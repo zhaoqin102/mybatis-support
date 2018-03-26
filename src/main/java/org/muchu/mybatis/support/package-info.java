@@ -1,0 +1,1 @@
+package org.muchu.mybatis.support;

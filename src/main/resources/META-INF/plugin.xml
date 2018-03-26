@@ -1,0 +1,16 @@
+<idea-plugin>
+    <id>org.muchu.mybatis-support</id>
+    <name>mybatis support</name>
+    <vendor email="dar_zeratul@outlook.com" url="https://github.com/zhaoqin102/mybatis-support">heber</vendor>
+
+    <description><![CDATA[
+    ]]></description>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
+    </extensions>
+
+    <actions>
+    </actions>
+</idea-plugin>
