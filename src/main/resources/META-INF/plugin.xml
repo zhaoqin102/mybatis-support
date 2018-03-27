@@ -6,9 +6,12 @@
     <description><![CDATA[
     ]]></description>
 
+
     <extensions defaultExtensionNs="com.intellij">
+        <dom.fileDescription implementation="org.muchu.mybatis.support.description.MapperDescription"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
+        <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
     </extensions>
 
     <actions>
