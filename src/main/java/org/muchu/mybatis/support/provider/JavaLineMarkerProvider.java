@@ -6,33 +6,27 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.constant.MybatisIcon;
-import org.muchu.mybatis.support.util.XmlUtils;
+import org.muchu.mybatis.support.util.JavaUtils;
 
 import java.util.Collection;
 
 /**
  * @author heber
  */
-public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
+public class JavaLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
-        DomElement domElement = XmlUtils.process(element);
-        if (domElement != null) {
+        PsiNameIdentifierOwner psiNameIdentifierOwner = JavaUtils.process(element);
+        if (psiNameIdentifierOwner != null) {
             NavigationGutterIconBuilder<PsiElement> builder =
-                    NavigationGutterIconBuilder.create(MybatisIcon.navigateToXmlIcon)
+                    NavigationGutterIconBuilder.create(MybatisIcon.navigateToJavaIcon)
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
-                            .setTarget(domElement.getXmlTag())
-                            .setTooltipTitle("Navigation to target in mapper xml");
-            if (element instanceof PsiNameIdentifierOwner) {
-                PsiNameIdentifierOwner psiNameIdentifierOwner = (PsiNameIdentifierOwner) element;
-                if (psiNameIdentifierOwner.getNameIdentifier() != null) {
-                    result.add(builder.createLineMarkerInfo(psiNameIdentifierOwner.getNameIdentifier()));
-                }
-            }
+                            .setTarget(psiNameIdentifierOwner.getNameIdentifier())
+                            .setTooltipTitle("Navigation to target in java ");
+            result.add(builder.createLineMarkerInfo(element));
         }
     }
 }

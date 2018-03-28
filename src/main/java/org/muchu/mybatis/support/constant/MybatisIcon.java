@@ -9,5 +9,7 @@ import javax.swing.*;
  */
 public class MybatisIcon {
 
-    public static final Icon navigateToDeclarationIcon = IconLoader.getIcon("/gutter/implementedMethod.png");
+    public static final Icon navigateToXmlIcon = IconLoader.getIcon("/gutter/implementedMethod.png");
+
+    public static final Icon navigateToJavaIcon = IconLoader.getIcon("/gutter/implementingMethod.png");
 }
