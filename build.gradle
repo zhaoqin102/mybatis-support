@@ -6,6 +6,7 @@ group 'org.muchu'
 version '0.1'
 
 apply plugin: 'java'
+apply from: "gradle.properties"
 
 sourceCompatibility = 1.8
 
@@ -20,6 +21,7 @@ dependencies {
 intellij {
     version '2017.3.5'
 }
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>
