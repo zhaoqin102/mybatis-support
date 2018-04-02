@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '0.1'
+version '0.2'
 
 apply plugin: 'java'
 apply from: "gradle.properties"
@@ -19,11 +19,13 @@ dependencies {
 }
 
 intellij {
-    version '2017.3.5'
+    version '2018.1'
+    publish {
+        pluginId '10572-mybatis-support'
+    }
 }
 
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      support newest version"""
 }
