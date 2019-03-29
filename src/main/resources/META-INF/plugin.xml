@@ -4,10 +4,8 @@
     <vendor email="dar_zeratul@outlook.com" url="https://github.com/zhaoqin102/mybatis-support">heber</vendor>
 
     <description><![CDATA[
-    Some basic mapper file navigation
+            Some basic mapper file navigation for mybatis
     ]]></description>
-
-    <idea-version since-build="173.4674.33" until-build="181.*"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <dom.fileDescription implementation="org.muchu.mybatis.support.description.MapperDescription"/>

@@ -1,12 +1,13 @@
 plugins {
-    id 'org.jetbrains.intellij' version '0.3.1'
+    id 'org.jetbrains.intellij' version '0.4.7'
 }
 
 group 'org.muchu'
-version '0.2'
+version '0.4'
 
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
-apply from: "gradle.properties"
 
 sourceCompatibility = 1.8
 
@@ -19,10 +20,12 @@ dependencies {
 }
 
 intellij {
-    version '2018.1.4'
-    publish {
-        pluginId '10572-mybatis-support'
-    }
+    version '191.6183.87'
+    pluginName '10572-mybatis-support'
+}
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
 }
 
 patchPluginXml {
