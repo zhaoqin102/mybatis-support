@@ -6,6 +6,5 @@ package org.muchu.mybatis.support.model;
  * Date: 26.05.12
  * Time: 15:50
  */
-public interface Select extends MapperIdentifiableStatement, WithResultMap {
-
+public interface Select extends MapperIdentifiableStatement, WithParameterMap, WithParameterType, WithResultMap, WithResultType {
 }

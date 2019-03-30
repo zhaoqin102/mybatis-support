@@ -9,8 +9,11 @@ import com.intellij.util.CommonProcessors;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
+import groovy.json.StringEscapeUtils;
+import org.apache.commons.codec.binary.StringUtils;
 import org.muchu.mybatis.support.model.Mapper;
 import org.muchu.mybatis.support.model.MapperIdentifiableStatement;
+import org.muchu.mybatis.support.model.Select;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,13 +58,14 @@ public class XmlUtils {
     private static MapperIdentifiableStatement processMethod(PsiMethod psiMethod) {
         PsiClass psiClass = psiMethod.getContainingClass();
         Mapper mapper = processClass(psiClass);
+        MapperIdentifiableStatement findStatement = null;
         if (mapper != null) {
             for (MapperIdentifiableStatement statement : mapper.getIdentifiableStatements()) {
                 if (Objects.equals(psiMethod.getName(), statement.getId().getRawText())) {
-                    return statement;
+                    findStatement = statement;
                 }
             }
         }
-        return null;
+        return findStatement;
     }
 }

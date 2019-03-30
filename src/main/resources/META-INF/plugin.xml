@@ -15,12 +15,7 @@
                                         implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
         <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
 
-        <intentionAction>
-            <className>org.muchu.mybatis.support.intention.GenerateStatementIntention</className>
-        </intentionAction>
-        <intentionAction>
-            <className>org.muchu.mybatis.support.intention.GenerateMapperIntention</className>
-        </intentionAction>
+
     </extensions>
 
     <actions>
