@@ -24,8 +24,8 @@ intellij {
     pluginName '10572-mybatis-support'
 }
 publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
+    username System.getenv('IDEA_USERNAME')
+    password System.getenv('IDEA_PASSWORD')
 }
 
 patchPluginXml {
