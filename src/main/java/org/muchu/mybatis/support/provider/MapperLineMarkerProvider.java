@@ -9,7 +9,7 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.constant.MybatisIcon;
-import org.muchu.mybatis.support.util.XmlUtils;
+import org.muchu.mybatis.support.util.MyXmlUtil;
 
 import java.util.Collection;
 
@@ -20,10 +20,10 @@ public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
-        DomElement domElement = XmlUtils.process(element);
+        DomElement domElement = MyXmlUtil.process(element);
         if (domElement != null) {
             NavigationGutterIconBuilder<PsiElement> builder =
-                    NavigationGutterIconBuilder.create(MybatisIcon.navigateToXmlIcon)
+                    NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML)
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTarget(domElement.getXmlTag())
                             .setTooltipTitle("Navigation to target in mapper xml");

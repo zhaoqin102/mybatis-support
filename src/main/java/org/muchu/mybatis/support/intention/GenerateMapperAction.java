@@ -1,23 +1,23 @@
 package org.muchu.mybatis.support.intention;
 
-import com.intellij.bootRuntime.Model;
+import com.intellij.CommonBundle;
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.ide.fileTemplates.FileTemplate;
-import com.intellij.ide.fileTemplates.FileTemplateManager;
-import com.intellij.ide.fileTemplates.FileTemplateUtil;
-import com.intellij.ide.util.PackageUtil;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.*;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.constant.MybatisTemplate;
-import org.muchu.mybatis.support.intention.impl.CreateXmlDialog;
+import org.muchu.mybatis.support.fileTemplates.MybatisFileTemplateProvider;
+import org.muchu.mybatis.support.util.MyJavaUtil;
+import org.muchu.mybatis.support.util.MyXmlUtil;
 
 import java.util.Properties;
 
@@ -39,9 +39,20 @@ public class GenerateMapperAction implements IntentionAction {
     @Override
     public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
         if (file instanceof PsiJavaFile) {
-            PsiJavaFile javaFile = (PsiJavaFile) file;
-            PsiClass[] classes = javaFile.getClasses();
-            return classes.length >= 1 && classes[0].isInterface();
+            PsiElement element = MyJavaUtil.getPsiElement(editor, file);
+            PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+            if (psiClass == null || !psiClass.isInterface()) {
+                return false;
+            }
+            PsiElement lBrace = psiClass.getLBrace();
+            if (lBrace == null) {
+                return false;
+            } else if (element.getTextOffset() >= lBrace.getTextOffset()) {
+                return false;
+            } else {
+                DomElement domElement = MyXmlUtil.process(element);
+                return domElement == null;
+            }
         }
         return false;
     }
@@ -73,7 +84,7 @@ public class GenerateMapperAction implements IntentionAction {
         }
         targetXmlName = targetXmlName == null ? "" : targetXmlName;
         final CreateXmlDialog dialog = new CreateXmlDialog(
-                project, "create Mybatis XML file",
+                project, "Create MyBatis xml file",
                 targetXmlName,
                 aPackage != null ? aPackage.getQualifiedName() : "",
                 true, ModuleUtilCore.findModuleForPsiElement(psiJavaFile)) {
@@ -92,13 +103,10 @@ public class GenerateMapperAction implements IntentionAction {
         }
         Properties properties = new Properties();
         properties.setProperty("namespace", classes[0].getQualifiedName());
-        FileTemplate fileTemplate = FileTemplateManager.getInstance(project).getJ2eeTemplate(MybatisTemplate.MYBATIS_MAPPER_XML_TEMPLATE);
         try {
-            PsiElement psiElement = FileTemplateUtil.createFromTemplate(fileTemplate, dialog.getClassName() + ".xml", properties, dialog.getTargetDirectory());
-            Module module = null;
-            PackageUtil.findOrCreateDirectoryForPackage(module, "", dialog.getTargetDirectory(), false).add(psiElement);
+            MybatisFileTemplateProvider.createFromTemplate(MybatisTemplate.MYBATIS_MAPPER_XML_TEMPLATE, MybatisFileTemplateProvider.getFileNameByNewElementName(dialog.getXmlName()), dialog.getTargetDirectory(), properties);
         } catch (Exception e) {
-            e.printStackTrace();
+            Messages.showMessageDialog(project, e.getMessage(), CommonBundle.getErrorTitle(), Messages.getErrorIcon());
         }
     }
 

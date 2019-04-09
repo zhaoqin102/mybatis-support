@@ -1,6 +1,6 @@
 package org.muchu.mybatis.support.constant;
 
-import com.intellij.openapi.util.IconLoader;
+import com.intellij.icons.AllIcons;
 
 import javax.swing.*;
 
@@ -9,7 +9,9 @@ import javax.swing.*;
  */
 public class MybatisIcon {
 
-    public static final Icon navigateToXmlIcon = IconLoader.getIcon("/gutter/implementedMethod.png");
+    public static final Icon NAVIGATE_TO_XML = AllIcons.Gutter.ImplementedMethod;
 
-    public static final Icon navigateToJavaIcon = IconLoader.getIcon("/gutter/implementingMethod.png");
+    public static final Icon NAVIGATE_TO_JAVA = AllIcons.Gutter.ImplementingMethod;
+
+    public static final Icon FILE_TYPE = AllIcons.FileTypes.Xml;
 }

@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * @author heber
  */
-public class XmlUtils {
+public class MyXmlUtil {
 
 
     public static DomElement process(PsiElement psiElement) {

@@ -1,4 +1,4 @@
-package org.muchu.mybatis.support.intention.impl;
+package org.muchu.mybatis.support.intention;
 
 import com.intellij.CommonBundle;
 import com.intellij.codeInsight.CodeInsightBundle;
@@ -236,7 +236,7 @@ public class CreateXmlDialog extends DialogWrapper {
                 if (myTargetDirectory == null) {
                     return;
                 }
-                errorString[0] = RefactoringMessageUtil.checkCanCreateFile(myTargetDirectory, getClassName() + ".xml");
+                errorString[0] = RefactoringMessageUtil.checkCanCreateFile(myTargetDirectory, getXmlName() + ".xml");
             } catch (IncorrectOperationException e) {
                 errorString[0] = e.getMessage();
             }
@@ -257,7 +257,7 @@ public class CreateXmlDialog extends DialogWrapper {
     }
 
     @NotNull
-    public String getClassName() {
+    public String getXmlName() {
         if (myClassNameEditable) {
             return myTfClassName.getText();
         } else {

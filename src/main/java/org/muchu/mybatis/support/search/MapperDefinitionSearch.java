@@ -6,7 +6,7 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.Processor;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.util.XmlUtils;
+import org.muchu.mybatis.support.util.MyXmlUtil;
 
 /**
  * @author heber
@@ -19,7 +19,7 @@ public class MapperDefinitionSearch extends QueryExecutorBase<XmlElement, PsiEle
 
     @Override
     public void processQuery(@NotNull PsiElement queryParameters, @NotNull Processor<? super XmlElement> consumer) {
-        DomElement element = XmlUtils.process(queryParameters);
+        DomElement element = MyXmlUtil.process(queryParameters);
         if (element != null) {
             consumer.process(element.getXmlElement());
         }

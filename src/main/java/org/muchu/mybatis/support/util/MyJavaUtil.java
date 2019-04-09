@@ -1,5 +1,7 @@
 package org.muchu.mybatis.support.util;
 
+import com.intellij.openapi.editor.CaretModel;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -13,7 +15,7 @@ import java.util.Objects;
 /**
  * @author heber
  */
-public class JavaUtils {
+public class MyJavaUtil {
 
     public static PsiNameIdentifierOwner process(PsiElement element) {
         if (element instanceof XmlTag) {
@@ -25,6 +27,12 @@ public class JavaUtils {
             }
         }
         return null;
+    }
+
+    public static PsiElement getPsiElement(Editor editor, PsiFile file) {
+        CaretModel caretModel = editor.getCaretModel();
+        int position = caretModel.getOffset();
+        return file.findElementAt(position);
     }
 
     private static PsiClass processMapper(XmlTag xmlTag) {

@@ -17,6 +17,9 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.GenerateMapperAction</className>
         </intentionAction>
+        <intentionAction>
+            <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
+        </intentionAction>
     </extensions>
 
     <actions>
