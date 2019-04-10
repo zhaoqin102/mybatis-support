@@ -5,18 +5,17 @@ import java.util.Objects;
 /**
  * @author heber
  */
-public enum MyBatisTag {
+public enum MyTag {
 
     MAPPER("mapper"),
     SELECT("select"),
     UPDATE("update"),
     DELETE("delete"),
-    INSERT("insert"),
-    ID("id");
+    INSERT("insert");
 
     private String value;
 
-    MyBatisTag(String value) {
+    MyTag(String value) {
         this.value = value;
     }
 
