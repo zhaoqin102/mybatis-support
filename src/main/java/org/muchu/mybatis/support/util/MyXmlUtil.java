@@ -9,11 +9,8 @@ import com.intellij.util.CommonProcessors;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
-import groovy.json.StringEscapeUtils;
-import org.apache.commons.codec.binary.StringUtils;
 import org.muchu.mybatis.support.model.Mapper;
 import org.muchu.mybatis.support.model.MapperIdentifiableStatement;
-import org.muchu.mybatis.support.model.Select;
 
 import java.util.List;
 import java.util.Objects;

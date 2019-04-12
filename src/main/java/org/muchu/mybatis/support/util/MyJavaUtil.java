@@ -8,8 +8,9 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import org.apache.commons.lang.StringUtils;
+import org.muchu.mybatis.support.constant.MyBatisSQLTag;
+import org.muchu.mybatis.support.constant.MyBatisTag;
 import org.muchu.mybatis.support.constant.MySQLAttrTag;
-import org.muchu.mybatis.support.constant.MyTag;
 
 import java.util.Objects;
 
@@ -21,9 +22,9 @@ public class MyJavaUtil {
     public static PsiNameIdentifierOwner process(PsiElement element) {
         if (element instanceof XmlTag) {
             XmlTag xmlTag = (XmlTag) element;
-            if (Objects.equals(MyTag.MAPPER.getValue(), xmlTag.getName())) {
+            if (Objects.equals(MyBatisTag.MAPPER.getValue(), xmlTag.getName())) {
                 return processMapper(xmlTag);
-            } else if (MyTag.isCRUDStatement(xmlTag.getName())) {
+            } else if (MyBatisSQLTag.isCRUDStatement(xmlTag.getName())) {
                 return processCRUDStatement(xmlTag);
             }
         }

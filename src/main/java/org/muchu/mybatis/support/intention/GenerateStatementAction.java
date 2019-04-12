@@ -18,10 +18,12 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.constant.MyTag;
+import org.muchu.mybatis.support.constant.MyBatisSQLTag;
+import org.muchu.mybatis.support.constant.MySQLAttrTag;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 import org.muchu.mybatis.support.util.MyXmlUtil;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -69,21 +71,28 @@ public class GenerateStatementAction implements IntentionAction {
         PsiElement context = element.getContext();
         XmlElement xmlElement = domElement.getXmlElement();
         if (xmlElement instanceof XmlTag && context instanceof PsiMethod) {
-            List<MyTag> myBatisTags = Arrays.asList(MyTag.values());
-            IPopupChooserBuilder<MyTag> popupChooserBuilder = JBPopupFactory.getInstance().createPopupChooserBuilder(myBatisTags);
+            List<MyBatisSQLTag> myBatisTags = Arrays.asList(MyBatisSQLTag.values());
+            IPopupChooserBuilder<MyBatisSQLTag> popupChooserBuilder = JBPopupFactory.getInstance().createPopupChooserBuilder(myBatisTags);
             JBPopup popup = popupChooserBuilder.setItemChosenCallback(myBatisTag -> {
                 PsiMethod psiMethod = (PsiMethod) context;
                 XmlTag parent = (XmlTag) xmlElement;
-                generateStatement(myBatisTag, psiMethod, parent, project);
+                try {
+                    generateStatement(myBatisTag, psiMethod, parent, project);
+                } catch (InvocationTargetException | IllegalAccessException e) {
+
+                }
             }).createPopup();
             popup.showInBestPositionFor(editor);
         }
     }
 
-    private void generateStatement(MyTag myBatisTag, PsiMethod psiMethod, XmlTag parent, Project project) {
-        String bodyText = "\nselect * from\n";
-        XmlTag select = parent.createChildTag(myBatisTag.getValue(), null, bodyText, false);
-        select.setAttribute("id", psiMethod.getName());
+    private void generateStatement(MyBatisSQLTag myBatisSQLTag, PsiMethod psiMethod, XmlTag parent, Project project) throws InvocationTargetException, IllegalAccessException {
+        String bodyText = myBatisSQLTag.getBodyText();
+        XmlTag select = parent.createChildTag(myBatisSQLTag.getValue(), null, bodyText, false);
+        List<MySQLAttrTag> attrTagList = myBatisSQLTag.getAttrTagList();
+        for (MySQLAttrTag mySQLAttrTag : attrTagList) {
+            select.setAttribute(mySQLAttrTag.getValue(), mySQLAttrTag.getAttrValue(psiMethod));
+        }
         if (psiMethod.getReturnType() != null && !psiMethod.getReturnType().equalsToText("void")) {
             select.setAttribute("resultType", psiMethod.getReturnType().getCanonicalText());
         }
