@@ -1,23 +1,27 @@
 package org.muchu.mybatis.support.constant;
 
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.xml.XmlTag;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public enum MyBatisSQLTag {
 
-    SELECT("select", "\nselect * from\n", MySQLAttrTag.ID),
-    UPDATE("update", "\nupdate\n", MySQLAttrTag.ID),
-    DELETE("delete", "\ndelete from\n", MySQLAttrTag.ID),
-    INSERT("insert", "\ninsert into\n", MySQLAttrTag.ID);
+    SELECT("select", "\nselect * from\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE),
+    UPDATE("update", "\nupdate\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE),
+    DELETE("delete", "\ndelete from\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE),
+    INSERT("insert", "\ninsert into\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE);
 
     private String value;
 
-    private List<MySQLAttrTag> attrTagList;
+    private List<MyBatisSQLAttrTag> attrTagList;
 
     private String bodyText;
 
-    MyBatisSQLTag(String value, String bodyText, MySQLAttrTag... attrTagList) {
+    MyBatisSQLTag(String value, String bodyText, MyBatisSQLAttrTag... attrTagList) {
         this.value = value;
         this.bodyText = bodyText;
         this.attrTagList = Arrays.asList(attrTagList);
@@ -25,14 +29,6 @@ public enum MyBatisSQLTag {
 
     public String getValue() {
         return value;
-    }
-
-    public List<MySQLAttrTag> getAttrTagList() {
-        return attrTagList;
-    }
-
-    public String getBodyText() {
-        return bodyText;
     }
 
     public static boolean isCRUDStatement(String value) {
@@ -46,5 +42,20 @@ public enum MyBatisSQLTag {
             return true;
         }
         return Objects.equals(DELETE.getValue(), value);
+    }
+
+    public XmlTag createMyBatisTag(XmlTag parent, PsiMethod psiMethod) {
+        XmlTag childTag = parent.createChildTag(value, null, bodyText, false);
+        setAttributes(childTag, psiMethod);
+        return childTag;
+    }
+
+    private void setAttributes(XmlTag childTag, PsiMethod psiMethod) {
+        for (MyBatisSQLAttrTag myBatisSQLAttrTag : attrTagList) {
+            String attrValue = myBatisSQLAttrTag.getAttrValue(psiMethod);
+            if (StringUtil.isNotEmpty(attrValue)) {
+                childTag.setAttribute(myBatisSQLAttrTag.getValue(), attrValue);
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ import com.intellij.psi.xml.XmlTag;
 import org.apache.commons.lang.StringUtils;
 import org.muchu.mybatis.support.constant.MyBatisSQLTag;
 import org.muchu.mybatis.support.constant.MyBatisTag;
-import org.muchu.mybatis.support.constant.MySQLAttrTag;
+import org.muchu.mybatis.support.constant.MyBatisSQLAttrTag;
 
 import java.util.Objects;
 
@@ -49,7 +49,7 @@ public class MyJavaUtil {
 
     private static PsiMethod processCRUDStatement(XmlTag xmlTag) {
         XmlTag parentTag = xmlTag.getParentTag();
-        XmlAttribute id = xmlTag.getAttribute(MySQLAttrTag.ID.getValue());
+        XmlAttribute id = xmlTag.getAttribute(MyBatisSQLAttrTag.ID.getValue());
         if (parentTag != null && id != null && StringUtils.isNotBlank(id.getValue())) {
             PsiClass psiClass = processMapper(parentTag);
             if (psiClass != null) {

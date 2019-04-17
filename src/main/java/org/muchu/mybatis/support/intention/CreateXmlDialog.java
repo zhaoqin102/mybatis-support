@@ -2,7 +2,6 @@ package org.muchu.mybatis.support.intention;
 
 import com.intellij.CommonBundle;
 import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.ide.util.PackageUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CustomShortcutSet;
@@ -57,10 +56,6 @@ public class CreateXmlDialog extends DialogWrapper {
 
     private final String myXmlName;
 
-    private final boolean myClassNameEditable;
-
-    private final Module myModule;
-
     private final DestinationFolderComboBox myDestinationCB = new DestinationFolderComboBox() {
         @Override
         public String getTargetPackage() {
@@ -88,21 +83,13 @@ public class CreateXmlDialog extends DialogWrapper {
                            boolean classNameEditable,
                            @Nullable Module defaultModule) {
         super(project, true);
-        myClassNameEditable = classNameEditable;
-        myModule = defaultModule;
         myXmlName = targetXmlName;
         myProject = project;
-        myPackageComponent = new PackageNameReferenceEditorCombo(targetPackageName, myProject, RECENTS_KEY, CodeInsightBundle.message("dialog.create.class.package.chooser.title"));
+        myPackageComponent = new PackageNameReferenceEditorCombo(targetPackageName, project, RECENTS_KEY, title);
         myPackageComponent.setTextFieldPreferredWidth(40);
         init();
         setTitle(title);
         myTfClassName.setText(myXmlName);
-        myDestinationCB.setData(myProject, getBaseDir(targetPackageName), new Pass<String>() {
-            @Override
-            public void pass(String s) {
-                setErrorText(s, myDestinationCB);
-            }
-        }, myPackageComponent.getChildComponent());
     }
 
     protected boolean reportBaseInTestSelectionInSource() {
@@ -115,7 +102,7 @@ public class CreateXmlDialog extends DialogWrapper {
 
     @Override
     public JComponent getPreferredFocusedComponent() {
-        return myClassNameEditable ? myTfClassName : myPackageComponent.getChildComponent();
+        return myTfClassName;
     }
 
     @Override
@@ -132,26 +119,24 @@ public class CreateXmlDialog extends DialogWrapper {
         gbConstraints.fill = GridBagConstraints.HORIZONTAL;
         gbConstraints.anchor = GridBagConstraints.WEST;
 
-        if (myClassNameEditable) {
-            gbConstraints.weightx = 0;
-            gbConstraints.gridwidth = 1;
-            panel.add(myInformationLabel, gbConstraints);
-            gbConstraints.insets = JBUI.insets(4, 8);
-            gbConstraints.gridx = 1;
-            gbConstraints.weightx = 1;
-            gbConstraints.gridwidth = 1;
-            gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-            gbConstraints.anchor = GridBagConstraints.WEST;
-            panel.add(myTfClassName, gbConstraints);
+        gbConstraints.weightx = 0;
+        gbConstraints.gridwidth = 1;
+        panel.add(myInformationLabel, gbConstraints);
+        gbConstraints.insets = JBUI.insets(4, 8);
+        gbConstraints.gridx = 1;
+        gbConstraints.weightx = 1;
+        gbConstraints.gridwidth = 1;
+        gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gbConstraints.anchor = GridBagConstraints.WEST;
+        panel.add(myTfClassName, gbConstraints);
 
-            myTfClassName.getDocument().addDocumentListener(new DocumentAdapter() {
-                @Override
-                protected void textChanged(@NotNull DocumentEvent e) {
-                    getOKAction().setEnabled(PsiNameHelper.getInstance(myProject).isIdentifier(myTfClassName.getText()));
-                }
-            });
-            getOKAction().setEnabled(StringUtil.isNotEmpty(myXmlName));
-        }
+        myTfClassName.getDocument().addDocumentListener(new DocumentAdapter() {
+            @Override
+            protected void textChanged(@NotNull DocumentEvent e) {
+                getOKAction().setEnabled(PsiNameHelper.getInstance(myProject).isIdentifier(myTfClassName.getText()));
+            }
+        });
+        getOKAction().setEnabled(StringUtil.isNotEmpty(myXmlName));
 
         gbConstraints.gridx = 0;
         gbConstraints.gridy = 2;
@@ -253,16 +238,12 @@ public class CreateXmlDialog extends DialogWrapper {
 
     @Nullable
     protected PsiDirectory getBaseDir(String packageName) {
-        return myModule == null ? null : PackageUtil.findPossiblePackageDirectoryInModule(myModule, packageName);
+        return null;
     }
 
     @NotNull
     public String getXmlName() {
-        if (myClassNameEditable) {
-            return myTfClassName.getText();
-        } else {
-            return myXmlName;
-        }
+        return myXmlName;
     }
 
 }
