@@ -76,7 +76,7 @@ public class GenerateMapperAction implements IntentionAction {
         PsiJavaFile psiJavaFile = (PsiJavaFile) file;
         final PsiDirectory sourceDir = psiJavaFile.getContainingFile().getContainingDirectory();
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        final PsiPackage aPackage = sourceDir != null ? JavaDirectoryService.getInstance().getPackage(sourceDir) : null;
+        final PsiDirectory baseDir = sourceDir != null && fileIndex.getSourceRootForFile(sourceDir.getVirtualFile()) != null ? sourceDir : null;
         PsiClass[] classes = psiJavaFile.getClasses();
         String targetXmlName = null;
         if (classes.length >= 1) {
@@ -86,18 +86,7 @@ public class GenerateMapperAction implements IntentionAction {
         final CreateXmlDialog dialog = new CreateXmlDialog(
                 project, "Create MyBatis xml file",
                 targetXmlName,
-                aPackage != null ? aPackage.getQualifiedName() : "",
-                true, ModuleUtilCore.findModuleForPsiElement(psiJavaFile)) {
-            @Override
-            protected PsiDirectory getBaseDir(String packageName) {
-                return sourceDir != null && fileIndex.getSourceRootForFile(sourceDir.getVirtualFile()) != null ? sourceDir : super.getBaseDir(packageName);
-            }
-
-            @Override
-            protected boolean reportBaseInTestSelectionInSource() {
-                return true;
-            }
-        };
+                baseDir);
         if (!dialog.showAndGet()) {
             return;
         }
