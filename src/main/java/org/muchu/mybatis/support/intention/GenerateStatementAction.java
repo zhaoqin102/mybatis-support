@@ -6,9 +6,10 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.ui.popup.IPopupChooserBuilder;
-import com.intellij.openapi.ui.popup.JBPopup;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.ui.popup.ListPopup;
+import com.intellij.openapi.ui.popup.PopupStep;
+import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -18,12 +19,10 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.muchu.mybatis.support.constant.MyBatisSQLTag;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 import org.muchu.mybatis.support.util.MyXmlUtil;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class GenerateStatementAction implements IntentionAction {
 
@@ -69,15 +68,24 @@ public class GenerateStatementAction implements IntentionAction {
         PsiElement context = element.getContext();
         XmlElement xmlElement = domElement.getXmlElement();
         if (xmlElement instanceof XmlTag && context instanceof PsiMethod) {
-            List<MyBatisSQLTag> myBatisTags = Arrays.asList(MyBatisSQLTag.values());
-            IPopupChooserBuilder<MyBatisSQLTag> popupChooserBuilder = JBPopupFactory.getInstance()
-                    .createPopupChooserBuilder(myBatisTags);
-            JBPopup popup = popupChooserBuilder.setItemChosenCallback(myBatisTag -> {
-                PsiMethod psiMethod = (PsiMethod) context;
-                XmlTag parent = (XmlTag) xmlElement;
-                generateStatement(myBatisTag, psiMethod, parent, project);
-            }).createPopup();
-            popup.showInBestPositionFor(editor);
+            ListPopup listPopup = JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<MyBatisSQLTag>(null, MyBatisSQLTag.values()) {
+
+                @NotNull
+                @Override
+                public String getTextFor(MyBatisSQLTag value) {
+                    return value.getValue() + " statement";
+                }
+
+                @Nullable
+                @Override
+                public PopupStep onChosen(MyBatisSQLTag selectedValue, boolean finalChoice) {
+                    PsiMethod psiMethod = (PsiMethod) context;
+                    XmlTag parent = (XmlTag) xmlElement;
+                    generateStatement(selectedValue, psiMethod, parent, project);
+                    return super.onChosen(selectedValue, finalChoice);
+                }
+            });
+            listPopup.showInBestPositionFor(editor);
         }
     }
 

@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '0.6'
+version '1.0'
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
@@ -20,7 +20,7 @@ dependencies {
 }
 
 intellij {
-    version '191.6183.87'
+    version '191.6707.61'
     pluginName '10572-mybatis-support'
 }
 publishPlugin {
@@ -30,5 +30,5 @@ publishPlugin {
 
 patchPluginXml {
     changeNotes """
-      support newest version"""
+      create MyBatis Mapper and SQL statement """
 }

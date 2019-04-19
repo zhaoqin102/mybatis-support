@@ -2,6 +2,7 @@ package org.muchu.mybatis.support.intention;
 
 import com.intellij.CommonBundle;
 import com.intellij.codeInsight.CodeInsightBundle;
+import com.intellij.ide.util.DirectoryUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CustomShortcutSet;
@@ -143,6 +144,9 @@ public class CreateXmlDialog extends DialogWrapper {
         final String[] errorString = new String[1];
         CommandProcessor.getInstance().executeCommand(myProject, () -> {
             try {
+                if (myTargetDirectory == null) {
+                    myTargetDirectory = DirectoryUtil.mkdirs(PsiManager.getInstance(myProject), myDirectoryComponent.getText());
+                }
                 errorString[0] = RefactoringMessageUtil.checkCanCreateFile(myTargetDirectory, getXmlName() + ".xml");
             } catch (IncorrectOperationException e) {
                 errorString[0] = e.getMessage();

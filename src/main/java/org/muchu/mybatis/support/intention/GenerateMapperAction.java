@@ -3,7 +3,6 @@ package org.muchu.mybatis.support.intention;
 import com.intellij.CommonBundle;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -50,7 +49,7 @@ public class GenerateMapperAction implements IntentionAction {
             } else if (element.getTextOffset() >= lBrace.getTextOffset()) {
                 return false;
             } else {
-                DomElement domElement = MyXmlUtil.process(element);
+                DomElement domElement = MyXmlUtil.process(psiClass);
                 return domElement == null;
             }
         }
@@ -68,7 +67,7 @@ public class GenerateMapperAction implements IntentionAction {
 
     @Override
     public boolean startInWriteAction() {
-        return false;
+        return true;
     }
 
     @Override
