@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '1.0'
+version '1.1'
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
@@ -30,5 +30,5 @@ publishPlugin {
 
 patchPluginXml {
     changeNotes """
-      create MyBatis Mapper and SQL statement """
+      fix some bug """
 }

@@ -10,10 +10,10 @@ import java.util.Objects;
 
 public enum MyBatisSQLTag {
 
-    SELECT("select", "\nselect * from\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE),
-    UPDATE("update", "\nupdate\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE),
-    DELETE("delete", "\ndelete from\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE),
-    INSERT("insert", "\ninsert into\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RETURN_TYPE);
+    SELECT("select", "\nselect * from\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RESULT_TYPE),
+    UPDATE("update", "\nupdate\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RESULT_TYPE),
+    DELETE("delete", "\ndelete from\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RESULT_TYPE),
+    INSERT("insert", "\ninsert into\n", MyBatisSQLAttrTag.ID, MyBatisSQLAttrTag.RESULT_TYPE);
 
     private String value;
 

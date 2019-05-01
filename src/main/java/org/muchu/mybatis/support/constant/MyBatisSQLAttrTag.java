@@ -4,7 +4,7 @@ import com.intellij.psi.PsiMethod;
 
 public enum MyBatisSQLAttrTag {
 
-    ID("id"), RETURN_TYPE("returnType");
+    ID("id"), RESULT_TYPE("resultType");
 
     private String value;
 
@@ -20,7 +20,7 @@ public enum MyBatisSQLAttrTag {
         switch (this) {
             case ID:
                 return psiMethod.getName();
-            case RETURN_TYPE:
+            case RESULT_TYPE:
                 if (psiMethod.getReturnType() != null && !psiMethod.getReturnType().equalsToText("void")) {
                     return psiMethod.getReturnType().getCanonicalText();
                 } else {
