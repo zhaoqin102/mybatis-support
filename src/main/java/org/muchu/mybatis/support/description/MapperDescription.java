@@ -6,6 +6,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomFileDescription;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.muchu.mybatis.support.constant.MyBatisTag;
 import org.muchu.mybatis.support.model.Mapper;
 
 /**
@@ -14,13 +15,13 @@ import org.muchu.mybatis.support.model.Mapper;
 public class MapperDescription extends DomFileDescription<Mapper> {
 
     public MapperDescription() {
-        super(Mapper.class, "mapper");
+        super(Mapper.class, MyBatisTag.MAPPER.getValue());
     }
 
     @Override
     public boolean isMyFile(@NotNull XmlFile file, @Nullable Module module) {
         XmlTag rootTag = file.getRootTag();
-        return rootTag != null && rootTag.getName().equals(getRootTagName());
+        return rootTag != null && getRootTagName().equals(rootTag.getName());
     }
 
 }

@@ -1,7 +1,7 @@
 package org.muchu.mybatis.support.intention;
 
 import com.intellij.CommonBundle;
-import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -23,7 +23,7 @@ import java.util.Properties;
 /**
  *
  */
-public class GenerateMapperAction implements IntentionAction {
+public class GenerateMapperAction extends BaseIntentionAction {
 
 
     private String name = "Create mapper";
@@ -67,7 +67,7 @@ public class GenerateMapperAction implements IntentionAction {
 
     @Override
     public boolean startInWriteAction() {
-        return true;
+        return false;
     }
 
     @Override

@@ -1,11 +1,10 @@
 package org.muchu.mybatis.support.intention;
 
-import com.intellij.CommonBundle;
+import com.intellij.codeInsight.hint.HintManager;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.openapi.ui.popup.PopupStep;
@@ -62,7 +61,7 @@ public class GenerateStatementAction implements IntentionAction {
         PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
         DomElement domElement = MyXmlUtil.process(psiClass);
         if (domElement == null) {
-            Messages.showMessageDialog(project, "Please create mapper", CommonBundle.getErrorTitle(), Messages.getErrorIcon());
+            HintManager.getInstance().showErrorHint(editor, "Please create mapper");
             return;
         }
         PsiElement context = element.getContext();
@@ -100,6 +99,6 @@ public class GenerateStatementAction implements IntentionAction {
 
     @Override
     public boolean startInWriteAction() {
-        return true;
+        return false;
     }
 }

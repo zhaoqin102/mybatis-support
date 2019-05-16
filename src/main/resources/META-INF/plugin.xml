@@ -20,6 +20,8 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
         </intentionAction>
+        <editorTypedHandler implementationClass="org.muchu.mybatis.support.typedHandler.MyTypedHandler"
+                            id="mybatisTypedHandler"/>
     </extensions>
 
     <actions>
