@@ -1,15 +1,19 @@
 package org.muchu.mybatis.support.constant;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
+
+import java.util.Optional;
+
+import static com.intellij.psi.CommonClassNames.JAVA_UTIL_COLLECTION;
+import static com.intellij.psi.CommonClassNames.JAVA_UTIL_MAP;
 
 public enum MyBatisSQLAttrTag {
 
     ID("id"), RESULT_TYPE("resultType");
 
     private String value;
-
-    private static PsiType listType;
 
     MyBatisSQLAttrTag(String value) {
         this.value = value;
@@ -20,32 +24,37 @@ public enum MyBatisSQLAttrTag {
     }
 
     public String getAttrValue(PsiMethod psiMethod) {
-        if (listType == null) {
-            listType = PsiClassType.getTypeByName("java.util.List", psiMethod.getProject(), GlobalSearchScope.allScope(psiMethod.getProject()));
-        }
+        Project project = psiMethod.getProject();
+        PsiType collectionType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_COLLECTION, GlobalSearchScope.allScope(project)))
+                .map(psiClass -> PsiElementFactory.SERVICE.getInstance(project).createType(psiClass))
+                .orElse(null);
+
+        PsiType mapType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_MAP, GlobalSearchScope.allScope(project)))
+                .map(psiClass -> PsiElementFactory.SERVICE.getInstance(project).createType(psiClass))
+                .orElse(null);
         switch (this) {
             case ID:
                 return psiMethod.getName();
             case RESULT_TYPE:
-                if (psiMethod.getReturnType() != null && !PsiType.VOID.equals(psiMethod.getReturnType())) {
-                    PsiType returnType = psiMethod.getReturnType();
-                    if (returnType instanceof PsiClassType) {
-                        PsiClassType returnClassType = ((PsiClassType) returnType);
-                        if (returnClassType.isAssignableFrom(listType)) {
-                            if (returnClassType.getParameterCount() > 0) {
-                                PsiType[] parameters = returnClassType.getParameters();
-                                return parameters[0].getCanonicalText();
-                            } else {
-                                return returnType.getCanonicalText();
-                            }
-                        } else {
-                            return returnType.getCanonicalText();
+                PsiType returnType = psiMethod.getReturnType();
+                if (returnType == null) {
+                    return null;
+                }
+                if (returnType instanceof PsiClassType) {
+                    PsiClassType psiClassType = ((PsiClassType) returnType);
+                    if (collectionType != null && collectionType.isAssignableFrom(returnType) && psiClassType.getParameterCount() == 1) {
+                        return psiClassType.getParameters()[0].getCanonicalText();
+                    } else if (mapType != null && mapType.isAssignableFrom(returnType)) {
+                        PsiClass resolve = psiClassType.resolve();
+                        if (resolve != null) {
+                            return resolve.getQualifiedName();
                         }
-                    } else if (returnType instanceof PsiArrayType) {
-                        return ((PsiArrayType) returnType).getComponentType().getCanonicalText();
                     } else {
-                        return null;
+                        return psiClassType.getCanonicalText();
                     }
+                } else if (returnType instanceof PsiArrayType) {
+                    PsiArrayType psiArrayType = (PsiArrayType) returnType;
+                    return psiArrayType.getComponentType().getCanonicalText();
                 } else {
                     return null;
                 }

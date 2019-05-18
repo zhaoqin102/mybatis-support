@@ -1,6 +1,5 @@
 package org.muchu.mybatis.support.typedHandler;
 
-import com.intellij.codeInsight.AutoPopupController;
 import com.intellij.codeInsight.template.impl.editorActions.TypedActionHandlerBase;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -32,9 +31,11 @@ public class MyTypedHandler extends TypedActionHandlerBase {
             isMybatisFile = rootTag != null && MyBatisTag.MAPPER.getValue().equals(rootTag.getName());
         }
         if (isMybatisFile) {
-        }
-        if (myOriginalHandler != null) {
-            myOriginalHandler.execute(editor, charTyped, dataContext);
+
+        } else {
+            if (myOriginalHandler != null) {
+                myOriginalHandler.execute(editor, charTyped, dataContext);
+            }
         }
     }
 }
