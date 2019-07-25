@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.intellij' version '0.4.7'
+    id 'org.jetbrains.intellij' version '0.4.9'
 }
 
 group 'org.muchu'
@@ -20,7 +20,7 @@ dependencies {
 }
 
 intellij {
-    version '191.6707.61'
+    version '191.7479.19'
     pluginName '10572-mybatis-support'
 }
 publishPlugin {
