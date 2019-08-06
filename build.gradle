@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '1.2'
+version '1.3'
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
@@ -20,7 +20,8 @@ dependencies {
 }
 
 intellij {
-    version '191.7479.19'
+    version 'LATEST-EAP-SNAPSHOT'
+    plugins = ['java']
     pluginName '10572-mybatis-support'
 }
 publishPlugin {

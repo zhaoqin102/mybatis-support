@@ -7,6 +7,9 @@
             Some basic mapper file navigation for mybatis
     ]]></description>
 
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.xml</depends>
+
     <extensions defaultExtensionNs="com.intellij">
         <dom.fileDescription implementation="org.muchu.mybatis.support.description.MapperDescription"/>
         <codeInsight.lineMarkerProvider language="JAVA"
