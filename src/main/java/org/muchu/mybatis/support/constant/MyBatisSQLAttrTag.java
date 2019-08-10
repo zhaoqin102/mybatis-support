@@ -26,11 +26,11 @@ public enum MyBatisSQLAttrTag {
     public String getAttrValue(PsiMethod psiMethod) {
         Project project = psiMethod.getProject();
         PsiType collectionType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_COLLECTION, GlobalSearchScope.allScope(project)))
-                .map(psiClass -> PsiElementFactory.SERVICE.getInstance(project).createType(psiClass))
+                .map(psiClass -> PsiElementFactory.getInstance(project).createType(psiClass))
                 .orElse(null);
 
         PsiType mapType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_MAP, GlobalSearchScope.allScope(project)))
-                .map(psiClass -> PsiElementFactory.SERVICE.getInstance(project).createType(psiClass))
+                .map(psiClass -> PsiElementFactory.getInstance(project).createType(psiClass))
                 .orElse(null);
         switch (this) {
             case ID:
