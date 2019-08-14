@@ -31,5 +31,5 @@ publishPlugin {
 
 patchPluginXml {
     changeNotes """
-      fix some bug """
+      fix some bug and support new version"""
 }
