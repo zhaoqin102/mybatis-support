@@ -2,6 +2,8 @@ package org.muchu.mybatis.support.intention;
 
 import com.intellij.codeInsight.hint.HintManager;
 import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -14,6 +16,7 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.util.DocumentUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
@@ -90,15 +93,15 @@ public class GenerateStatementAction implements IntentionAction {
 
     private void generateStatement(MyBatisSQLTag myBatisSQLTag, PsiMethod psiMethod, XmlTag parent, Project project) {
         XmlTag childTag = myBatisSQLTag.createMyBatisTag(parent, psiMethod);
-        WriteCommandAction.runWriteCommandAction(project, () -> {
+        WriteCommandAction.runWriteCommandAction(project, "create statement", null, () -> {
             parent.add(childTag);
-        });
+        }, parent.getContainingFile());
         CodeStyleManager formatter = CodeStyleManager.getInstance(project);
         formatter.reformat(parent.getContainingFile());
     }
 
     @Override
     public boolean startInWriteAction() {
-        return false;
+        return true;
     }
 }
