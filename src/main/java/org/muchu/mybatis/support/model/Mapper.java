@@ -21,7 +21,7 @@ public interface Mapper extends DomElement {
 
     @SubTagList("resultMap")
     List<ResultMap> getResultMaps();
-    
+
     @SubTagList("sql")
     List<MapperIdentifiableStatement> getSqls();
 

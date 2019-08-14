@@ -8,8 +8,10 @@ import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.*;
+import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.Query;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -49,6 +51,10 @@ public class GenerateMapperAction extends BaseIntentionAction {
             } else if (element.getTextOffset() >= lBrace.getTextOffset()) {
                 return false;
             } else {
+                Query<PsiClass> search = ClassInheritorsSearch.search(psiClass);
+                if (search.findAll().size() > 0) {
+                    return false;
+                }
                 DomElement domElement = MyXmlUtil.process(psiClass);
                 return domElement == null;
             }

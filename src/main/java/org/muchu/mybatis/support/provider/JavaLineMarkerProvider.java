@@ -26,7 +26,7 @@ public class JavaLineMarkerProvider extends RelatedItemLineMarkerProvider {
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTarget(psiNameIdentifierOwner.getNameIdentifier())
                             .setTooltipTitle("Navigation to target in java ");
-            result.add(builder.createLineMarkerInfo(element));
+            result.add(builder.createLineMarkerInfo(element.getFirstChild() == null ? element : element.getFirstChild()));
         }
     }
 }

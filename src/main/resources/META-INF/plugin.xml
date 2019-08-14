@@ -22,8 +22,10 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
         </intentionAction>
-        <editorTypedHandler implementationClass="org.muchu.mybatis.support.typedHandler.MyTypedHandler"
-                            id="mybatisTypedHandler"/>
+<!--        <editorTypedHandler implementationClass="org.muchu.mybatis.support.typedHandler.MyTypedHandler"-->
+<!--                            id="mybatisTypedHandler"/>-->
+        <completion.contributor language="XML"
+                                implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
     </extensions>
 
     <actions>

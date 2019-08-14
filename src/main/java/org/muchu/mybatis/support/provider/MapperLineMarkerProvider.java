@@ -21,7 +21,7 @@ public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
         DomElement domElement = MyXmlUtil.process(element);
-        if (domElement != null) {
+        if (domElement != null && domElement.getXmlTag() != null) {
             NavigationGutterIconBuilder<PsiElement> builder =
                     NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML)
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
