@@ -6,6 +6,7 @@ import com.intellij.ide.util.DirectoryUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CustomShortcutSet;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
@@ -144,15 +145,16 @@ public class CreateXmlDialog extends DialogWrapper {
         final String[] errorString = new String[1];
         CommandProcessor.getInstance().executeCommand(myProject, () -> {
             try {
-                if (myTargetDirectory == null) {
-                    myTargetDirectory = DirectoryUtil.mkdirs(PsiManager.getInstance(myProject), myDirectoryComponent.getText());
-                }
-                errorString[0] = RefactoringMessageUtil.checkCanCreateFile(myTargetDirectory, getXmlName() + ".xml");
+                ApplicationManager.getApplication().runWriteAction(() -> {
+                    if (myTargetDirectory == null) {
+                        myTargetDirectory = DirectoryUtil.mkdirs(PsiManager.getInstance(myProject), myDirectoryComponent.getText());
+                        errorString[0] = RefactoringMessageUtil.checkCanCreateFile(myTargetDirectory, getXmlName() + ".xml");
+                    }
+                });
             } catch (IncorrectOperationException e) {
                 errorString[0] = e.getMessage();
             }
         }, CodeInsightBundle.message("create.directory.command"), null);
-
         if (errorString[0] != null) {
             if (errorString[0].length() > 0) {
                 Messages.showMessageDialog(myProject, errorString[0], CommonBundle.getErrorTitle(), Messages.getErrorIcon());
