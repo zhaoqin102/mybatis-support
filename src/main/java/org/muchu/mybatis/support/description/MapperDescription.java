@@ -6,12 +6,9 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomFileDescription;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.muchu.mybatis.support.bean.Mapper;
 import org.muchu.mybatis.support.constant.MyBatisTag;
-import org.muchu.mybatis.support.model.Mapper;
 
-/**
- * @author Max
- */
 public class MapperDescription extends DomFileDescription<Mapper> {
 
     public MapperDescription() {

@@ -1,33 +1,26 @@
 <idea-plugin>
     <id>org.muchu.mybatis-support</id>
     <name>mybatis support</name>
-    <vendor email="dar_zeratul@outlook.com" url="https://github.com/zhaoqin102/mybatis-support">heber</vendor>
+    <vendor email="dark_zeratul@outlook.com" url="https://github.com/zhaoqin102/mybatis-support">heber</vendor>
 
     <description><![CDATA[
             Some basic mapper file navigation for mybatis
     ]]></description>
 
-    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.xml</depends>
+    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <dom.fileDescription implementation="org.muchu.mybatis.support.description.MapperDescription"/>
+        <dom.fileMetaData implementation="org.muchu.mybatis.support.description.MapperDescription"
+                          rootTagName="mapper"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML"
                                         implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
-        <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
-        <intentionAction>
-            <className>org.muchu.mybatis.support.intention.GenerateMapperAction</className>
-        </intentionAction>
-        <intentionAction>
-            <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
-        </intentionAction>
-<!--        <editorTypedHandler implementationClass="org.muchu.mybatis.support.typedHandler.MyTypedHandler"-->
-<!--                            id="mybatisTypedHandler"/>-->
-        <completion.contributor language="XML"
-                                implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
     </extensions>
 
     <actions>
+        <!-- Add your actions here -->
     </actions>
 </idea-plugin>

@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.9'
+    id 'org.jetbrains.intellij' version '0.4.15'
 }
 
 group 'org.muchu'
-version '1.4'
+version '0.1'
 
 sourceCompatibility = 1.8
 
@@ -13,18 +13,14 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 intellij {
-    version '2019.2.3'
-    plugins = ['java']
-    pluginName '10572-mybatis-support'
+    version '2019.3'
+    plugins 'java'
 }
-publishPlugin {
-}
-
 patchPluginXml {
     changeNotes """
-      fix some bug and support new version"""
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
 }

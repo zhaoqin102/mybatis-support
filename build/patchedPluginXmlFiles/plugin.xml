@@ -1,0 +1,22 @@
+<idea-plugin>
+  <version>0.1</version>
+  <change-notes>
+      Add change notes here.&lt;br&gt;
+      &lt;em&gt;most HTML tags may be used&lt;/em&gt;</change-notes>
+  <idea-version since-build="193.5233" until-build="193.*"/>
+  <id>org.muchu.mybatis-support</id>
+  <name>mybatis support</name>
+  <vendor email="dark_zeratul@outlook.com" url="https://github.com/zhaoqin102/mybatis-support">heber</vendor>
+  <description>
+            Some basic mapper file navigation for mybatis
+    </description>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.xml</depends>
+  <depends>com.intellij.java</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <dom.fileMetaData implementation="org.muchu.mybatis.support.description.MapperDescription" rootTagName="mapper"/>
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
+    <codeInsight.lineMarkerProvider language="XML" implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
+  </extensions>
+  <actions/>
+</idea-plugin>

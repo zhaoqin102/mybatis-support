@@ -1,8 +1,5 @@
 package org.muchu.mybatis.support.constant;
 
-/**
- * @author heber
- */
 public enum MyBatisTag {
 
     MAPPER("mapper");
@@ -16,5 +13,4 @@ public enum MyBatisTag {
     public String getValue() {
         return value;
     }
-
 }

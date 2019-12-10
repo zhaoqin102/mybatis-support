@@ -1,0 +1,37 @@
+<application>
+  <component name="WindowManager">
+    <frame x="219" y="33" width="1400" height="1022" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="WindowStateApplicationService">
+    <state x="743" y="204" key="FileChooserDialogImpl" timestamp="1575944921904">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="743" y="204" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1080" timestamp="1575944921904" />
+    <state x="1188" y="843" width="400" height="196" key="ProcessPopupWindow" timestamp="1575945630720">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1188" y="843" width="400" height="196" key="ProcessPopupWindow/1920.0.1920.1080/0.0.1920.1080" timestamp="1575945630720" />
+    <state x="455" y="75" key="SettingsEditor" timestamp="1575944854554">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="455" y="75" key="SettingsEditor/1920.0.1920.1080/0.0.1920.1080" timestamp="1575944854554" />
+    <state x="963" y="450" key="WELCOME_SCREEN" timestamp="1575944854570">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="963" y="450" key="WELCOME_SCREEN/1920.0.1920.1080/0.0.1920.1080" timestamp="1575944854570" />
+  </component>
+</application>
