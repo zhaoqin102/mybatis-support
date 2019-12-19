@@ -34,8 +34,6 @@ public class AddParamAnnotationAction extends BaseIntentionAction {
 
     @Override
     public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
-        System.out.println(editor);
-        System.out.println(file);
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             @Override
             public void run() {
