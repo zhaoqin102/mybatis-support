@@ -19,6 +19,8 @@
         <codeInsight.lineMarkerProvider language="XML"
                                         implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
         <annotator language="JAVA" implementationClass="org.muchu.mybatis.support.annotator.ParamAnnotator"/>
+        <completion.contributor language="XML"
+                                implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.AddParamAnnotationAction</className>
         </intentionAction>
