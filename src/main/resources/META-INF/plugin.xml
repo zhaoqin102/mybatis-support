@@ -18,9 +18,12 @@
                                         implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML"
                                         implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
+        <annotator language="JAVA" implementationClass="org.muchu.mybatis.support.annotator.ParamAnnotator"/>
+        <intentionAction>
+            <className>org.muchu.mybatis.support.intention.AddParamAnnotationAction</className>
+        </intentionAction>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
     </actions>
 </idea-plugin>
