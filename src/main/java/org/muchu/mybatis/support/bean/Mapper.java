@@ -9,6 +9,9 @@ public interface Mapper extends DomElement {
     @Attribute("namespace")
     GenericAttributeValue<String> getNameSpace();
 
+    @SubTagList("resultMap")
+    List<ResultMap> getResultMaps();
+
     @SubTagsList({"select", "insert", "update", "delete"})
     List<CommonAttribute> getCommonAttributes();
 

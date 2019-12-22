@@ -1,10 +1,4 @@
 package org.muchu.mybatis.support.bean;
 
-import com.intellij.util.xml.Attribute;
-import com.intellij.util.xml.GenericAttributeValue;
-
-public interface ResultMap {
-
-    @Attribute("resultMap")
-    GenericAttributeValue<String> getResultMap();
+public interface ResultMap extends Id {
 }

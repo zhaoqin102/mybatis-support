@@ -37,7 +37,6 @@ public class MyJavaUtil {
             return result;
         }
         CommonAttribute commonAttribute = (CommonAttribute) domElement;
-        System.out.println(commonAttribute.getResultType());
         PsiMethod[] psiMethods = psiClass.findMethodsByName(xmlAttribute.getValue(), false);
         for (PsiMethod psiMethod : psiMethods) {
             PsiType returnType = psiMethod.getReturnType();
