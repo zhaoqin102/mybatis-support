@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
 import com.intellij.util.xml.GenericAttributeValue;
-import org.muchu.mybatis.support.bean.CommonAttribute;
+import org.muchu.mybatis.support.bean.Statement;
 import org.muchu.mybatis.support.bean.Mapper;
 import org.muchu.mybatis.support.bean.Id;
 
@@ -31,7 +31,7 @@ public class MyXmlUtil {
                         resultList.add(nameSpace.getXmlTag());
                     } else if (element.getParent() instanceof PsiMethod) {
                         PsiMethod psiMethod = (PsiMethod) element.getParent();
-                        List<CommonAttribute> identifiableStatements = fileElement.getRootElement().getCommonAttributes();
+                        List<Statement> identifiableStatements = fileElement.getRootElement().getStatements();
                         if (identifiableStatements != null) {
                             for (Id identifiableStatement : identifiableStatements) {
                                 if (identifiableStatement.getId() != null) {

@@ -4,7 +4,9 @@ import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
@@ -13,6 +15,7 @@ import com.intellij.util.ProcessingContext;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
+import org.apache.batik.svggen.DOMTreeManager;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.bean.Mapper;
@@ -29,17 +32,17 @@ public class ResultMapCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-                        PsiElement position = parameters.getPosition();
-                        System.out.println(position.getClass());
                         if (!(parameters.getPosition().getParent() instanceof XmlAttributeValue)) {
                             return;
                         }
-                        XmlAttributeValue xmlAttributeValue = (XmlAttributeValue) parameters.getPosition().getParent();
-                        XmlAttribute xmlAttribute = (XmlAttribute) xmlAttributeValue.getParent();
-                        if (!"resultMap".equals(xmlAttribute.getName())) {
+                        XmlAttribute xmlAttribute = PsiTreeUtil.getParentOfType(parameters.getPosition(), XmlAttribute.class);
+                        if (xmlAttribute == null || !"resultMap".equals(xmlAttribute.getName())) {
                             return;
                         }
-                        XmlFile xmlFile = (XmlFile) xmlAttribute.getContainingFile();
+                        XmlFile xmlFile = PsiTreeUtil.getParentOfType(parameters.getPosition(), XmlFile.class);
+                        if (xmlFile == null) {
+                            return;
+                        }
                         DomManager domManager = DomManager.getDomManager(xmlAttribute.getProject());
                         DomFileElement<Mapper> mapperDomFileElement = domManager.getFileElement(xmlFile, Mapper.class);
                         if (mapperDomFileElement == null) {

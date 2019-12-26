@@ -7,7 +7,7 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
-import org.muchu.mybatis.support.bean.CommonAttribute;
+import org.muchu.mybatis.support.bean.Statement;
 import org.muchu.mybatis.support.bean.Mapper;
 import org.muchu.mybatis.support.constant.MyBatisTag;
 
@@ -33,10 +33,10 @@ public class MyJavaUtil {
         }
         DomManager manager = DomManager.getDomManager(xmlAttribute.getProject());
         DomElement domElement = manager.getDomElement(xmlAttribute.getParent());
-        if (!(domElement instanceof CommonAttribute)) {
+        if (!(domElement instanceof Statement)) {
             return result;
         }
-        CommonAttribute commonAttribute = (CommonAttribute) domElement;
+        Statement statement = (Statement) domElement;
         PsiMethod[] psiMethods = psiClass.findMethodsByName(xmlAttribute.getValue(), false);
         for (PsiMethod psiMethod : psiMethods) {
             PsiType returnType = psiMethod.getReturnType();

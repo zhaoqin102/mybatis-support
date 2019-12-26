@@ -1,4 +1,4 @@
 package org.muchu.mybatis.support.bean;
 
-public interface Delete extends CommonAttribute {
+public interface Delete extends Statement {
 }

@@ -13,7 +13,10 @@ public interface Mapper extends DomElement {
     List<ResultMap> getResultMaps();
 
     @SubTagsList({"select", "insert", "update", "delete"})
-    List<CommonAttribute> getCommonAttributes();
+    List<Statement> getStatements();
+
+    @SubTagList("sql")
+    List<Sql> getSql();
 
     List<Select> getSelects();
 
