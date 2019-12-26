@@ -16,7 +16,7 @@ public interface Mapper extends DomElement {
     List<Statement> getStatements();
 
     @SubTagList("sql")
-    List<Sql> getSql();
+    List<Sql> getSQL();
 
     List<Select> getSelects();
 

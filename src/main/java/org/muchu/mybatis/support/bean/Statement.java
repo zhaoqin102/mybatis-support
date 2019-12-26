@@ -3,6 +3,8 @@ package org.muchu.mybatis.support.bean;
 import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.GenericAttributeValue;
 
+import java.util.List;
+
 public interface Statement extends Id {
 
     @Attribute("parameterType")
@@ -16,4 +18,6 @@ public interface Statement extends Id {
 
     @Attribute("statementType")
     GenericAttributeValue<String> getStatementType();
+
+    List<Include> getIncludes();
 }

@@ -19,6 +19,7 @@
                                         implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML"
                                         implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
+        <lang.foldingBuilder language="XML" implementationClass="org.muchu.mybatis.support.folding.SQLFoldingBuilder"/>
         <annotator language="JAVA" implementationClass="org.muchu.mybatis.support.annotator.ParamAnnotator"/>
         <completion.contributor language="XML"
                                 implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
