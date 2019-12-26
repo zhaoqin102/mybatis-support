@@ -12,8 +12,7 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeUsageSchemaDescriptor schema="Mybatis"
-                                       implementationClass="org.muchu.mybatis.support.util.MybatisFileTypeFactory"/>
+        <fileIconProvider implementation="org.muchu.mybatis.support.config.MybatisIconProvider"/>
         <dom.fileMetaData implementation="org.muchu.mybatis.support.description.MapperDescription"
                           rootTagName="mapper"/>
         <codeInsight.lineMarkerProvider language="JAVA"
