@@ -3,10 +3,9 @@ package org.muchu.mybatis.support.config;
 import com.intellij.ide.FileIconProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.ui.IconManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.constant.MybatisIcon;
+import org.muchu.mybatis.support.icon.MybatisIcon;
 import org.muchu.mybatis.support.util.MybatisFileUtil;
 
 import javax.swing.*;

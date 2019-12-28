@@ -1,8 +1,7 @@
-package org.muchu.mybatis.support.constant;
+package org.muchu.mybatis.support.icon;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.ui.IconManager;
-import org.muchu.mybatis.support.config.MybatisIconProvider;
 
 import javax.swing.*;
 

@@ -12,7 +12,7 @@ import com.intellij.util.xml.DomManager;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.bean.Mapper;
 import org.muchu.mybatis.support.constant.MyBatisTag;
-import org.muchu.mybatis.support.constant.MybatisIcon;
+import org.muchu.mybatis.support.icon.MybatisIcon;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 
 import java.util.Collection;

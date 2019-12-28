@@ -9,7 +9,7 @@ import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.constant.MybatisIcon;
+import org.muchu.mybatis.support.icon.MybatisIcon;
 import org.muchu.mybatis.support.util.MyXmlUtil;
 import org.muchu.mybatis.support.util.PsiElementUtil;
 
