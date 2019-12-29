@@ -12,10 +12,11 @@ import org.muchu.mybatis.support.bean.Mapper;
 public class MybatisFileUtil {
 
     public static boolean isMybatisFile(VirtualFile file, Project project) {
-        if (project == null) {
+        if (project == null || !project.isOpen()) {
             return false;
         }
-        PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+        PsiManager psiManager = PsiManager.getInstance(project);
+        PsiFile psiFile = psiManager.findFile(file);
         if (!(psiFile instanceof XmlFile)) {
             return false;
         }

@@ -7,7 +7,10 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.FoldingGroup;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
@@ -30,36 +33,36 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
         if (!(root instanceof XmlFile)) {
             return FoldingDescriptor.EMPTY;
         }
+        XmlFile xmlFile = (XmlFile) root;
+        DomFileElement<Mapper> domFileElement = DomManager.getDomManager(root.getProject()).getFileElement(xmlFile, Mapper.class);
+        if (domFileElement == null) {
+            return FoldingDescriptor.EMPTY;
+        }
+        Mapper mapper = domFileElement.getRootElement();
         FoldingGroup foldingGroup = FoldingGroup.newGroup("mybatis");
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        XmlFile xmlFile = (XmlFile) root;
-        DomFileElement<Mapper> element = DomManager.getDomManager(root.getProject()).getFileElement(xmlFile, Mapper.class);
-        if (element != null) {
-            List<Statement> statements = element.getRootElement().getStatements();
-            for (Statement statement : statements) {
-                List<Include> includes = statement.getIncludes();
-                for (Include include : includes) {
-                    if (include.getRefId() == null || include.getXmlElement() == null || include.getXmlElement().getNode() == null) {
+        List<Statement> statements = mapper.getStatements();
+        for (Statement statement : statements) {
+            List<Include> includes = statement.getIncludes();
+            for (Include include : includes) {
+                if (include.getRefId() == null || include.getXmlElement() == null || include.getXmlElement().getNode() == null) {
+                    continue;
+                }
+                List<Sql> sqlList = mapper.getSQL();
+                for (Sql sql : sqlList) {
+                    if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
                         continue;
                     }
-                    List<Sql> sqlList = element.getRootElement().getSQL();
-                    for (Sql sql : sqlList) {
-                        if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
-                            continue;
-                        }
-                        if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
-                            descriptors.add(new FoldingDescriptor(include.getXmlElement().getNode(),
-                                    new TextRange(include.getXmlElement().getTextRange().getStartOffset() + 1,
-                                            include.getXmlElement().getTextRange().getEndOffset() - 1),
-                                    foldingGroup) {
-                                @Nullable
-                                @Override
-                                public String getPlaceholderText() {
-                                    return sql.getValue() == null ? "" : sql.getValue().replaceAll("\n", "\\n").replaceAll("\"", "\\\\\"");
-                                }
-                            });
-                            break;
-                        }
+                    if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
+                        descriptors.add(new FoldingDescriptor(include.getXmlElement().getNode(), include.getXmlElement().getTextRange(),
+                                foldingGroup) {
+                            @Nullable
+                            @Override
+                            public String getPlaceholderText() {
+                                return sql.getValue() == null ? "" : sql.getValue().replaceAll("\n", "\\n").replaceAll("\"", "\\\\\"");
+                            }
+                        });
+                        break;
                     }
                 }
             }
@@ -70,7 +73,33 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
     @Nullable
     @Override
     public String getPlaceholderText(@NotNull ASTNode node) {
-        return "...";
+        PsiElement psi = node.getPsi();
+        if (!(psi instanceof XmlTag)) {
+            return null;
+        }
+        XmlTag xmlTag = (XmlTag) psi;
+        DomElement domElement = DomManager.getDomManager(xmlTag.getProject()).getDomElement(xmlTag);
+        if (!(domElement instanceof Include)) {
+            return null;
+        }
+        Include include = (Include) domElement;
+        if (include.getRefId() == null || StringUtils.isBlank(include.getRefId().getStringValue())) {
+            return null;
+        }
+        Mapper mapper = include.getParentOfType(Mapper.class, false);
+        if (mapper == null) {
+            return null;
+        }
+        List<Sql> sqlList = mapper.getSQL();
+        for (Sql sql : sqlList) {
+            if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
+                continue;
+            }
+            if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
+                return sql.getValue() == null ? "" : sql.getValue().replaceAll("\n", "\\n").replaceAll("\"", "\\\\\"");
+            }
+        }
+        return null;
     }
 
     @Override

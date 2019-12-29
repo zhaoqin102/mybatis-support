@@ -12,16 +12,18 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Mybatis file" implementationClass="org.muchu.mybatis.support.language.MybatisFileType"
-                  fileNames="mybatis.file"/>
+        <!-- TODO TypedHandlerDelegate -->
+        <fileIconProvider implementation="org.muchu.mybatis.support.config.MybatisIconProvider"/>
         <dom.fileMetaData implementation="org.muchu.mybatis.support.description.MapperDescription"
                           rootTagName="mapper"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML"
                                         implementationClass="org.muchu.mybatis.support.provider.JavaLineMarkerProvider"/>
-        <lang.foldingBuilder language="XML" implementationClass="org.muchu.mybatis.support.folding.SQLFoldingBuilder"/>
+        <lang.foldingBuilder language="XML" order="first"
+                             implementationClass="org.muchu.mybatis.support.folding.SQLFoldingBuilder"/>
         <annotator language="JAVA" implementationClass="org.muchu.mybatis.support.annotator.ParamAnnotator"/>
+        <standardResourceProvider implementation="org.muchu.mybatis.support.dom.MyBatisSchemaProvider"/>
         <completion.contributor language="XML"
                                 implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
         <intentionAction>
