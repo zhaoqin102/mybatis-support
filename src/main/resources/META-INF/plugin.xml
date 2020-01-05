@@ -28,7 +28,14 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.AddParamAnnotationAction</className>
         </intentionAction>
-        <typedHandler implementation="org.muchu.mybatis.support.editorActions.XmlResultMapTypedHandler" id="xmlResultMap"/>
+        <intentionAction>
+            <className>org.muchu.mybatis.support.intention.GenerateMapperAction</className>
+        </intentionAction>
+        <intentionAction>
+            <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
+        </intentionAction>
+        <typedHandler implementation="org.muchu.mybatis.support.editorActions.XmlResultMapTypedHandler"
+                      id="xmlResultMap"/>
     </extensions>
 
     <actions>
