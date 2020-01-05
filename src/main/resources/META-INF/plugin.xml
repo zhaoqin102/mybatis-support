@@ -12,7 +12,6 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- TODO TypedHandlerDelegate -->
         <fileIconProvider implementation="org.muchu.mybatis.support.config.MybatisIconProvider"/>
         <dom.fileMetaData implementation="org.muchu.mybatis.support.description.MapperDescription"
                           rootTagName="mapper"/>
@@ -29,6 +28,7 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.AddParamAnnotationAction</className>
         </intentionAction>
+        <typedHandler implementation="org.muchu.mybatis.support.editorActions.XmlResultMapTypedHandler" id="xmlResultMap"/>
     </extensions>
 
     <actions>
