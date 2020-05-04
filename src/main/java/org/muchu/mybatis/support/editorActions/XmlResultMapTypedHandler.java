@@ -15,7 +15,6 @@ public class XmlResultMapTypedHandler extends TypedHandlerDelegate {
     public Result beforeCharTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file, @NotNull FileType fileType) {
         if (!(file instanceof XmlFile)) return Result.CONTINUE;
         if (c == '.') {
-            System.out.println("type .");
         }
         return super.beforeCharTyped(c, project, editor, file, fileType);
     }

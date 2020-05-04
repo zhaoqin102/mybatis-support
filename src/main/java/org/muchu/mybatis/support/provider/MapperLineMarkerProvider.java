@@ -7,10 +7,10 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.icon.MybatisIcon;
-import org.muchu.mybatis.support.util.MyXmlUtil;
+import org.muchu.mybatis.support.service.FindRelatedItemService;
+import org.muchu.mybatis.support.service.factory.MyFindRelatedItemServiceFactory;
 import org.muchu.mybatis.support.util.PsiElementUtil;
 
 import java.util.Collection;
@@ -25,7 +25,8 @@ public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
         if (!support) {
             return;
         }
-        List<XmlTag> resultList = MyXmlUtil.process(element);
+        FindRelatedItemService findRelatedItemService = MyFindRelatedItemServiceFactory.getFindRelatedItemService(element);
+        List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
         if (resultList.size() > 0) {
             NavigationGutterIconBuilder<PsiElement> builder =
                     NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML).

@@ -16,8 +16,8 @@ dependencies {
 }
 
 intellij {
-    version '2019.3'
-    plugins = ['java','PsiViewer:193-SNAPSHOT']
+    version '2020.1'
+    plugins = ['java', 'PsiViewer:201.6251.22-EAP-SNAPSHOT.3']
 }
 patchPluginXml {
     changeNotes """

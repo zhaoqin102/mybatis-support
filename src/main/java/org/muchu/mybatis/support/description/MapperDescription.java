@@ -1,24 +1,27 @@
 package org.muchu.mybatis.support.description;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomFileDescription;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.muchu.mybatis.support.bean.Mapper;
-import org.muchu.mybatis.support.constant.MyBatisTag;
+import org.muchu.mybatis.support.constant.MyBatisDoctype;
+import org.muchu.mybatis.support.icon.MybatisIcon;
+
+import javax.swing.*;
 
 public class MapperDescription extends DomFileDescription<Mapper> {
 
     public MapperDescription() {
-        super(Mapper.class, MyBatisTag.MAPPER.getValue());
+        super(Mapper.class, "mapper");
+    }
+
+    @Nullable
+    @Override
+    public Icon getFileIcon(int flags) {
+        return MybatisIcon.MYBATIS_ICON;
     }
 
     @Override
-    public boolean isMyFile(@NotNull XmlFile file, @Nullable Module module) {
-        XmlTag rootTag = file.getRootTag();
-        return rootTag != null && getRootTagName().equals(rootTag.getName());
+    protected void initializeFileDescription() {
+        registerNamespacePolicy("mybatis", MyBatisDoctype.SYSTEM_ID);
     }
-
 }

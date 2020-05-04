@@ -12,9 +12,7 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileIconProvider implementation="org.muchu.mybatis.support.config.MybatisIconProvider"/>
-        <dom.fileMetaData implementation="org.muchu.mybatis.support.description.MapperDescription"
-                          rootTagName="mapper"/>
+        <dom.fileDescription implementation="org.muchu.mybatis.support.description.MapperDescription"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="org.muchu.mybatis.support.provider.MapperLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML"
@@ -25,6 +23,8 @@
         <standardResourceProvider implementation="org.muchu.mybatis.support.dom.MyBatisSchemaProvider"/>
         <completion.contributor language="XML"
                                 implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
+        <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
+        <definitionsSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.AddParamAnnotationAction</className>
         </intentionAction>
@@ -34,8 +34,10 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
         </intentionAction>
-        <typedHandler implementation="org.muchu.mybatis.support.editorActions.XmlResultMapTypedHandler"
-                      id="xmlResultMap"/>
+        <!--        <typedHandler implementation="org.muchu.mybatis.support.editorActions.XmlResultMapTypedHandler"-->
+        <!--                      id="xmlResultMap"/>-->
+        <applicationService serviceInterface="org.muchu.mybatis.support.service.MyDomService"
+                            serviceImplementation="org.muchu.mybatis.support.service.impl.MyDomServiceImpl"/>
     </extensions>
 
     <actions>
