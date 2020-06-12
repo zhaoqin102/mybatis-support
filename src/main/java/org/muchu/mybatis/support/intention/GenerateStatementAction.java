@@ -109,9 +109,9 @@ public class GenerateStatementAction implements IntentionAction {
         XmlTag childTag = myBatisSQLTag.createMyBatisTag(parent, psiMethod);
         WriteCommandAction.runWriteCommandAction(project, "create statement", null, () -> {
             parent.add(childTag);
+            CodeStyleManager formatter = CodeStyleManager.getInstance(project);
+            formatter.reformat(parent.getContainingFile());
         }, parent.getContainingFile());
-        CodeStyleManager formatter = CodeStyleManager.getInstance(project);
-        formatter.reformat(parent.getContainingFile());
     }
 
     @Override

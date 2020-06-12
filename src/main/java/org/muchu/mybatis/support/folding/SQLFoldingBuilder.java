@@ -5,9 +5,7 @@ import com.intellij.lang.folding.FoldingBuilderEx;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.FoldingGroup;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
@@ -54,14 +52,16 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
                         continue;
                     }
                     if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
-                        descriptors.add(new FoldingDescriptor(include.getXmlElement().getNode(), include.getXmlElement().getTextRange(),
-                                foldingGroup) {
-                            @Nullable
-                            @Override
-                            public String getPlaceholderText() {
-                                return sql.getValue() == null ? "" : sql.getValue().replaceAll("\n", "\\n").replaceAll("\"", "\\\\\"");
-                            }
-                        });
+                        FoldingDescriptor foldingDescriptor = new FoldingDescriptor(include.getXmlElement().getNode(), include.getXmlElement().getTextRange());
+                        String retTxt = "...";
+                        if (StringUtils.isNotBlank(sql.getValue())) {
+                            retTxt = sql.getValue().replace("\n", "\\\\n");
+                        }
+                        if (retTxt.length() > include.getXmlElement().getTextLength()) {
+                            retTxt = retTxt.substring(0, include.getXmlElement().getTextLength()) + "...";
+                        }
+                        foldingDescriptor.setPlaceholderText(retTxt);
+                        descriptors.add(foldingDescriptor);
                         break;
                     }
                 }
@@ -96,7 +96,7 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
                 continue;
             }
             if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
-                return sql.getValue() == null ? "" : sql.getValue().replaceAll("\n", "\\n").replaceAll("\"", "\\\\\"");
+                return sql.getValue() == null ? "..." : sql.getValue();
             }
         }
         return null;
