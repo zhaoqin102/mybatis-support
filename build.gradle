@@ -1,27 +1,30 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.15'
+    id 'org.jetbrains.intellij' version '0.4.21'
 }
 
 group 'org.muchu'
-version '1.8.1'
-
-sourceCompatibility = 1.8
+version '1.8.2'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {
 }
 
 intellij {
-    version '2020.1'
+    version '2020.2'
     plugins = ['java']
 }
 patchPluginXml {
     changeNotes """
-      Fixed generate statement error <br> """
+      support new version  <br> """
 }
 
 publishPlugin {

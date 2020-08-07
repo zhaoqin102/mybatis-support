@@ -4,7 +4,6 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiIdentifier;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.icon.MybatisIcon;
 import org.muchu.mybatis.support.service.FindRelatedItemService;
@@ -16,8 +15,7 @@ import java.util.List;
 public class JavaLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element,
-                                            @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
+    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         FindRelatedItemService findRelatedItemService = MyFindRelatedItemServiceFactory.getFindRelatedItemService(element);
         List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
         if (resultList.size() > 0) {
