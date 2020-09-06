@@ -6,7 +6,8 @@ mybatis插件
 ## Thanks for free JetBrains Open Source license
 
 <a href="https://www.jetbrains.com/?from=mybatissupport" target="_blank">
-![alt text](https://github.com/zhaoqin102/mybatis-support/raw/master/jetbrains.png?raw=true "Optional Title")
+    <img src="/jetbrains.png" height="200" alt="jetbrains logo"/>
+</a>
 
 ### todo list
 
