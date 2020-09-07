@@ -98,10 +98,10 @@ type CDATA #REQUIRED
 type CDATA #REQUIRED
 >
 
-<!ELEMENT mappers (myBatisRoot*,package*)>
+<!ELEMENT mappers (mapper*,package*)>
 
-<!ELEMENT myBatisRoot EMPTY>
-<!ATTLIST myBatisRoot
+<!ELEMENT mapper EMPTY>
+<!ATTLIST mapper
 resource CDATA #IMPLIED
 url CDATA #IMPLIED
 class CDATA #IMPLIED

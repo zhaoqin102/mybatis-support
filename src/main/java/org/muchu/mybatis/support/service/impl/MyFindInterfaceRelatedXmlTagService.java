@@ -5,7 +5,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.xml.GenericAttributeValue;
-import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.Mapper;
 import org.muchu.mybatis.support.service.MyDomService;
 
 import java.util.ArrayList;
@@ -32,9 +32,9 @@ public class MyFindInterfaceRelatedXmlTagService extends AbstractFindRelatedItem
     public List<PsiElement> findRelatedItem(PsiElement psiElement) {
         List<PsiElement> resultList = new ArrayList<>();
         PsiClass psiClass = (PsiClass) psiElement.getParent();
-        MyBatisRoot myBatisRoot = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiElement.getProject()));
-        if (myBatisRoot != null) {
-            GenericAttributeValue<String> nameSpace = myBatisRoot.getNameSpace();
+        Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiElement.getProject()));
+        if (mapper != null) {
+            GenericAttributeValue<String> nameSpace = mapper.getNameSpace();
             if (Objects.equals(nameSpace.getValue(), psiClass.getQualifiedName())) {
                 resultList.add(nameSpace.getXmlElement());
             }

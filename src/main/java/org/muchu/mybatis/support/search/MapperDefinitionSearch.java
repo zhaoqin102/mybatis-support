@@ -7,7 +7,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.Mapper;
 import org.muchu.mybatis.support.service.MyDomService;
 
 public class MapperDefinitionSearch extends QueryExecutorBase<XmlElement, PsiElement> {
@@ -22,9 +22,9 @@ public class MapperDefinitionSearch extends QueryExecutorBase<XmlElement, PsiEle
             return;
         }
         PsiClass psiClass = (PsiClass) psiElement;
-        MyBatisRoot myBatisRoot = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiClass.getProject()));
-        if (myBatisRoot != null) {
-            consumer.process(myBatisRoot.getXmlElement());
+        Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiClass.getProject()));
+        if (mapper != null) {
+            consumer.process(mapper.getXmlElement());
         }
     }
 

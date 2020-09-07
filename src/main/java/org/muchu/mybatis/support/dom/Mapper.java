@@ -1,15 +1,14 @@
 package org.muchu.mybatis.support.dom;
 
 import com.intellij.util.xml.*;
-import org.muchu.mybatis.support.dom.MyBatisDomConstants;
 import org.muchu.mybatis.support.dom.model.*;
 
 import java.util.List;
 
 @Namespace(MyBatisDomConstants.MYBATIS_NAMESPACE_KEY)
-public interface MyBatisRoot extends DomElement {
+public interface Mapper extends DomElement {
 
-    String TAG_NAME = "mybatis";
+    String TAG_NAME = "mapper";
 
     @Attribute("namespace")
     GenericAttributeValue<String> getNameSpace();

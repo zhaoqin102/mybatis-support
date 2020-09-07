@@ -14,7 +14,7 @@ import com.intellij.util.xml.DomService;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.Mapper;
 import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.service.MyDomService;
 
@@ -24,18 +24,18 @@ import java.util.List;
 public class MyDomServiceImpl implements MyDomService {
 
     @Override
-    public MyBatisRoot getMapper(@NotNull PsiClass psiClass, @Nullable GlobalSearchScope scope) {
+    public Mapper getMapper(@NotNull PsiClass psiClass, @Nullable GlobalSearchScope scope) {
         if (!psiClass.isInterface()) {
             return null;
         }
         Project project = psiClass.getProject();
-        Collection<VirtualFile> domFileCandidates = DomService.getInstance().getDomFileCandidates(MyBatisRoot.class,
+        Collection<VirtualFile> domFileCandidates = DomService.getInstance().getDomFileCandidates(Mapper.class,
                 psiClass.getProject(), scope != null ? scope : GlobalSearchScope.allScope(project));
         for (VirtualFile file : domFileCandidates) {
             final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
             if (psiFile instanceof XmlFile) {
-                final DomFileElement<MyBatisRoot> element = DomManager.getDomManager(project)
-                        .getFileElement((XmlFile) psiFile, MyBatisRoot.class);
+                final DomFileElement<Mapper> element = DomManager.getDomManager(project)
+                        .getFileElement((XmlFile) psiFile, Mapper.class);
                 if (element != null && StringUtils.equals(psiClass.getQualifiedName(), element.getRootElement().getNameSpace().getValue())) {
                     return element.getRootElement();
                 }
@@ -51,9 +51,9 @@ public class MyDomServiceImpl implements MyDomService {
         if (psiClass == null) {
             return null;
         }
-        MyBatisRoot myBatisRoot = getMapper(psiClass, scope);
-        if (myBatisRoot != null) {
-            List<Statement> statements = myBatisRoot.getStatements();
+        Mapper mapper = getMapper(psiClass, scope);
+        if (mapper != null) {
+            List<Statement> statements = mapper.getStatements();
             for (Statement statement : statements) {
                 if (StringUtils.equals(psiMethod.getName(), statement.getId().getValue())) {
                     //TODO check return type

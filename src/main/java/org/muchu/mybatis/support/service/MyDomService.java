@@ -6,7 +6,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.Mapper;
 import org.muchu.mybatis.support.dom.model.Statement;
 
 public interface MyDomService {
@@ -15,8 +15,8 @@ public interface MyDomService {
     }
 
     @Nullable
-    MyBatisRoot getMapper(@NotNull PsiClass psiClass,
-                          @Nullable GlobalSearchScope scope);
+    Mapper getMapper(@NotNull PsiClass psiClass,
+                     @Nullable GlobalSearchScope scope);
 
     @Nullable
     Statement getStatement(@NotNull PsiMethod psiMethod,

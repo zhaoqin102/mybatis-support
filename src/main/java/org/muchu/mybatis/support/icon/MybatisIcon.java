@@ -10,7 +10,7 @@ import javax.swing.*;
  */
 public class MybatisIcon {
 
-    private static IconManager iconManager = IconManager.getInstance();
+    private static final IconManager iconManager = IconManager.getInstance();
 
     public static final Icon NAVIGATE_TO_XML = AllIcons.Gutter.ImplementedMethod;
 
