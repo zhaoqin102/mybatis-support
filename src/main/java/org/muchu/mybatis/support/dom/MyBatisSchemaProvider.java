@@ -8,6 +8,6 @@ public class MyBatisSchemaProvider implements StandardResourceProvider {
 
     @Override
     public void registerResources(ResourceRegistrar registrar) {
-        registrar.addStdResource(MyBatisDoctype.SYSTEM_ID, "/schemas/mybatis-3-mapper.dtd", getClass());
+        registrar.addStdResource(MyBatisDoctype.MYBATIS_DTD, "/schemas/mybatis-3-mapper.dtd", getClass());
     }
 }

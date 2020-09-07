@@ -15,8 +15,8 @@ import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.bean.Mapper;
-import org.muchu.mybatis.support.bean.ResultMap;
+import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.model.ResultMap;
 
 import java.util.List;
 
@@ -41,22 +41,22 @@ public class ResultMapCompletionContributor extends CompletionContributor {
                             return;
                         }
                         DomManager domManager = DomManager.getDomManager(xmlAttribute.getProject());
-                        DomFileElement<Mapper> mapperDomFileElement = domManager.getFileElement(xmlFile, Mapper.class);
+                        DomFileElement<MyBatisRoot> mapperDomFileElement = domManager.getFileElement(xmlFile, MyBatisRoot.class);
                         if (mapperDomFileElement == null) {
                             return;
                         }
-                        List<DomFileElement<Mapper>> fileElements = DomService.getInstance().getFileElements(Mapper.class, parameters.getPosition().getProject(), GlobalSearchScope.allScope(parameters.getPosition().getProject()));
-                        for (DomFileElement<Mapper> fileElement : fileElements) {
-                            Mapper mapper = fileElement.getRootElement();
-                            List<ResultMap> resultMaps = mapper.getResultMaps();
+                        List<DomFileElement<MyBatisRoot>> fileElements = DomService.getInstance().getFileElements(MyBatisRoot.class, parameters.getPosition().getProject(), GlobalSearchScope.allScope(parameters.getPosition().getProject()));
+                        for (DomFileElement<MyBatisRoot> fileElement : fileElements) {
+                            MyBatisRoot myBatisRoot = fileElement.getRootElement();
+                            List<ResultMap> resultMaps = myBatisRoot.getResultMaps();
                             for (ResultMap resultMap : resultMaps) {
                                 if (resultMap.getId() == null || resultMap.getId().getStringValue() == null) {
                                     continue;
                                 }
-                                if (StringUtils.equals(mapper.getNameSpace().getStringValue(), mapperDomFileElement.getRootElement().getNameSpace().getStringValue())) {
+                                if (StringUtils.equals(myBatisRoot.getNameSpace().getStringValue(), mapperDomFileElement.getRootElement().getNameSpace().getStringValue())) {
                                     resultSet.addElement(LookupElementBuilder.create(resultMap.getId().getStringValue()));
                                 } else {
-                                    resultSet.addElement(LookupElementBuilder.create(mapper.getNameSpace() + "." + resultMap.getId().getStringValue()));
+                                    resultSet.addElement(LookupElementBuilder.create(myBatisRoot.getNameSpace() + "." + resultMap.getId().getStringValue()));
                                 }
                             }
                         }

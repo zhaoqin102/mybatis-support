@@ -9,7 +9,7 @@ import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
-import org.muchu.mybatis.support.bean.Mapper;
+import org.muchu.mybatis.support.dom.MyBatisRoot;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class MyFindMapperRelatedInterfaceService extends AbstractFindRelatedItem
             return false;
         }
         DomElement domElement = DomManager.getDomManager(xmlToken.getProject()).getDomElement((XmlTag) xmlToken.getParent());
-        if (!(domElement instanceof Mapper)) {
+        if (!(domElement instanceof MyBatisRoot)) {
             return false;
         }
         return true;
@@ -47,8 +47,8 @@ public class MyFindMapperRelatedInterfaceService extends AbstractFindRelatedItem
         XmlToken xmlToken = (XmlToken) psiElement;
         Project project = xmlToken.getProject();
         DomManager domManager = DomManager.getDomManager(project);
-        Mapper mapper = (Mapper) domManager.getDomElement((XmlTag) xmlToken.getParent());
-        PsiClass psiClass = MyJavaUtil.findClass(mapper, project);
+        MyBatisRoot myBatisRoot = (MyBatisRoot) domManager.getDomElement((XmlTag) xmlToken.getParent());
+        PsiClass psiClass = MyJavaUtil.findClass(myBatisRoot, project);
         if (psiClass == null) {
             return result;
         }

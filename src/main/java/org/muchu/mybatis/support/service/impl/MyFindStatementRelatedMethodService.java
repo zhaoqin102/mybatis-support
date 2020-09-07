@@ -10,8 +10,8 @@ import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
-import org.muchu.mybatis.support.bean.Mapper;
-import org.muchu.mybatis.support.bean.Statement;
+import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.constant.MyBatisSQLTag;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 
@@ -57,8 +57,8 @@ public class MyFindStatementRelatedMethodService extends AbstractFindRelatedItem
         if (StringUtils.isBlank(valueOfId)) {
             return result;
         }
-        Mapper mapper = (Mapper) statement.getParent();
-        PsiClass psiClass = MyJavaUtil.findClass(mapper, project);
+        MyBatisRoot myBatisRoot = (MyBatisRoot) statement.getParent();
+        PsiClass psiClass = MyJavaUtil.findClass(myBatisRoot, project);
         if (psiClass == null) {
             return result;
         }

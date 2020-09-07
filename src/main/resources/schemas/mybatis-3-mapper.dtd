@@ -17,8 +17,8 @@
 
 -->
 
-<!ELEMENT mapper (cache-ref | cache | resultMap* | parameterMap* | sql* | insert* | update* | delete* | select* )+>
-<!ATTLIST mapper
+<!ELEMENT myBatisRoot (cache-ref | cache | resultMap* | parameterMap* | sql* | insert* | update* | delete* | select* )+>
+<!ATTLIST myBatisRoot
 xmlns:fo CDATA #IMPLIED
 namespace CDATA #IMPLIED
 >

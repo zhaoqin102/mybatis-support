@@ -14,10 +14,10 @@ import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.bean.Include;
-import org.muchu.mybatis.support.bean.Mapper;
-import org.muchu.mybatis.support.bean.Sql;
-import org.muchu.mybatis.support.bean.Statement;
+import org.muchu.mybatis.support.dom.model.Include;
+import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.model.Sql;
+import org.muchu.mybatis.support.dom.model.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,21 +32,21 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
             return FoldingDescriptor.EMPTY;
         }
         XmlFile xmlFile = (XmlFile) root;
-        DomFileElement<Mapper> domFileElement = DomManager.getDomManager(root.getProject()).getFileElement(xmlFile, Mapper.class);
+        DomFileElement<MyBatisRoot> domFileElement = DomManager.getDomManager(root.getProject()).getFileElement(xmlFile, MyBatisRoot.class);
         if (domFileElement == null) {
             return FoldingDescriptor.EMPTY;
         }
-        Mapper mapper = domFileElement.getRootElement();
+        MyBatisRoot myBatisRoot = domFileElement.getRootElement();
         FoldingGroup foldingGroup = FoldingGroup.newGroup("mybatis");
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        List<Statement> statements = mapper.getStatements();
+        List<Statement> statements = myBatisRoot.getStatements();
         for (Statement statement : statements) {
             List<Include> includes = statement.getIncludes();
             for (Include include : includes) {
                 if (include.getRefId() == null || include.getXmlElement() == null || include.getXmlElement().getNode() == null) {
                     continue;
                 }
-                List<Sql> sqlList = mapper.getSQL();
+                List<Sql> sqlList = myBatisRoot.getSQL();
                 for (Sql sql : sqlList) {
                     if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
                         continue;
@@ -86,11 +86,11 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
         if (include.getRefId() == null || StringUtils.isBlank(include.getRefId().getStringValue())) {
             return null;
         }
-        Mapper mapper = include.getParentOfType(Mapper.class, false);
-        if (mapper == null) {
+        MyBatisRoot myBatisRoot = include.getParentOfType(MyBatisRoot.class, false);
+        if (myBatisRoot == null) {
             return null;
         }
-        List<Sql> sqlList = mapper.getSQL();
+        List<Sql> sqlList = myBatisRoot.getSQL();
         for (Sql sql : sqlList) {
             if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
                 continue;

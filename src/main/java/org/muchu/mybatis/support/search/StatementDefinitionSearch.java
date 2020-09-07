@@ -7,7 +7,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.bean.Statement;
+import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.service.MyDomService;
 
 public class StatementDefinitionSearch extends QueryExecutorBase<XmlElement, PsiElement> {

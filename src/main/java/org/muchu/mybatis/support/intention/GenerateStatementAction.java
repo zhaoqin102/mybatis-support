@@ -19,8 +19,8 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.bean.Mapper;
-import org.muchu.mybatis.support.bean.Statement;
+import org.muchu.mybatis.support.dom.MyBatisRoot;
+import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.constant.MyBatisSQLTag;
 import org.muchu.mybatis.support.service.MyDomService;
 
@@ -78,8 +78,8 @@ public class GenerateStatementAction implements IntentionAction {
         if (psiClass == null) {
             return;
         }
-        Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
-        if (mapper == null) {
+        MyBatisRoot myBatisRoot = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
+        if (myBatisRoot == null) {
             HintManager.getInstance().showErrorHint(editor, "Please create mapper");
             return;
         }
@@ -97,7 +97,7 @@ public class GenerateStatementAction implements IntentionAction {
                 @Override
                 public PopupStep onChosen(MyBatisSQLTag selectedValue, boolean finalChoice) {
                     PsiMethod psiMethod = (PsiMethod) context;
-                    generateStatement(selectedValue, psiMethod, mapper.getXmlTag(), project);
+                    generateStatement(selectedValue, psiMethod, myBatisRoot.getXmlTag(), project);
                     return super.onChosen(selectedValue, finalChoice);
                 }
             });

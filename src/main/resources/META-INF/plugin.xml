@@ -4,11 +4,9 @@
     <vendor email="dark_zeratul@outlook.com" url="https://github.com/zhaoqin102/mybatis-support">heber</vendor>
 
     <description><![CDATA[
-            Some basic mapper file navigation for mybatis
+            Some basic myBatisRoot file navigation for mybatis
     ]]></description>
 
-    <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.xml</depends>
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
