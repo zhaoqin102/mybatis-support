@@ -8,10 +8,9 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.DomFileIndex;
 import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.DomService;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,9 +29,9 @@ public class MyDomServiceImpl implements MyDomService {
             return null;
         }
         Project project = psiClass.getProject();
-        final Collection<VirtualFile> list = FileBasedIndex.getInstance().getContainingFiles(DomFileIndex.NAME,
-                MyBatisRoot.class.getName(), scope != null ? scope : GlobalSearchScope.allScope(project));
-        for (VirtualFile file : list) {
+        Collection<VirtualFile> domFileCandidates = DomService.getInstance().getDomFileCandidates(MyBatisRoot.class,
+                psiClass.getProject(), scope != null ? scope : GlobalSearchScope.allScope(project));
+        for (VirtualFile file : domFileCandidates) {
             final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
             if (psiFile instanceof XmlFile) {
                 final DomFileElement<MyBatisRoot> element = DomManager.getDomManager(project)
