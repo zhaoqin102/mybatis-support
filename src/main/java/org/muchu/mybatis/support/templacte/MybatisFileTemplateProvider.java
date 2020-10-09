@@ -23,29 +23,6 @@ public class MybatisFileTemplateProvider implements FileTemplateGroupDescriptorF
     }
 
 
-    @Nullable
-    public static PsiElement createFromTemplate(@NotNull Project project,
-                                                @NotNull VirtualFile rootDir,
-                                                @NotNull String templateName,
-                                                @NotNull String fileName,
-                                                @NotNull Properties properties) throws Exception {
-        rootDir.refresh(false, false);
-        PsiDirectory directory = PsiManager.getInstance(project).findDirectory(rootDir);
-        if (directory != null) {
-            return createFromTemplate(templateName, fileName, directory, properties);
-        }
-        return null;
-    }
-
-
-    @Nullable
-    public static PsiElement createFromTemplate(@NotNull Project project,
-                                                @NotNull VirtualFile rootDir,
-                                                @NotNull String templateName,
-                                                @NotNull String fileName) throws Exception {
-        return createFromTemplate(project, rootDir, templateName, fileName, FileTemplateManager.getInstance(project).getDefaultProperties());
-    }
-
     public static PsiElement createFromTemplate(String templateName, String fileName, @NotNull PsiDirectory directory, Properties properties)
             throws Exception {
         FileTemplateManager manager = FileTemplateManager.getInstance(directory.getProject());
@@ -53,15 +30,4 @@ public class MybatisFileTemplateProvider implements FileTemplateGroupDescriptorF
         return FileTemplateUtil.createFromTemplate(template, fileName, properties, directory);
     }
 
-    public static PsiElement createFromTemplate(String templateName, String fileName, @NotNull PsiDirectory directory) throws Exception {
-        return createFromTemplate(templateName, fileName, directory, FileTemplateManager.getInstance(directory.getProject()).getDefaultProperties());
-    }
-
-    @NotNull
-    public static String getFileNameByNewElementName(@NotNull String name) {
-        if (!FileUtilRt.extensionEquals(name, "xml")) {
-            name += ".xml";
-        }
-        return name;
-    }
 }
