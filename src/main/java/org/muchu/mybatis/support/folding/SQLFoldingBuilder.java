@@ -14,8 +14,8 @@ import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.dom.Mapper;
 import org.muchu.mybatis.support.dom.model.Include;
+import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.Sql;
 import org.muchu.mybatis.support.dom.model.Statement;
 
@@ -43,15 +43,15 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
         for (Statement statement : statements) {
             List<Include> includes = statement.getIncludes();
             for (Include include : includes) {
-                if (include.getRefId() == null || include.getXmlElement() == null || include.getXmlElement().getNode() == null) {
+                if (include.getRefid() == null || include.getXmlElement() == null || include.getXmlElement().getNode() == null) {
                     continue;
                 }
-                List<Sql> sqlList = mapper.getSQL();
+                List<Sql> sqlList = mapper.getSqls();
                 for (Sql sql : sqlList) {
                     if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
                         continue;
                     }
-                    if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
+                    if (StringUtils.equals(sql.getId().getStringValue(), include.getRefid().getStringValue())) {
                         FoldingDescriptor foldingDescriptor = new FoldingDescriptor(include.getXmlElement().getNode(), include.getXmlElement().getTextRange());
                         String retTxt = "...";
                         if (StringUtils.isNotBlank(sql.getValue())) {
@@ -83,19 +83,19 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
             return null;
         }
         Include include = (Include) domElement;
-        if (include.getRefId() == null || StringUtils.isBlank(include.getRefId().getStringValue())) {
+        if (include.getRefid() == null || StringUtils.isBlank(include.getRefid().getStringValue())) {
             return null;
         }
         Mapper mapper = include.getParentOfType(Mapper.class, false);
         if (mapper == null) {
             return null;
         }
-        List<Sql> sqlList = mapper.getSQL();
+        List<Sql> sqlList = mapper.getSqls();
         for (Sql sql : sqlList) {
             if (sql.getId() == null || StringUtils.isBlank(sql.getId().getStringValue())) {
                 continue;
             }
-            if (StringUtils.equals(sql.getId().getStringValue(), include.getRefId().getStringValue())) {
+            if (StringUtils.equals(sql.getId().getStringValue(), include.getRefid().getStringValue())) {
                 return sql.getValue() == null ? "..." : sql.getValue();
             }
         }

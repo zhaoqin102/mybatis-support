@@ -15,7 +15,7 @@ import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.dom.Mapper;
+import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.ResultMap;
 
 import java.util.List;
@@ -53,10 +53,10 @@ public class ResultMapCompletionContributor extends CompletionContributor {
                                 if (resultMap.getId() == null || resultMap.getId().getStringValue() == null) {
                                     continue;
                                 }
-                                if (StringUtils.equals(mapper.getNameSpace().getStringValue(), mapperDomFileElement.getRootElement().getNameSpace().getStringValue())) {
+                                if (StringUtils.equals(mapper.getNamespace().getStringValue(), mapperDomFileElement.getRootElement().getNamespace().getStringValue())) {
                                     resultSet.addElement(LookupElementBuilder.create(resultMap.getId().getStringValue()));
                                 } else {
-                                    resultSet.addElement(LookupElementBuilder.create(mapper.getNameSpace() + "." + resultMap.getId().getStringValue()));
+                                    resultSet.addElement(LookupElementBuilder.create(mapper.getNamespace() + "." + resultMap.getId().getStringValue()));
                                 }
                             }
                         }

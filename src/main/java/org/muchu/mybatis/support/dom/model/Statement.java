@@ -1,23 +1,48 @@
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.Attribute;
+import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.Required;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+public interface Statement extends DomElement {
 
-public interface Statement extends MybatisId {
+    /**
+     * Returns the value of the simple content.
+     *
+     * @return the value of the simple content.
+     */
+    @NotNull
+    String getValue();
 
-    @Attribute("parameterType")
-    GenericAttributeValue<String> getParameterType();
+    /**
+     * Sets the value of the simple content.
+     *
+     * @param value the new value to set
+     */
+    void setValue(String value);
 
-    @Attribute("flushCache")
-    GenericAttributeValue<String> getFlushCache();
 
-    @Attribute("timeout")
-    GenericAttributeValue<String> getTimeout();
+    /**
+     * Returns the value of the id child.
+     * Attribute id
+     *
+     * @return the value of the id child.
+     */
+    @NotNull
+    @Required
+    GenericAttributeValue<String> getId();
 
-    @Attribute("statementType")
-    GenericAttributeValue<String> getStatementType();
+    /**
+     * Returns the list of include children.
+     * Type include documentation
+     * <pre>
+     *  Dynamic
+     * </pre>
+     *
+     * @return the list of include children.
+     */
+    @NotNull
+    java.util.List<Include> getIncludes();
 
-    List<Include> getIncludes();
 }

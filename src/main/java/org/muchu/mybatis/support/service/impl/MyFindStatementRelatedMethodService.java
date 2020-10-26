@@ -10,9 +10,9 @@ import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang.StringUtils;
-import org.muchu.mybatis.support.dom.Mapper;
-import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.constant.MyBatisSQLTag;
+import org.muchu.mybatis.support.dom.model.Mapper;
+import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 
 import java.util.ArrayList;

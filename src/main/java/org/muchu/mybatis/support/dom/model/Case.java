@@ -10,46 +10,36 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * mybatis-3-mapper.dtd:resultMap interface.
+ * mybatis-3-mapper.dtd:case interface.
  */
-public interface ResultMap extends DomElement {
+public interface Case extends DomElement {
 
 	/**
-	 * Returns the value of the autoMapping child.
-	 * Attribute autoMapping
-	 * @return the value of the autoMapping child.
+	 * Returns the value of the resultType child.
+	 * Attribute resultType
+	 * @return the value of the resultType child.
 	 */
 	@NotNull
-	GenericAttributeValue<String> getAutoMapping();
+	GenericAttributeValue<String> getResultType();
 
 
 	/**
-	 * Returns the value of the type child.
-	 * Attribute type
-	 * @return the value of the type child.
+	 * Returns the value of the resultMap child.
+	 * Attribute resultMap
+	 * @return the value of the resultMap child.
 	 */
 	@NotNull
-	@Required
-	GenericAttributeValue<String> getType();
+	GenericAttributeValue<String> getResultMap();
 
 
 	/**
-	 * Returns the value of the extends child.
-	 * Attribute extends
-	 * @return the value of the extends child.
-	 */
-	@NotNull
-	GenericAttributeValue<String> getExtends();
-
-
-	/**
-	 * Returns the value of the id child.
-	 * Attribute id
-	 * @return the value of the id child.
+	 * Returns the value of the value child.
+	 * Attribute value
+	 * @return the value of the value child.
 	 */
 	@NotNull
 	@Required
-	GenericAttributeValue<String> getId();
+	GenericAttributeValue<String> getValue();
 
 
 	/**

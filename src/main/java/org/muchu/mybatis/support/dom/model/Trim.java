@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * mybatis-3-mapper.dtd:sql interface.
+ * mybatis-3-mapper.dtd:trim interface.
  */
-public interface Sql extends DomElement {
+public interface Trim extends DomElement {
 
 	/**
 	 * Returns the value of the simple content.
@@ -28,31 +28,39 @@ public interface Sql extends DomElement {
 
 
 	/**
-	 * Returns the value of the databaseId child.
-	 * Attribute databaseId
-	 * @return the value of the databaseId child.
+	 * Returns the value of the suffixOverrides child.
+	 * Attribute suffixOverrides
+	 * @return the value of the suffixOverrides child.
 	 */
 	@NotNull
-	GenericAttributeValue<String> getDatabaseId();
+	GenericAttributeValue<String> getSuffixOverrides();
 
 
 	/**
-	 * Returns the value of the lang child.
-	 * Attribute lang
-	 * @return the value of the lang child.
+	 * Returns the value of the prefix child.
+	 * Attribute prefix
+	 * @return the value of the prefix child.
 	 */
 	@NotNull
-	GenericAttributeValue<String> getLang();
+	GenericAttributeValue<String> getPrefix();
 
 
 	/**
-	 * Returns the value of the id child.
-	 * Attribute id
-	 * @return the value of the id child.
+	 * Returns the value of the suffix child.
+	 * Attribute suffix
+	 * @return the value of the suffix child.
 	 */
 	@NotNull
-	@Required
-	GenericAttributeValue<String> getId();
+	GenericAttributeValue<String> getSuffix();
+
+
+	/**
+	 * Returns the value of the prefixOverrides child.
+	 * Attribute prefixOverrides
+	 * @return the value of the prefixOverrides child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getPrefixOverrides();
 
 
 	/**

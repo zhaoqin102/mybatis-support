@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * mybatis-3-mapper.dtd:sql interface.
+ * mybatis-3-mapper.dtd:selectKey interface.
  */
-public interface Sql extends DomElement {
+public interface SelectKey extends DomElement {
 
 	/**
 	 * Returns the value of the simple content.
@@ -28,31 +28,57 @@ public interface Sql extends DomElement {
 
 
 	/**
+	 * Returns the value of the order child.
+	 * Attribute order
+	 * @return the value of the order child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getOrder();
+
+
+	/**
+	 * Returns the value of the keyProperty child.
+	 * Attribute keyProperty
+	 * @return the value of the keyProperty child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getKeyProperty();
+
+
+	/**
+	 * Returns the value of the resultType child.
+	 * Attribute resultType
+	 * @return the value of the resultType child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getResultType();
+
+
+	/**
+	 * Returns the value of the keyColumn child.
+	 * Attribute keyColumn
+	 * @return the value of the keyColumn child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getKeyColumn();
+
+
+	/**
+	 * Returns the value of the statementType child.
+	 * Attribute statementType
+	 * @return the value of the statementType child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getStatementType();
+
+
+	/**
 	 * Returns the value of the databaseId child.
 	 * Attribute databaseId
 	 * @return the value of the databaseId child.
 	 */
 	@NotNull
 	GenericAttributeValue<String> getDatabaseId();
-
-
-	/**
-	 * Returns the value of the lang child.
-	 * Attribute lang
-	 * @return the value of the lang child.
-	 */
-	@NotNull
-	GenericAttributeValue<String> getLang();
-
-
-	/**
-	 * Returns the value of the id child.
-	 * Attribute id
-	 * @return the value of the id child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getId();
 
 
 	/**

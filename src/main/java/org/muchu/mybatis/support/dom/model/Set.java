@@ -3,16 +3,13 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 /**
- * mybatis-3-mapper.dtd:sql interface.
+ * mybatis-3-mapper.dtd:set interface.
  */
-public interface Sql extends DomElement {
+public interface Set extends DomElement {
 
 	/**
 	 * Returns the value of the simple content.
@@ -28,34 +25,6 @@ public interface Sql extends DomElement {
 
 
 	/**
-	 * Returns the value of the databaseId child.
-	 * Attribute databaseId
-	 * @return the value of the databaseId child.
-	 */
-	@NotNull
-	GenericAttributeValue<String> getDatabaseId();
-
-
-	/**
-	 * Returns the value of the lang child.
-	 * Attribute lang
-	 * @return the value of the lang child.
-	 */
-	@NotNull
-	GenericAttributeValue<String> getLang();
-
-
-	/**
-	 * Returns the value of the id child.
-	 * Attribute id
-	 * @return the value of the id child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getId();
-
-
-	/**
 	 * Returns the list of include children.
 	 * Type include documentation
 	 * <pre>
@@ -64,7 +33,7 @@ public interface Sql extends DomElement {
 	 * @return the list of include children.
 	 */
 	@NotNull
-	List<Include> getIncludes();
+	java.util.List<Include> getIncludes();
 	/**
 	 * Adds new child to the list of include children.
 	 * @return created child
@@ -77,7 +46,7 @@ public interface Sql extends DomElement {
 	 * @return the list of trim children.
 	 */
 	@NotNull
-	List<Trim> getTrims();
+	java.util.List<Trim> getTrims();
 	/**
 	 * Adds new child to the list of trim children.
 	 * @return created child
@@ -90,7 +59,7 @@ public interface Sql extends DomElement {
 	 * @return the list of where children.
 	 */
 	@NotNull
-	List<Where> getWheres();
+	java.util.List<Where> getWheres();
 	/**
 	 * Adds new child to the list of where children.
 	 * @return created child
@@ -103,7 +72,7 @@ public interface Sql extends DomElement {
 	 * @return the list of set children.
 	 */
 	@NotNull
-	List<Set> getSets();
+	java.util.List<Set> getSets();
 	/**
 	 * Adds new child to the list of set children.
 	 * @return created child
@@ -116,7 +85,7 @@ public interface Sql extends DomElement {
 	 * @return the list of foreach children.
 	 */
 	@NotNull
-	List<Foreach> getForeaches();
+	java.util.List<Foreach> getForeaches();
 	/**
 	 * Adds new child to the list of foreach children.
 	 * @return created child
@@ -129,7 +98,7 @@ public interface Sql extends DomElement {
 	 * @return the list of choose children.
 	 */
 	@NotNull
-	List<Choose> getChooses();
+	java.util.List<Choose> getChooses();
 	/**
 	 * Adds new child to the list of choose children.
 	 * @return created child
@@ -142,7 +111,7 @@ public interface Sql extends DomElement {
 	 * @return the list of if children.
 	 */
 	@NotNull
-	List<If> getIfs();
+	java.util.List<If> getIfs();
 	/**
 	 * Adds new child to the list of if children.
 	 * @return created child
@@ -155,7 +124,7 @@ public interface Sql extends DomElement {
 	 * @return the list of bind children.
 	 */
 	@NotNull
-	List<Bind> getBinds();
+	java.util.List<Bind> getBinds();
 	/**
 	 * Adds new child to the list of bind children.
 	 * @return created child

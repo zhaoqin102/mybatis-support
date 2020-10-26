@@ -3,16 +3,15 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 /**
- * mybatis-3-mapper.dtd:sql interface.
+ * mybatis-3-mapper.dtd:otherwise interface.
  */
-public interface Sql extends DomElement {
+public interface Otherwise extends DomElement {
 
 	/**
 	 * Returns the value of the simple content.
@@ -25,34 +24,6 @@ public interface Sql extends DomElement {
 	 * @param value the new value to set
 	 */
 	void setValue(String value);
-
-
-	/**
-	 * Returns the value of the databaseId child.
-	 * Attribute databaseId
-	 * @return the value of the databaseId child.
-	 */
-	@NotNull
-	GenericAttributeValue<String> getDatabaseId();
-
-
-	/**
-	 * Returns the value of the lang child.
-	 * Attribute lang
-	 * @return the value of the lang child.
-	 */
-	@NotNull
-	GenericAttributeValue<String> getLang();
-
-
-	/**
-	 * Returns the value of the id child.
-	 * Attribute id
-	 * @return the value of the id child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getId();
 
 
 	/**

@@ -14,7 +14,7 @@ import com.intellij.util.xml.DomService;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.muchu.mybatis.support.dom.Mapper;
+import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.service.MyDomService;
 
@@ -36,7 +36,7 @@ public class MyDomServiceImpl implements MyDomService {
             if (psiFile instanceof XmlFile) {
                 final DomFileElement<Mapper> element = DomManager.getDomManager(project)
                         .getFileElement((XmlFile) psiFile, Mapper.class);
-                if (element != null && StringUtils.equals(psiClass.getQualifiedName(), element.getRootElement().getNameSpace().getValue())) {
+                if (element != null && StringUtils.equals(psiClass.getQualifiedName(), element.getRootElement().getNamespace().getValue())) {
                     return element.getRootElement();
                 }
             }

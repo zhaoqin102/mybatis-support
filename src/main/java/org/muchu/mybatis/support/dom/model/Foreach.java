@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * mybatis-3-mapper.dtd:sql interface.
+ * mybatis-3-mapper.dtd:foreach interface.
  */
-public interface Sql extends DomElement {
+public interface Foreach extends DomElement {
 
 	/**
 	 * Returns the value of the simple content.
@@ -28,31 +28,58 @@ public interface Sql extends DomElement {
 
 
 	/**
-	 * Returns the value of the databaseId child.
-	 * Attribute databaseId
-	 * @return the value of the databaseId child.
+	 * Returns the value of the open child.
+	 * Attribute open
+	 * @return the value of the open child.
 	 */
 	@NotNull
-	GenericAttributeValue<String> getDatabaseId();
+	GenericAttributeValue<String> getOpen();
 
 
 	/**
-	 * Returns the value of the lang child.
-	 * Attribute lang
-	 * @return the value of the lang child.
+	 * Returns the value of the index child.
+	 * Attribute index
+	 * @return the value of the index child.
 	 */
 	@NotNull
-	GenericAttributeValue<String> getLang();
+	GenericAttributeValue<String> getIndex();
 
 
 	/**
-	 * Returns the value of the id child.
-	 * Attribute id
-	 * @return the value of the id child.
+	 * Returns the value of the item child.
+	 * Attribute item
+	 * @return the value of the item child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getItem();
+
+
+	/**
+	 * Returns the value of the separator child.
+	 * Attribute separator
+	 * @return the value of the separator child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getSeparator();
+
+
+	/**
+	 * Returns the value of the close child.
+	 * Attribute close
+	 * @return the value of the close child.
+	 */
+	@NotNull
+	GenericAttributeValue<String> getClose();
+
+
+	/**
+	 * Returns the value of the collection child.
+	 * Attribute collection
+	 * @return the value of the collection child.
 	 */
 	@NotNull
 	@Required
-	GenericAttributeValue<String> getId();
+	GenericAttributeValue<String> getCollection();
 
 
 	/**
@@ -129,7 +156,7 @@ public interface Sql extends DomElement {
 	 * @return the list of choose children.
 	 */
 	@NotNull
-	List<Choose> getChooses();
+	java.util.List<Choose> getChooses();
 	/**
 	 * Adds new child to the list of choose children.
 	 * @return created child
@@ -142,7 +169,7 @@ public interface Sql extends DomElement {
 	 * @return the list of if children.
 	 */
 	@NotNull
-	List<If> getIfs();
+	java.util.List<If> getIfs();
 	/**
 	 * Adds new child to the list of if children.
 	 * @return created child
@@ -155,7 +182,7 @@ public interface Sql extends DomElement {
 	 * @return the list of bind children.
 	 */
 	@NotNull
-	List<Bind> getBinds();
+	java.util.List<Bind> getBinds();
 	/**
 	 * Adds new child to the list of bind children.
 	 * @return created child

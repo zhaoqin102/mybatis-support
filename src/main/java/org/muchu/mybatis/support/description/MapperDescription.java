@@ -4,7 +4,7 @@ import com.intellij.util.xml.DomFileDescription;
 import org.jetbrains.annotations.Nullable;
 import org.muchu.mybatis.support.dom.MyBatisDomConstants;
 import org.muchu.mybatis.support.constant.MyBatisDoctype;
-import org.muchu.mybatis.support.dom.Mapper;
+import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.icon.MybatisIcon;
 
 import javax.swing.*;
