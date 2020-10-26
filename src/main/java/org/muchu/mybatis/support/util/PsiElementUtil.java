@@ -6,7 +6,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 
 public class PsiElementUtil {
 
-
     public static PsiClass getPsiClass(PsiElement element) {
         PsiElement parent = element.getParent();
         if (parent instanceof PsiClass) {

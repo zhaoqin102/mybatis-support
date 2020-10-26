@@ -30,21 +30,13 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class CreateXmlDialog extends DialogWrapper {
-
     private final JLabel myInformationLabel = new JLabel(CodeInsightBundle.message("dialog.create.class.label", "xml"));
-
     private final DirectoryEditorComboWithBrowseButton myDirectoryComponent;
-
     private final JLabel myPackageLabel = new JLabel("Destination folder");
-
     private final JTextField myTfClassName = new MyTextField();
-
     private final Project myProject;
-
     private PsiDirectory myTargetDirectory;
-
     private final String myXmlName;
-
     @NonNls
     private static final String RECENTS_KEY = "CreateXmlDialog.RecentsKey";
 
@@ -166,7 +158,7 @@ public class CreateXmlDialog extends DialogWrapper {
 
     @NotNull
     public String getXmlName() {
-        return myXmlName;
+        return myTfClassName.getText();
     }
 
 }

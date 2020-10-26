@@ -33,6 +33,9 @@ public class MyFindStatementRelatedMethodService extends AbstractFindRelatedItem
         if (!MyBatisSQLTag.isCRUDStatement(xmlToken.getText()) || !(xmlToken.getParent() instanceof XmlTag)) {
             return false;
         }
+        if (!(xmlToken.getPrevSibling() instanceof XmlToken)) {
+            return false;
+        }
         XmlToken prevSibling = (XmlToken) xmlToken.getPrevSibling();
         if (!(prevSibling.getTokenType() == XmlTokenType.XML_START_TAG_START)) {
             return false;

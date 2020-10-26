@@ -23,6 +23,8 @@
                                 implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
         <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
         <definitionsSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
+        <fileTemplateGroup
+                implementation="org.muchu.mybatis.support.template.MybatisFileTemplateGroupDescriptorFactory"/>
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.AddParamAnnotationAction</className>
         </intentionAction>

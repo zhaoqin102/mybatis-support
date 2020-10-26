@@ -1,86 +1,57 @@
 package org.muchu.mybatis.support.intention;
 
 import com.intellij.CommonBundle;
-import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
+import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
+import com.intellij.codeInsight.navigation.NavigationUtil;
+import com.intellij.ide.fileTemplates.FileTemplate;
+import com.intellij.ide.fileTemplates.FileTemplateManager;
+import com.intellij.ide.fileTemplates.FileTemplateUtil;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiIdentifier;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.xml.DomManager;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-import org.muchu.mybatis.support.templacte.MybatisFileTemplateProvider;
-import org.muchu.mybatis.support.templacte.MybatisTemplate;
+import org.muchu.mybatis.support.template.MybatisFileTemplateGroupDescriptorFactory;
 
 import java.util.Properties;
 
-public class GenerateMapperAction extends BaseIntentionAction {
+public class GenerateMapperAction extends PsiElementBaseIntentionAction {
 
+    @NotNull
+    @Override
+    public String getText() {
+        return "Create mapper.xml";
+    }
 
-    private String name = "Create mapper";
+    @Override
+    public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
+        if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass)) {
+            return false;
+        }
+        PsiClass psiClass = (PsiClass) element.getParent();
+        return psiClass.isInterface();
+    }
 
     @Nls
     @NotNull
     @Override
     public String getFamilyName() {
-        return name;
+        return getText();
     }
 
     @Override
-    public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
-        if (!(file instanceof PsiJavaFile)) {
-            return false;
-        }
-        int offset = editor.getCaretModel().getOffset();
-        PsiElement element = file.findElementAt(offset);
-        if (element == null) {
-            return false;
-        }
-        if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass)) {
-            return false;
-        }
+    public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         PsiClass psiClass = (PsiClass) element.getParent();
-        if (!psiClass.isInterface()) {
-            return false;
-        }
-        return true;
-    }
-
-    public GenerateMapperAction() {
-    }
-
-    @NotNull
-    @Override
-    public String getText() {
-        return name;
-    }
-
-    @Override
-    public boolean startInWriteAction() {
-        return false;
-    }
-
-    @Override
-    public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
-        PsiJavaFile psiJavaFile = (PsiJavaFile) file;
-        final PsiDirectory sourceDir = psiJavaFile.getContainingFile().getContainingDirectory();
+        final PsiDirectory sourceDir = psiClass.getContainingFile().getContainingDirectory();
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
         final PsiDirectory baseDir = sourceDir != null && fileIndex.getSourceRootForFile(sourceDir.getVirtualFile()) != null ? sourceDir : null;
-        int offset = editor.getCaretModel().getOffset();
-        PsiElement element = file.findElementAt(offset);
-        if (element == null) {
-            return;
-        }
-        if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass)) {
-            return;
-        }
-        PsiClass psiClass = (PsiClass) element.getParent();
-        if (!psiClass.isInterface()) {
-            return;
-        }
         String targetXmlName = psiClass.getName();
         targetXmlName = targetXmlName == null ? "" : targetXmlName;
         final CreateXmlDialog dialog = new CreateXmlDialog(
@@ -92,11 +63,18 @@ public class GenerateMapperAction extends BaseIntentionAction {
         }
         Properties properties = new Properties();
         properties.setProperty("namespace", psiClass.getQualifiedName());
+        FileTemplateManager templateManager = FileTemplateManager.getInstance(project);
+        FileTemplate mapperTemplate = templateManager.getJ2eeTemplate(MybatisFileTemplateGroupDescriptorFactory.MAPPER_XML);
         try {
-            MybatisFileTemplateProvider.createFromTemplate(MybatisTemplate.MYBATIS_MAPPER_XML_TEMPLATE, MybatisFileTemplateProvider.getFileNameByNewElementName(dialog.getXmlName()), dialog.getTargetDirectory(), properties);
+            PsiElement psiElement = FileTemplateUtil.createFromTemplate(mapperTemplate, dialog.getXmlName(), properties, dialog.getTargetDirectory());
+            NavigationUtil.activateFileWithPsiElement(psiElement, true);
         } catch (Exception e) {
             Messages.showMessageDialog(project, e.getMessage(), CommonBundle.getErrorTitle(), Messages.getErrorIcon());
         }
     }
 
+    @Override
+    public boolean startInWriteAction() {
+        return false;
+    }
 }
