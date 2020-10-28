@@ -45,4 +45,41 @@ public interface Statement extends DomElement {
     @NotNull
     java.util.List<Include> getIncludes();
 
+
+    /**
+     * Adds new child to the list of include children.
+     *
+     * @return created child
+     */
+    Include addInclude();
+
+
+    /**
+     * Returns the value of the parameterMap child.
+     * Attribute parameterMap
+     *
+     * @return the value of the parameterMap child.
+     */
+    @NotNull
+    GenericAttributeValue<String> getParameterMap();
+
+
+    /**
+     * Returns the value of the parameterType child.
+     * Attribute parameterType
+     *
+     * @return the value of the parameterType child.
+     */
+    @NotNull
+    GenericAttributeValue<String> getParameterType();
+
+
+    /**
+     * Returns the value of the statementType child.
+     * Attribute statementType
+     *
+     * @return the value of the statementType child.
+     */
+    @NotNull
+    GenericAttributeValue<String> getStatementType();
 }

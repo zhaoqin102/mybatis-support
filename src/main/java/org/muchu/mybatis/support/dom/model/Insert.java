@@ -15,16 +15,6 @@ import java.util.List;
 public interface Insert extends Statement {
 
     /**
-     * Returns the value of the parameterMap child.
-     * Attribute parameterMap
-     *
-     * @return the value of the parameterMap child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getParameterMap();
-
-
-    /**
      * Returns the value of the keyColumn child.
      * Attribute keyColumn
      *
@@ -52,26 +42,6 @@ public interface Insert extends Statement {
      */
     @NotNull
     GenericAttributeValue<String> getKeyProperty();
-
-
-    /**
-     * Returns the value of the parameterType child.
-     * Attribute parameterType
-     *
-     * @return the value of the parameterType child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getParameterType();
-
-
-    /**
-     * Returns the value of the statementType child.
-     * Attribute statementType
-     *
-     * @return the value of the statementType child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getStatementType();
 
 
     /**
@@ -130,14 +100,6 @@ public interface Insert extends Statement {
      */
     @SubTagList("selectKey")
     SelectKey addSelectKey();
-
-    /**
-     * Adds new child to the list of include children.
-     *
-     * @return created child
-     */
-    Include addInclude();
-
 
     /**
      * Returns the list of trim children.

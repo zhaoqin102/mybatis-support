@@ -22,17 +22,6 @@ public interface Select extends Statement {
     @NotNull
     GenericAttributeValue<String> getResultMap();
 
-
-    /**
-     * Returns the value of the parameterMap child.
-     * Attribute parameterMap
-     *
-     * @return the value of the parameterMap child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getParameterMap();
-
-
     /**
      * Returns the value of the useCache child.
      * Attribute useCache
@@ -71,26 +60,6 @@ public interface Select extends Statement {
      */
     @NotNull
     GenericAttributeValue<String> getResultType();
-
-
-    /**
-     * Returns the value of the parameterType child.
-     * Attribute parameterType
-     *
-     * @return the value of the parameterType child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getParameterType();
-
-
-    /**
-     * Returns the value of the statementType child.
-     * Attribute statementType
-     *
-     * @return the value of the statementType child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getStatementType();
 
 
     /**

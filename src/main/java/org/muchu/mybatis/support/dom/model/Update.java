@@ -15,16 +15,6 @@ import java.util.List;
 public interface Update extends Statement {
 
     /**
-     * Returns the value of the parameterMap child.
-     * Attribute parameterMap
-     *
-     * @return the value of the parameterMap child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getParameterMap();
-
-
-    /**
      * Returns the value of the keyColumn child.
      * Attribute keyColumn
      *
@@ -52,26 +42,6 @@ public interface Update extends Statement {
      */
     @NotNull
     GenericAttributeValue<String> getKeyProperty();
-
-
-    /**
-     * Returns the value of the parameterType child.
-     * Attribute parameterType
-     *
-     * @return the value of the parameterType child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getParameterType();
-
-
-    /**
-     * Returns the value of the statementType child.
-     * Attribute statementType
-     *
-     * @return the value of the statementType child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getStatementType();
 
 
     /**

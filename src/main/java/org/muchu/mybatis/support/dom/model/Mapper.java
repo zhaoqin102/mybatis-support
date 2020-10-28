@@ -4,7 +4,6 @@
 package org.muchu.mybatis.support.dom.model;
 
 import com.intellij.util.xml.*;
-import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.dom.MyBatisDomConstants;
 

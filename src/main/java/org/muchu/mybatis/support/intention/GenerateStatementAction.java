@@ -8,10 +8,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.openapi.ui.popup.PopupStep;
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.PsiMethod;
+import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
@@ -21,7 +18,13 @@ import org.jetbrains.annotations.Nullable;
 import org.muchu.mybatis.support.constant.MyBatisSQLTag;
 import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.Select;
+import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.service.MyDomService;
+
+import java.util.Optional;
+
+import static com.intellij.psi.CommonClassNames.JAVA_UTIL_COLLECTION;
+import static com.intellij.psi.CommonClassNames.JAVA_UTIL_MAP;
 
 public class GenerateStatementAction extends PsiElementBaseIntentionAction {
 
@@ -85,9 +88,54 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
 
     private void generateStatement(MyBatisSQLTag myBatisSQLTag, PsiMethod psiMethod, Mapper mapper, Project project) {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            Select select = mapper.addSelect();
-            select.getId().setStringValue(psiMethod.getName());
-            select.setValue("\nselect * from \n");
+            Statement statement = null;
+            switch (myBatisSQLTag) {
+                case INSERT:
+                    statement = mapper.addInsert();
+                    break;
+                case DELETE:
+                    statement = mapper.addDelete();
+                    break;
+                case UPDATE:
+                    statement = mapper.addUpdate();
+                    break;
+                case SELECT:
+                    statement = mapper.addSelect();
+            }
+            if (statement == null) {
+                return;
+            }
+            statement.getId().setStringValue(psiMethod.getName());
+            statement.setValue(myBatisSQLTag.getBodyText());
+            if (statement instanceof Select) {
+                String returnTypeStr = "";
+                PsiType returnType = psiMethod.getReturnType();
+                if (returnType instanceof PsiClassType) {
+                    PsiClassType psiClassType = ((PsiClassType) returnType);
+                    PsiType collectionType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_COLLECTION, GlobalSearchScope.allScope(project)))
+                            .map(psiClass -> PsiElementFactory.getInstance(project).createType(psiClass))
+                            .orElse(null);
+                    PsiType mapType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_MAP, GlobalSearchScope.allScope(project)))
+                            .map(psiClass -> PsiElementFactory.getInstance(project).createType(psiClass))
+                            .orElse(null);
+                    if (collectionType != null && collectionType.isAssignableFrom(returnType) && psiClassType.getParameterCount() == 1) {
+                        returnTypeStr = psiClassType.getParameters()[0].getCanonicalText();
+                    } else if (mapType != null && mapType.isAssignableFrom(returnType)) {
+                        PsiClass resolve = psiClassType.resolve();
+                        if (resolve != null) {
+                            returnTypeStr = resolve.getQualifiedName();
+                        }
+                    } else {
+                        returnTypeStr = psiClassType.getCanonicalText();
+                    }
+                } else if (returnType instanceof PsiArrayType) {
+                    PsiArrayType psiArrayType = (PsiArrayType) returnType;
+                    returnTypeStr = psiArrayType.getComponentType().getCanonicalText();
+                }
+                if (!returnTypeStr.trim().isEmpty()) {
+                    ((Select) statement).getResultType().setStringValue(returnTypeStr);
+                }
+            }
 //            XmlTag childTag = myBatisSQLTag.createMyBatisTag(mapper.getXmlTag(), psiMethod);
 //            PsiElement psiElement = mapper.getXmlTag().add(childTag);
 //            CodeStyleManager formatter = CodeStyleManager.getInstance(project);
