@@ -24,57 +24,57 @@ import java.util.Properties;
 
 public class GenerateMapperAction extends PsiElementBaseIntentionAction {
 
-    @NotNull
-    @Override
-    public String getText() {
-        return "Create mapper.xml";
-    }
+  @NotNull
+  @Override
+  public String getText() {
+    return "Create mapper.xml";
+  }
 
-    @Override
-    public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
-        if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass)) {
-            return false;
-        }
-        PsiClass psiClass = (PsiClass) element.getParent();
-        return psiClass.isInterface();
+  @Override
+  public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
+    if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass)) {
+      return false;
     }
+    PsiClass psiClass = (PsiClass) element.getParent();
+    return psiClass.isInterface();
+  }
 
-    @Nls
-    @NotNull
-    @Override
-    public String getFamilyName() {
-        return getText();
-    }
+  @Nls
+  @NotNull
+  @Override
+  public String getFamilyName() {
+    return getText();
+  }
 
-    @Override
-    public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
-        PsiClass psiClass = (PsiClass) element.getParent();
-        final PsiDirectory sourceDir = psiClass.getContainingFile().getContainingDirectory();
-        ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        final PsiDirectory baseDir = sourceDir != null && fileIndex.getSourceRootForFile(sourceDir.getVirtualFile()) != null ? sourceDir : null;
-        String targetXmlName = psiClass.getName();
-        targetXmlName = targetXmlName == null ? "" : targetXmlName;
-        final CreateXmlDialog dialog = new CreateXmlDialog(
-                project, "Create MyBatis xml file",
-                targetXmlName,
-                baseDir);
-        if (!dialog.showAndGet()) {
-            return;
-        }
-        Properties properties = new Properties();
-        properties.setProperty("namespace", psiClass.getQualifiedName());
-        FileTemplateManager templateManager = FileTemplateManager.getInstance(project);
-        FileTemplate mapperTemplate = templateManager.getJ2eeTemplate(MybatisFileTemplateGroupDescriptorFactory.MAPPER_XML);
-        try {
-            PsiElement psiElement = FileTemplateUtil.createFromTemplate(mapperTemplate, dialog.getXmlName(), properties, dialog.getTargetDirectory());
-            NavigationUtil.activateFileWithPsiElement(psiElement, true);
-        } catch (Exception e) {
-            Messages.showMessageDialog(project, e.getMessage(), CommonBundle.getErrorTitle(), Messages.getErrorIcon());
-        }
+  @Override
+  public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
+    PsiClass psiClass = (PsiClass) element.getParent();
+    final PsiDirectory sourceDir = psiClass.getContainingFile().getContainingDirectory();
+    ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+    final PsiDirectory baseDir = sourceDir != null && fileIndex.getSourceRootForFile(sourceDir.getVirtualFile()) != null ? sourceDir : null;
+    String targetXmlName = psiClass.getName();
+    targetXmlName = targetXmlName == null ? "" : targetXmlName;
+    final CreateXmlDialog dialog = new CreateXmlDialog(
+        project, "Create MyBatis xml file",
+        targetXmlName,
+        baseDir);
+    if (!dialog.showAndGet()) {
+      return;
     }
+    Properties properties = new Properties();
+    properties.setProperty("namespace", psiClass.getQualifiedName());
+    FileTemplateManager templateManager = FileTemplateManager.getInstance(project);
+    FileTemplate mapperTemplate = templateManager.getJ2eeTemplate(MybatisFileTemplateGroupDescriptorFactory.MAPPER_XML);
+    try {
+      PsiElement psiElement = FileTemplateUtil.createFromTemplate(mapperTemplate, dialog.getXmlName(), properties, dialog.getTargetDirectory());
+      NavigationUtil.activateFileWithPsiElement(psiElement, true);
+    } catch (Exception e) {
+      Messages.showMessageDialog(project, e.getMessage(), CommonBundle.getErrorTitle(), Messages.getErrorIcon());
+    }
+  }
 
-    @Override
-    public boolean startInWriteAction() {
-        return false;
-    }
+  @Override
+  public boolean startInWriteAction() {
+    return false;
+  }
 }

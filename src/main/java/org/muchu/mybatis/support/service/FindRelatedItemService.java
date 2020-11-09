@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FindRelatedItemService {
 
-    boolean isSupport(PsiElement psiElement);
+  boolean isSupport(PsiElement psiElement);
 
-    List<PsiElement> findRelatedItem(PsiElement psiElement);
+  List<PsiElement> findRelatedItem(PsiElement psiElement);
 }

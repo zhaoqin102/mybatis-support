@@ -3,8 +3,8 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
-import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.Required;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -13,32 +13,36 @@ import java.util.List;
  * mybatis-3-mapper.dtd:include interface.
  * Type include documentation
  * <pre>
- *  Dynamic 
+ *  Dynamic
  * </pre>
  */
-public interface Include extends DomElement {
+public interface Include extends MyBatisDomElement {
 
-	/**
-	 * Returns the value of the refid child.
-	 * Attribute refid
-	 * @return the value of the refid child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getRefid();
+  /**
+   * Returns the value of the refid child.
+   * Attribute refid
+   *
+   * @return the value of the refid child.
+   */
+  @NotNull
+  @Required
+  GenericAttributeValue<String> getRefid();
 
 
-	/**
-	 * Returns the list of property children.
-	 * @return the list of property children.
-	 */
-	@NotNull
-	List<Property> getProperties();
-	/**
-	 * Adds new child to the list of property children.
-	 * @return created child
-	 */
-	Property addProperty();
+  /**
+   * Returns the list of property children.
+   *
+   * @return the list of property children.
+   */
+  @NotNull
+  List<Property> getProperties();
+
+  /**
+   * Adds new child to the list of property children.
+   *
+   * @return created child
+   */
+  Property addProperty();
 
 
 }

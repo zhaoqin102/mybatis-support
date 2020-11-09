@@ -7,14 +7,14 @@ import org.muchu.mybatis.support.MyBatisBundle;
 import org.muchu.mybatis.support.icon.MybatisIcon;
 
 public class MybatisFileTemplateGroupDescriptorFactory implements FileTemplateGroupDescriptorFactory {
-    public static final String MAPPER_XML = "MybatisMapper.xml";
+  public static final String MAPPER_XML = "MybatisMapper.xml";
 
-    @Override
-    public FileTemplateGroupDescriptor getFileTemplatesDescriptor() {
-        final FileTemplateGroupDescriptor group = new FileTemplateGroupDescriptor(MyBatisBundle.message("mybatis"),
-                MybatisIcon.MYBATIS_ICON);
-        group.addTemplate(new FileTemplateDescriptor(MAPPER_XML, MybatisIcon.MYBATIS_ICON));
-        return group;
-    }
+  @Override
+  public FileTemplateGroupDescriptor getFileTemplatesDescriptor() {
+    final FileTemplateGroupDescriptor group = new FileTemplateGroupDescriptor(MyBatisBundle.message("mybatis"),
+        MybatisIcon.MYBATIS_ICON);
+    group.addTemplate(new FileTemplateDescriptor(MAPPER_XML, MybatisIcon.MYBATIS_ICON));
+    return group;
+  }
 
 }

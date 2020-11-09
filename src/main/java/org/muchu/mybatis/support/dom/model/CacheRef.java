@@ -3,23 +3,24 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
-import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.Required;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * mybatis-3-mapper.dtd:cache-ref interface.
  */
-public interface CacheRef extends DomElement {
+public interface CacheRef extends MyBatisDomElement {
 
-	/**
-	 * Returns the value of the namespace child.
-	 * Attribute namespace
-	 * @return the value of the namespace child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getNamespace();
+  /**
+   * Returns the value of the namespace child.
+   * Attribute namespace
+   *
+   * @return the value of the namespace child.
+   */
+  @NotNull
+  @Required
+  GenericAttributeValue<String> getNamespace();
 
 
 }

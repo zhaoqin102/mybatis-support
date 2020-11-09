@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class XmlResultMapTypedHandler extends TypedHandlerDelegate {
 
-    @NotNull
-    @Override
-    public Result beforeCharTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file, @NotNull FileType fileType) {
-        if (!(file instanceof XmlFile)) return Result.CONTINUE;
-        if (c == '.') {
-        }
-        return super.beforeCharTyped(c, project, editor, file, fileType);
+  @NotNull
+  @Override
+  public Result beforeCharTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file, @NotNull FileType fileType) {
+    if (!(file instanceof XmlFile)) return Result.CONTINUE;
+    if (c == '.') {
     }
+    return super.beforeCharTyped(c, project, editor, file, fileType);
+  }
 }

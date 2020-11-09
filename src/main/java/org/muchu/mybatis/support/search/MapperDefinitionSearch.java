@@ -12,20 +12,20 @@ import org.muchu.mybatis.support.service.MyDomService;
 
 public class MapperDefinitionSearch extends QueryExecutorBase<XmlElement, PsiElement> {
 
-    public MapperDefinitionSearch() {
-        super(true);
-    }
+  public MapperDefinitionSearch() {
+    super(true);
+  }
 
-    @Override
-    public void processQuery(@NotNull PsiElement psiElement, @NotNull Processor<? super XmlElement> consumer) {
-        if (!(psiElement instanceof PsiClass)) {
-            return;
-        }
-        PsiClass psiClass = (PsiClass) psiElement;
-        Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiClass.getProject()));
-        if (mapper != null) {
-            consumer.process(mapper.getXmlElement());
-        }
+  @Override
+  public void processQuery(@NotNull PsiElement psiElement, @NotNull Processor<? super XmlElement> consumer) {
+    if (!(psiElement instanceof PsiClass)) {
+      return;
     }
+    PsiClass psiClass = (PsiClass) psiElement;
+    Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiClass.getProject()));
+    if (mapper != null) {
+      consumer.process(mapper.getXmlElement());
+    }
+  }
 
 }

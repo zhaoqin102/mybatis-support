@@ -13,28 +13,28 @@ import java.util.List;
 
 public class DirectoryEditorComboWithBrowseButton extends ComponentWithBrowseButton<TextFieldWithHistory> implements TextAccessor {
 
-    public DirectoryEditorComboWithBrowseButton(final ActionListener browseActionListener,
-                                                final PsiDirectory psiDirectory,
-                                                @NotNull final Project project,
-                                                final String recentsKey) {
-        super(new TextFieldWithHistory(), browseActionListener);
-        final List<String> recentEntries = RecentsManager.getInstance(project).getRecentEntries(recentsKey);
-        if (recentEntries != null) {
-            getChildComponent().setHistory(recentEntries);
-        }
-        if (psiDirectory != null && psiDirectory.getVirtualFile().getCanonicalFile() != null
-                && psiDirectory.getVirtualFile().getCanonicalPath() != null && psiDirectory.getVirtualFile().getCanonicalPath().length() > 0) {
-            setText(psiDirectory.getVirtualFile().getCanonicalPath());
-        }
+  public DirectoryEditorComboWithBrowseButton(final ActionListener browseActionListener,
+                                              final PsiDirectory psiDirectory,
+                                              @NotNull final Project project,
+                                              final String recentsKey) {
+    super(new TextFieldWithHistory(), browseActionListener);
+    final List<String> recentEntries = RecentsManager.getInstance(project).getRecentEntries(recentsKey);
+    if (recentEntries != null) {
+      getChildComponent().setHistory(recentEntries);
     }
+    if (psiDirectory != null && psiDirectory.getVirtualFile().getCanonicalFile() != null
+        && psiDirectory.getVirtualFile().getCanonicalPath() != null && psiDirectory.getVirtualFile().getCanonicalPath().length() > 0) {
+      setText(psiDirectory.getVirtualFile().getCanonicalPath());
+    }
+  }
 
-    @Override
-    public void setText(String text) {
-        getChildComponent().setText(text);
-    }
+  @Override
+  public void setText(String text) {
+    getChildComponent().setText(text);
+  }
 
-    @Override
-    public String getText() {
-        return getChildComponent().getText();
-    }
+  @Override
+  public String getText() {
+    return getChildComponent().getText();
+  }
 }

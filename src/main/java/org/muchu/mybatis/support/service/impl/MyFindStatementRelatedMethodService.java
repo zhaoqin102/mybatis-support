@@ -19,56 +19,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyFindStatementRelatedMethodService extends AbstractFindRelatedItemService {
-    public static MyFindStatementRelatedMethodService INSTANCE = new MyFindStatementRelatedMethodService();
+  public static MyFindStatementRelatedMethodService INSTANCE = new MyFindStatementRelatedMethodService();
 
-    private MyFindStatementRelatedMethodService() {
-    }
+  private MyFindStatementRelatedMethodService() {
+  }
 
-    @Override
-    public boolean isSupport(PsiElement psiElement) {
-        if (!(psiElement instanceof XmlToken)) {
-            return false;
-        }
-        XmlToken xmlToken = (XmlToken) psiElement;
-        if (!MyBatisSQLTag.isCRUDStatement(xmlToken.getText()) || !(xmlToken.getParent() instanceof XmlTag)) {
-            return false;
-        }
-        if (!(xmlToken.getPrevSibling() instanceof XmlToken)) {
-            return false;
-        }
-        XmlToken prevSibling = (XmlToken) xmlToken.getPrevSibling();
-        if (!(prevSibling.getTokenType() == XmlTokenType.XML_START_TAG_START)) {
-            return false;
-        }
-        DomElement domElement = DomManager.getDomManager(xmlToken.getProject()).getDomElement((XmlTag) xmlToken.getParent());
-        if (!(domElement instanceof Statement)) {
-            return false;
-        }
-        return true;
+  @Override
+  public boolean isSupport(PsiElement psiElement) {
+    if (!(psiElement instanceof XmlToken)) {
+      return false;
     }
+    XmlToken xmlToken = (XmlToken) psiElement;
+    if (!MyBatisSQLTag.isCRUDStatement(xmlToken.getText()) || !(xmlToken.getParent() instanceof XmlTag)) {
+      return false;
+    }
+    if (!(xmlToken.getPrevSibling() instanceof XmlToken)) {
+      return false;
+    }
+    XmlToken prevSibling = (XmlToken) xmlToken.getPrevSibling();
+    if (!(prevSibling.getTokenType() == XmlTokenType.XML_START_TAG_START)) {
+      return false;
+    }
+    DomElement domElement = DomManager.getDomManager(xmlToken.getProject()).getDomElement((XmlTag) xmlToken.getParent());
+    if (!(domElement instanceof Statement)) {
+      return false;
+    }
+    return true;
+  }
 
-    @Override
-    public List<PsiElement> findRelatedItem(PsiElement psiElement) {
-        List<PsiElement> result = new ArrayList<>();
-        XmlToken xmlToken = (XmlToken) psiElement;
-        Project project = xmlToken.getProject();
-        Statement statement = (Statement) DomManager.getDomManager(project).getDomElement((XmlTag) xmlToken.getParent());
-        if (statement == null) {
-            return result;
-        }
-        String valueOfId = statement.getId().getValue();
-        if (StringUtils.isBlank(valueOfId)) {
-            return result;
-        }
-        Mapper mapper = (Mapper) statement.getParent();
-        PsiClass psiClass = MyJavaUtil.findClass(mapper, project);
-        if (psiClass == null) {
-            return result;
-        }
-        PsiMethod[] methodsByName = psiClass.findMethodsByName(valueOfId, true);
-        for (PsiMethod psiMethod : methodsByName) {
-            result.add(psiMethod.getNameIdentifier());
-        }
-        return result;
+  @Override
+  public List<PsiElement> findRelatedItem(PsiElement psiElement) {
+    List<PsiElement> result = new ArrayList<>();
+    XmlToken xmlToken = (XmlToken) psiElement;
+    Project project = xmlToken.getProject();
+    Statement statement = (Statement) DomManager.getDomManager(project).getDomElement((XmlTag) xmlToken.getParent());
+    if (statement == null) {
+      return result;
     }
+    String valueOfId = statement.getId().getValue();
+    if (StringUtils.isBlank(valueOfId)) {
+      return result;
+    }
+    Mapper mapper = (Mapper) statement.getParent();
+    PsiClass psiClass = MyJavaUtil.findClass(mapper, project);
+    if (psiClass == null) {
+      return result;
+    }
+    PsiMethod[] methodsByName = psiClass.findMethodsByName(valueOfId, true);
+    for (PsiMethod psiMethod : methodsByName) {
+      result.add(psiMethod.getNameIdentifier());
+    }
+    return result;
+  }
 }

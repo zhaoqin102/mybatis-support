@@ -4,10 +4,10 @@ import org.jetbrains.annotations.NonNls;
 
 public final class MyBatisDomConstants {
 
-    private MyBatisDomConstants() {
-    }
+  private MyBatisDomConstants() {
+  }
 
-    @NonNls
-    public static final String MYBATIS_NAMESPACE_KEY = "mybatis namespace";
+  @NonNls
+  public static final String MYBATIS_NAMESPACE_KEY = "mybatis namespace";
 
 }

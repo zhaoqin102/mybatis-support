@@ -10,11 +10,11 @@ import org.muchu.mybatis.support.dom.model.Mapper;
 
 public class MyJavaUtil {
 
-    public static PsiClass findClass(Mapper mapper, @NotNull Project project) {
-        if (mapper == null || StringUtils.isBlank(mapper.getNamespace().getValue())) {
-            return null;
-        }
-        JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
-        return javaPsiFacade.findClass(mapper.getNamespace().getValue(), GlobalSearchScope.allScope(project));
+  public static PsiClass findClass(Mapper mapper, @NotNull Project project) {
+    if (mapper == null || StringUtils.isBlank(mapper.getNamespace().getValue())) {
+      return null;
     }
+    JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
+    return javaPsiFacade.findClass(mapper.getNamespace().getValue(), GlobalSearchScope.allScope(project));
+  }
 }

@@ -11,18 +11,18 @@ import javax.swing.*;
 
 public class MapperDescription extends DomFileDescription<Mapper> {
 
-    public MapperDescription() {
-        super(Mapper.class, Mapper.TAG_NAME);
-    }
+  public MapperDescription() {
+    super(Mapper.class, Mapper.TAG_NAME);
+  }
 
-    @Nullable
-    @Override
-    public Icon getFileIcon(int flags) {
-        return MybatisIcon.MYBATIS_ICON;
-    }
+  @Nullable
+  @Override
+  public Icon getFileIcon(int flags) {
+    return MybatisIcon.MYBATIS_ICON;
+  }
 
-    @Override
-    protected void initializeFileDescription() {
-        registerNamespacePolicy(MyBatisDomConstants.MYBATIS_NAMESPACE_KEY, MyBatisDoctype.MYBATIS_DTD);
-    }
+  @Override
+  protected void initializeFileDescription() {
+    registerNamespacePolicy(MyBatisDomConstants.MYBATIS_NAMESPACE_KEY, MyBatisDoctype.MYBATIS_DTD);
+  }
 }

@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyNotSupportElementService extends AbstractFindRelatedItemService {
-    public static MyNotSupportElementService INSTANCE = new MyNotSupportElementService();
+  public static MyNotSupportElementService INSTANCE = new MyNotSupportElementService();
 
-    private MyNotSupportElementService() {
-    }
+  private MyNotSupportElementService() {
+  }
 
-    @Override
-    public boolean isSupport(PsiElement psiElement) {
-        return true;
-    }
+  @Override
+  public boolean isSupport(PsiElement psiElement) {
+    return true;
+  }
 
-    @Override
-    public List<PsiElement> findRelatedItem(PsiElement psiElement) {
-        return new ArrayList<>();
-    }
+  @Override
+  public List<PsiElement> findRelatedItem(PsiElement psiElement) {
+    return new ArrayList<>();
+  }
 }

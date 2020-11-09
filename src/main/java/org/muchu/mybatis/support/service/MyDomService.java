@@ -10,15 +10,15 @@ import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.Statement;
 
 public interface MyDomService {
-    static MyDomService getInstance() {
-        return ServiceManager.getService(MyDomService.class);
-    }
+  static MyDomService getInstance() {
+    return ServiceManager.getService(MyDomService.class);
+  }
 
-    @Nullable
-    Mapper getMapper(@NotNull PsiClass psiClass,
-                     @Nullable GlobalSearchScope scope);
+  @Nullable
+  Mapper getMapper(@NotNull PsiClass psiClass,
+                   @Nullable GlobalSearchScope scope);
 
-    @Nullable
-    Statement getStatement(@NotNull PsiMethod psiMethod,
-                           @Nullable GlobalSearchScope scope);
+  @Nullable
+  Statement getStatement(@NotNull PsiMethod psiMethod,
+                         @Nullable GlobalSearchScope scope);
 }

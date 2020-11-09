@@ -23,44 +23,44 @@ import java.util.List;
 
 public class MyDomServiceImpl implements MyDomService {
 
-    @Override
-    public Mapper getMapper(@NotNull PsiClass psiClass, @Nullable GlobalSearchScope scope) {
-        if (!psiClass.isInterface()) {
-            return null;
-        }
-        Project project = psiClass.getProject();
-        Collection<VirtualFile> domFileCandidates = DomService.getInstance().getDomFileCandidates(Mapper.class,
-                psiClass.getProject(), scope != null ? scope : GlobalSearchScope.allScope(project));
-        for (VirtualFile file : domFileCandidates) {
-            final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-            if (psiFile instanceof XmlFile) {
-                final DomFileElement<Mapper> element = DomManager.getDomManager(project)
-                        .getFileElement((XmlFile) psiFile, Mapper.class);
-                if (element != null && StringUtils.equals(psiClass.getQualifiedName(), element.getRootElement().getNamespace().getValue())) {
-                    return element.getRootElement();
-                }
-            }
-        }
-        return null;
+  @Override
+  public Mapper getMapper(@NotNull PsiClass psiClass, @Nullable GlobalSearchScope scope) {
+    if (!psiClass.isInterface()) {
+      return null;
     }
+    Project project = psiClass.getProject();
+    Collection<VirtualFile> domFileCandidates = DomService.getInstance().getDomFileCandidates(Mapper.class,
+        psiClass.getProject(), scope != null ? scope : GlobalSearchScope.allScope(project));
+    for (VirtualFile file : domFileCandidates) {
+      final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+      if (psiFile instanceof XmlFile) {
+        final DomFileElement<Mapper> element = DomManager.getDomManager(project)
+            .getFileElement((XmlFile) psiFile, Mapper.class);
+        if (element != null && StringUtils.equals(psiClass.getQualifiedName(), element.getRootElement().getNamespace().getValue())) {
+          return element.getRootElement();
+        }
+      }
+    }
+    return null;
+  }
 
-    @Nullable
-    @Override
-    public Statement getStatement(@NotNull PsiMethod psiMethod, @Nullable GlobalSearchScope scope) {
-        PsiClass psiClass = psiMethod.getContainingClass();
-        if (psiClass == null) {
-            return null;
-        }
-        Mapper mapper = getMapper(psiClass, scope);
-        if (mapper != null) {
-            List<Statement> statements = mapper.getStatements();
-            for (Statement statement : statements) {
-                if (StringUtils.equals(psiMethod.getName(), statement.getId().getValue())) {
-                    //TODO check return type
-                    return statement;
-                }
-            }
-        }
-        return null;
+  @Nullable
+  @Override
+  public Statement getStatement(@NotNull PsiMethod psiMethod, @Nullable GlobalSearchScope scope) {
+    PsiClass psiClass = psiMethod.getContainingClass();
+    if (psiClass == null) {
+      return null;
     }
+    Mapper mapper = getMapper(psiClass, scope);
+    if (mapper != null) {
+      List<Statement> statements = mapper.getStatements();
+      for (Statement statement : statements) {
+        if (StringUtils.equals(psiMethod.getName(), statement.getId().getValue())) {
+          //TODO check return type
+          return statement;
+        }
+      }
+    }
+    return null;
+  }
 }

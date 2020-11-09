@@ -3,7 +3,6 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -11,27 +10,31 @@ import java.util.List;
 /**
  * mybatis-3-mapper.dtd:choose interface.
  */
-public interface Choose extends DomElement {
+public interface Choose extends MyBatisDomElement {
 
-	/**
-	 * Returns the list of when children.
-	 * @return the list of when children.
-	 */
-	@NotNull
-	List<When> getWhens();
-	/**
-	 * Adds new child to the list of when children.
-	 * @return created child
-	 */
-	When addWhen();
+  /**
+   * Returns the list of when children.
+   *
+   * @return the list of when children.
+   */
+  @NotNull
+  List<When> getWhens();
+
+  /**
+   * Adds new child to the list of when children.
+   *
+   * @return created child
+   */
+  When addWhen();
 
 
-	/**
-	 * Returns the value of the otherwise child.
-	 * @return the value of the otherwise child.
-	 */
-	@NotNull
-	Otherwise getOtherwise();
+  /**
+   * Returns the value of the otherwise child.
+   *
+   * @return the value of the otherwise child.
+   */
+  @NotNull
+  Otherwise getOtherwise();
 
 
 }

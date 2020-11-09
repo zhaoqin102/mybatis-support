@@ -3,8 +3,7 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
-import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.SubTagList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -12,34 +11,40 @@ import java.util.List;
 /**
  * mybatis-3-mapper.dtd:constructor interface.
  */
-public interface Constructor extends DomElement {
+public interface Constructor extends MyBatisDomElement {
 
-	/**
-	 * Returns the list of idArg children.
-	 * @return the list of idArg children.
-	 */
-	@NotNull
-	@SubTagList ("idArg")
-	List<IdArg> getIdArgs();
-	/**
-	 * Adds new child to the list of idArg children.
-	 * @return created child
-	 */
-	@SubTagList ("idArg")
-	IdArg addIdArg();
+  /**
+   * Returns the list of idArg children.
+   *
+   * @return the list of idArg children.
+   */
+  @NotNull
+  @SubTagList("idArg")
+  List<IdArg> getIdArgs();
+
+  /**
+   * Adds new child to the list of idArg children.
+   *
+   * @return created child
+   */
+  @SubTagList("idArg")
+  IdArg addIdArg();
 
 
-	/**
-	 * Returns the list of arg children.
-	 * @return the list of arg children.
-	 */
-	@NotNull
-	List<Arg> getArgs();
-	/**
-	 * Adds new child to the list of arg children.
-	 * @return created child
-	 */
-	Arg addArg();
+  /**
+   * Returns the list of arg children.
+   *
+   * @return the list of arg children.
+   */
+  @NotNull
+  List<Arg> getArgs();
+
+  /**
+   * Adds new child to the list of arg children.
+   *
+   * @return created child
+   */
+  Arg addArg();
 
 
 }

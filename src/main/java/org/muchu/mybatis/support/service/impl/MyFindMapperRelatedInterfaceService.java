@@ -16,43 +16,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyFindMapperRelatedInterfaceService extends AbstractFindRelatedItemService {
-    public static MyFindMapperRelatedInterfaceService INSTANCE = new MyFindMapperRelatedInterfaceService();
+  public static MyFindMapperRelatedInterfaceService INSTANCE = new MyFindMapperRelatedInterfaceService();
 
-    private MyFindMapperRelatedInterfaceService() {
-    }
+  private MyFindMapperRelatedInterfaceService() {
+  }
 
-    @Override
-    public boolean isSupport(PsiElement psiElement) {
-        if (!(psiElement instanceof XmlToken)) {
-            return false;
-        }
-        XmlToken xmlToken = (XmlToken) psiElement;
-        if (!StringUtils.equals(xmlToken.getText(), "mapper") || !(xmlToken.getParent() instanceof XmlTag)) {
-            return false;
-        }
-        XmlToken prevSibling = (XmlToken) xmlToken.getPrevSibling();
-        if (!(prevSibling.getTokenType() == XmlTokenType.XML_START_TAG_START)) {
-            return false;
-        }
-        DomElement domElement = DomManager.getDomManager(xmlToken.getProject()).getDomElement((XmlTag) xmlToken.getParent());
-        if (!(domElement instanceof Mapper)) {
-            return false;
-        }
-        return true;
+  @Override
+  public boolean isSupport(PsiElement psiElement) {
+    if (!(psiElement instanceof XmlToken)) {
+      return false;
     }
+    XmlToken xmlToken = (XmlToken) psiElement;
+    if (!StringUtils.equals(xmlToken.getText(), "mapper") || !(xmlToken.getParent() instanceof XmlTag)) {
+      return false;
+    }
+    XmlToken prevSibling = (XmlToken) xmlToken.getPrevSibling();
+    if (!(prevSibling.getTokenType() == XmlTokenType.XML_START_TAG_START)) {
+      return false;
+    }
+    DomElement domElement = DomManager.getDomManager(xmlToken.getProject()).getDomElement((XmlTag) xmlToken.getParent());
+    if (!(domElement instanceof Mapper)) {
+      return false;
+    }
+    return true;
+  }
 
-    @Override
-    public List<PsiElement> findRelatedItem(PsiElement psiElement) {
-        List<PsiElement> result = new ArrayList<>();
-        XmlToken xmlToken = (XmlToken) psiElement;
-        Project project = xmlToken.getProject();
-        DomManager domManager = DomManager.getDomManager(project);
-        Mapper mapper = (Mapper) domManager.getDomElement((XmlTag) xmlToken.getParent());
-        PsiClass psiClass = MyJavaUtil.findClass(mapper, project);
-        if (psiClass == null) {
-            return result;
-        }
-        result.add(psiClass.getNameIdentifier());
-        return result;
+  @Override
+  public List<PsiElement> findRelatedItem(PsiElement psiElement) {
+    List<PsiElement> result = new ArrayList<>();
+    XmlToken xmlToken = (XmlToken) psiElement;
+    Project project = xmlToken.getProject();
+    DomManager domManager = DomManager.getDomManager(project);
+    Mapper mapper = (Mapper) domManager.getDomElement((XmlTag) xmlToken.getParent());
+    PsiClass psiClass = MyJavaUtil.findClass(mapper, project);
+    if (psiClass == null) {
+      return result;
     }
+    result.add(psiClass.getNameIdentifier());
+    return result;
+  }
 }

@@ -6,8 +6,8 @@ import org.muchu.mybatis.support.constant.MyBatisDoctype;
 
 public class MyBatisSchemaProvider implements StandardResourceProvider {
 
-    @Override
-    public void registerResources(ResourceRegistrar registrar) {
-        registrar.addStdResource(MyBatisDoctype.MYBATIS_DTD, "/schemas/mybatis-3-mapper.dtd", getClass());
-    }
+  @Override
+  public void registerResources(ResourceRegistrar registrar) {
+    registrar.addStdResource(MyBatisDoctype.MYBATIS_DTD, "/schemas/mybatis-3-mapper.dtd", getClass());
+  }
 }

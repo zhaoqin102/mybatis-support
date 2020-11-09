@@ -3,33 +3,35 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
-import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.Required;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * mybatis-3-mapper.dtd:bind interface.
  */
-public interface Bind extends DomElement {
+public interface Bind extends MyBatisDomElement {
 
-	/**
-	 * Returns the value of the name child.
-	 * Attribute name
-	 * @return the value of the name child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getName();
+  /**
+   * Returns the value of the name child.
+   * Attribute name
+   *
+   * @return the value of the name child.
+   */
+  @NotNull
+  @Required
+  GenericAttributeValue<String> getName();
 
 
-	/**
-	 * Returns the value of the value child.
-	 * Attribute value
-	 * @return the value of the value child.
-	 */
-	@NotNull
-	@Required
-	GenericAttributeValue<String> getValue();
+  /**
+   * Returns the value of the value child.
+   * Attribute value
+   *
+   * @return the value of the value child.
+   */
+  @NotNull
+  @Required
+  GenericAttributeValue<String> getValue();
 
 
 }

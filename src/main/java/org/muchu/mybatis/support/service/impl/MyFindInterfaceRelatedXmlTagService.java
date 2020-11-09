@@ -13,32 +13,32 @@ import java.util.List;
 import java.util.Objects;
 
 public class MyFindInterfaceRelatedXmlTagService extends AbstractFindRelatedItemService {
-    public static MyFindInterfaceRelatedXmlTagService INSTANCE = new MyFindInterfaceRelatedXmlTagService();
+  public static MyFindInterfaceRelatedXmlTagService INSTANCE = new MyFindInterfaceRelatedXmlTagService();
 
-    private MyFindInterfaceRelatedXmlTagService() {
-    }
+  private MyFindInterfaceRelatedXmlTagService() {
+  }
 
-    @Override
-    public boolean isSupport(PsiElement psiElement) {
-        PsiElement parent = psiElement.getParent();
-        if (!(psiElement instanceof PsiIdentifier) || !(parent instanceof PsiClass)) {
-            return false;
-        }
-        PsiClass psiClass = (PsiClass) parent;
-        return psiClass.isInterface();
+  @Override
+  public boolean isSupport(PsiElement psiElement) {
+    PsiElement parent = psiElement.getParent();
+    if (!(psiElement instanceof PsiIdentifier) || !(parent instanceof PsiClass)) {
+      return false;
     }
+    PsiClass psiClass = (PsiClass) parent;
+    return psiClass.isInterface();
+  }
 
-    @Override
-    public List<PsiElement> findRelatedItem(PsiElement psiElement) {
-        List<PsiElement> resultList = new ArrayList<>();
-        PsiClass psiClass = (PsiClass) psiElement.getParent();
-        Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiElement.getProject()));
-        if (mapper != null) {
-            GenericAttributeValue<String> nameSpace = mapper.getNamespace();
-            if (Objects.equals(nameSpace.getValue(), psiClass.getQualifiedName())) {
-                resultList.add(nameSpace.getXmlElement());
-            }
-        }
-        return resultList;
+  @Override
+  public List<PsiElement> findRelatedItem(PsiElement psiElement) {
+    List<PsiElement> resultList = new ArrayList<>();
+    PsiClass psiClass = (PsiClass) psiElement.getParent();
+    Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiElement.getProject()));
+    if (mapper != null) {
+      GenericAttributeValue<String> nameSpace = mapper.getNamespace();
+      if (Objects.equals(nameSpace.getValue(), psiClass.getQualifiedName())) {
+        resultList.add(nameSpace.getXmlElement());
+      }
     }
+    return resultList;
+  }
 }

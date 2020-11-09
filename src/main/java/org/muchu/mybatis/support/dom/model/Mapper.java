@@ -3,7 +3,10 @@
 
 package org.muchu.mybatis.support.dom.model;
 
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.Namespace;
+import com.intellij.util.xml.SubTagList;
+import com.intellij.util.xml.SubTagsList;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.dom.MyBatisDomConstants;
 
@@ -26,166 +29,166 @@ import java.util.List;
  * </pre>
  */
 @Namespace(MyBatisDomConstants.MYBATIS_NAMESPACE_KEY)
-public interface Mapper extends DomElement {
-    String TAG_NAME = "mapper";
+public interface Mapper extends MyBatisDomElement {
+  String TAG_NAME = "mapper";
 
-    /**
-     * Returns the value of the namespace child.
-     * Attribute namespace
-     *
-     * @return the value of the namespace child.
-     */
-    @NotNull
-    GenericAttributeValue<String> getNamespace();
-
-
-    /**
-     * Returns the list of cache-ref children.
-     *
-     * @return the list of cache-ref children.
-     */
-    @NotNull
-    java.util.List<CacheRef> getCacheRefs();
-
-    /**
-     * Adds new child to the list of cache-ref children.
-     *
-     * @return created child
-     */
-    CacheRef addCacheRef();
+  /**
+   * Returns the value of the namespace child.
+   * Attribute namespace
+   *
+   * @return the value of the namespace child.
+   */
+  @NotNull
+  GenericAttributeValue<String> getNamespace();
 
 
-    /**
-     * Returns the list of cache children.
-     *
-     * @return the list of cache children.
-     */
-    @NotNull
-    java.util.List<Cache> getCaches();
+  /**
+   * Returns the list of cache-ref children.
+   *
+   * @return the list of cache-ref children.
+   */
+  @NotNull
+  java.util.List<CacheRef> getCacheRefs();
 
-    /**
-     * Adds new child to the list of cache children.
-     *
-     * @return created child
-     */
-    Cache addCache();
-
-
-    /**
-     * Returns the list of resultMap children.
-     *
-     * @return the list of resultMap children.
-     */
-    @NotNull
-    @SubTagList("resultMap")
-    java.util.List<ResultMap> getResultMaps();
-
-    /**
-     * Adds new child to the list of resultMap children.
-     *
-     * @return created child
-     */
-    @SubTagList("resultMap")
-    ResultMap addResultMap();
+  /**
+   * Adds new child to the list of cache-ref children.
+   *
+   * @return created child
+   */
+  CacheRef addCacheRef();
 
 
-    /**
-     * Returns the list of parameterMap children.
-     *
-     * @return the list of parameterMap children.
-     */
-    @NotNull
-    @SubTagList("parameterMap")
-    java.util.List<ParameterMap> getParameterMaps();
+  /**
+   * Returns the list of cache children.
+   *
+   * @return the list of cache children.
+   */
+  @NotNull
+  java.util.List<Cache> getCaches();
 
-    /**
-     * Adds new child to the list of parameterMap children.
-     *
-     * @return created child
-     */
-    @SubTagList("parameterMap")
-    ParameterMap addParameterMap();
+  /**
+   * Adds new child to the list of cache children.
+   *
+   * @return created child
+   */
+  Cache addCache();
 
 
-    /**
-     * Returns the list of sql children.
-     *
-     * @return the list of sql children.
-     */
-    @NotNull
-    java.util.List<Sql> getSqls();
+  /**
+   * Returns the list of resultMap children.
+   *
+   * @return the list of resultMap children.
+   */
+  @NotNull
+  @SubTagList("resultMap")
+  java.util.List<ResultMap> getResultMaps();
 
-    /**
-     * Adds new child to the list of sql children.
-     *
-     * @return created child
-     */
-    Sql addSql();
-
-
-    /**
-     * Returns the list of insert children.
-     *
-     * @return the list of insert children.
-     */
-    @NotNull
-    java.util.List<Insert> getInserts();
-
-    /**
-     * Adds new child to the list of insert children.
-     *
-     * @return created child
-     */
-    Insert addInsert();
+  /**
+   * Adds new child to the list of resultMap children.
+   *
+   * @return created child
+   */
+  @SubTagList("resultMap")
+  ResultMap addResultMap();
 
 
-    /**
-     * Returns the list of update children.
-     *
-     * @return the list of update children.
-     */
-    @NotNull
-    java.util.List<Update> getUpdates();
+  /**
+   * Returns the list of parameterMap children.
+   *
+   * @return the list of parameterMap children.
+   */
+  @NotNull
+  @SubTagList("parameterMap")
+  java.util.List<ParameterMap> getParameterMaps();
 
-    /**
-     * Adds new child to the list of update children.
-     *
-     * @return created child
-     */
-    Update addUpdate();
-
-
-    /**
-     * Returns the list of delete children.
-     *
-     * @return the list of delete children.
-     */
-    @NotNull
-    java.util.List<Delete> getDeletes();
-
-    /**
-     * Adds new child to the list of delete children.
-     *
-     * @return created child
-     */
-    Delete addDelete();
+  /**
+   * Adds new child to the list of parameterMap children.
+   *
+   * @return created child
+   */
+  @SubTagList("parameterMap")
+  ParameterMap addParameterMap();
 
 
-    /**
-     * Returns the list of select children.
-     *
-     * @return the list of select children.
-     */
-    @NotNull
-    java.util.List<Select> getSelects();
+  /**
+   * Returns the list of sql children.
+   *
+   * @return the list of sql children.
+   */
+  @NotNull
+  java.util.List<Sql> getSqls();
 
-    /**
-     * Adds new child to the list of select children.
-     *
-     * @return created child
-     */
-    Select addSelect();
+  /**
+   * Adds new child to the list of sql children.
+   *
+   * @return created child
+   */
+  Sql addSql();
 
-    @SubTagsList({"select", "insert", "update", "delete"})
-    List<Statement> getStatements();
+
+  /**
+   * Returns the list of insert children.
+   *
+   * @return the list of insert children.
+   */
+  @NotNull
+  java.util.List<Insert> getInserts();
+
+  /**
+   * Adds new child to the list of insert children.
+   *
+   * @return created child
+   */
+  Insert addInsert();
+
+
+  /**
+   * Returns the list of update children.
+   *
+   * @return the list of update children.
+   */
+  @NotNull
+  java.util.List<Update> getUpdates();
+
+  /**
+   * Adds new child to the list of update children.
+   *
+   * @return created child
+   */
+  Update addUpdate();
+
+
+  /**
+   * Returns the list of delete children.
+   *
+   * @return the list of delete children.
+   */
+  @NotNull
+  java.util.List<Delete> getDeletes();
+
+  /**
+   * Adds new child to the list of delete children.
+   *
+   * @return created child
+   */
+  Delete addDelete();
+
+
+  /**
+   * Returns the list of select children.
+   *
+   * @return the list of select children.
+   */
+  @NotNull
+  java.util.List<Select> getSelects();
+
+  /**
+   * Adds new child to the list of select children.
+   *
+   * @return created child
+   */
+  Select addSelect();
+
+  @SubTagsList({"select", "insert", "update", "delete"})
+  List<Statement> getStatements();
 }

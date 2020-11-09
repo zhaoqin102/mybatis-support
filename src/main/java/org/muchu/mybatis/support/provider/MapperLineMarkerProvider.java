@@ -18,29 +18,29 @@ import java.util.List;
 
 public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
-    @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        boolean support = isSupport(element);
-        if (!support) {
-            return;
-        }
-        FindRelatedItemService findRelatedItemService = MyFindRelatedItemServiceFactory.getFindRelatedItemService(element);
-        List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
-        if (resultList.size() > 0) {
-            NavigationGutterIconBuilder<PsiElement> builder =
-                    NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML).
-                            setTargets(resultList).
-                            setTooltipText("Navigate to mybatis file");
-            result.add(builder.createLineMarkerInfo(element));
-        }
+  @Override
+  protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
+    boolean support = isSupport(element);
+    if (!support) {
+      return;
     }
+    FindRelatedItemService findRelatedItemService = MyFindRelatedItemServiceFactory.getFindRelatedItemService(element);
+    List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
+    if (resultList.size() > 0) {
+      NavigationGutterIconBuilder<PsiElement> builder =
+          NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML).
+              setTargets(resultList).
+              setTooltipText("Navigate to mybatis file");
+      result.add(builder.createLineMarkerInfo(element));
+    }
+  }
 
-    private boolean isSupport(PsiElement element) {
-        PsiElement parent = element.getParent();
-        if (!(element instanceof PsiIdentifier) || (!(parent instanceof PsiMethod) && !(parent instanceof PsiClass))) {
-            return false;
-        }
-        PsiClass psiClass = PsiElementUtil.getPsiClass(element);
-        return psiClass != null && psiClass.isInterface();
+  private boolean isSupport(PsiElement element) {
+    PsiElement parent = element.getParent();
+    if (!(element instanceof PsiIdentifier) || (!(parent instanceof PsiMethod) && !(parent instanceof PsiClass))) {
+      return false;
     }
+    PsiClass psiClass = PsiElementUtil.getPsiClass(element);
+    return psiClass != null && psiClass.isInterface();
+  }
 }
