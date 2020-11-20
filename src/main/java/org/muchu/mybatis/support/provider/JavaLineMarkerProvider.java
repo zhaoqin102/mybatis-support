@@ -20,9 +20,9 @@ public class JavaLineMarkerProvider extends RelatedItemLineMarkerProvider {
     List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
     if (resultList.size() > 0) {
       NavigationGutterIconBuilder<PsiElement> builder =
-          NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_JAVA).
-              setTargets(resultList).
-              setTooltipText("Navigate to mybatis file");
+          NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_JAVA)
+              .setTargets(resultList)
+              .setTooltipText("Navigate to mybatis file");
       result.add(builder.createLineMarkerInfo(element));
     }
   }

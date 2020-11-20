@@ -28,9 +28,9 @@ public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
     List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
     if (resultList.size() > 0) {
       NavigationGutterIconBuilder<PsiElement> builder =
-          NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML).
-              setTargets(resultList).
-              setTooltipText("Navigate to mybatis file");
+          NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML)
+              .setTargets(resultList)
+              .setTooltipText("Navigate to mybatis file");
       result.add(builder.createLineMarkerInfo(element));
     }
   }

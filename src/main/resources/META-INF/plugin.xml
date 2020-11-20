@@ -22,8 +22,8 @@
         <standardResourceProvider implementation="org.muchu.mybatis.support.dom.MyBatisSchemaProvider"/>
         <completion.contributor language="XML"
                                 implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
-        <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
         <definitionsSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
+        <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
         <fileTemplateGroup
                 implementation="org.muchu.mybatis.support.template.MybatisFileTemplateGroupDescriptorFactory"/>
         <intentionAction>

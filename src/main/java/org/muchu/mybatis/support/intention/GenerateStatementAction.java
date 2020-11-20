@@ -27,6 +27,7 @@ import org.muchu.mybatis.support.dom.model.Select;
 import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.service.MyDomService;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.intellij.psi.CommonClassNames.JAVA_UTIL_COLLECTION;
@@ -56,8 +57,8 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
       }
       PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
       if (psiClass != null) {
-        Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
-        return mapper != null;
+        List<Mapper> mappers = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
+        return !mappers.isEmpty();
       }
     }
     return false;
@@ -83,8 +84,8 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
         @Override
         public PopupStep onChosen(MyBatisSQLTag selectedValue, boolean finalChoice) {
           PsiMethod psiMethod = (PsiMethod) context;
-          Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
-          generateStatement(selectedValue, psiMethod, mapper, project);
+//          Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
+//          generateStatement(selectedValue, psiMethod, mapper, project);
           return super.onChosen(selectedValue, finalChoice);
         }
       });

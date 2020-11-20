@@ -32,13 +32,10 @@ public class MyFindInterfaceRelatedXmlTagService extends AbstractFindRelatedItem
   public List<PsiElement> findRelatedItem(PsiElement psiElement) {
     List<PsiElement> resultList = new ArrayList<>();
     PsiClass psiClass = (PsiClass) psiElement.getParent();
-    Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiElement.getProject()));
-    if (mapper != null) {
-      GenericAttributeValue<String> nameSpace = mapper.getNamespace();
-      if (Objects.equals(nameSpace.getValue(), psiClass.getQualifiedName())) {
-        resultList.add(nameSpace.getXmlElement());
-      }
-    }
+    List<Mapper> mappers = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(psiElement.getProject()));
+    mappers.forEach(mapper -> {
+      resultList.add(mapper.getNamespace().getXmlElement());
+    });
     return resultList;
   }
 }
