@@ -64,14 +64,17 @@ public class GenerateMapperAction extends PsiElementBaseIntentionAction {
     properties.setProperty("namespace", psiClass.getQualifiedName());
     FileTemplateManager templateManager = FileTemplateManager.getInstance(project);
     FileTemplate mapperTemplate = templateManager.getJ2eeTemplate(MybatisFileTemplateGroupDescriptorFactory.MAPPER_XML);
-    WriteCommandAction.writeCommandAction(project).run(() -> {
-      try {
-        PsiElement psiElement = FileTemplateUtil.createFromTemplate(mapperTemplate, dialog.getXmlName(), properties, dialog.getTargetDirectory());
-        NavigationUtil.activateFileWithPsiElement(psiElement, true);
-      } catch (Exception e) {
-        throw new IncorrectOperationException("error creating validation.xml", (Throwable) e);
-      }
-    });
+    try {
+      PsiElement psiElement = FileTemplateUtil.createFromTemplate(mapperTemplate, dialog.getXmlName(), properties, dialog.getTargetDirectory());
+      NavigationUtil.activateFileWithPsiElement(psiElement, true);
+    } catch (Exception e) {
+      throw new IncorrectOperationException("error creating mapper.xml", (Throwable) e);
+    }
+  }
+
+  @Override
+  public boolean startInWriteAction() {
+    return false;
   }
 
 }

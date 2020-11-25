@@ -5,7 +5,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.Processor;
 import com.intellij.xml.util.XmlUtil;
 import org.apache.commons.lang.StringUtils;
