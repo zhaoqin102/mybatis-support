@@ -11,16 +11,16 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
 }
 
 intellij {
-    version '2020.2'
-    plugins = ['java', 'PsiViewer:202-SNAPSHOT.3']
+    version '2020.3'
+    plugins = ['java']
 }
 patchPluginXml {
     changeNotes """

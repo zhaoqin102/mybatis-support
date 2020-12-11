@@ -5,7 +5,6 @@ import com.intellij.codeInsight.navigation.NavigationUtil;
 import com.intellij.ide.fileTemplates.FileTemplate;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
 import com.intellij.ide.fileTemplates.FileTemplateUtil;
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -74,7 +73,7 @@ public class GenerateMapperAction extends PsiElementBaseIntentionAction {
 
   @Override
   public boolean startInWriteAction() {
-    return false;
+    return true;
   }
 
 }
