@@ -1,30 +1,23 @@
 package org.muchu.mybatis.support.intention;
 
-import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
-import com.intellij.ide.util.PsiElementListCellRenderer;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.IPopupChooserBuilder;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.openapi.ui.popup.PopupStep;
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.*;
+import com.intellij.psi.presentation.java.SymbolPresentationUtil;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +28,6 @@ import org.muchu.mybatis.support.dom.model.Select;
 import org.muchu.mybatis.support.dom.model.Statement;
 import org.muchu.mybatis.support.service.MyDomService;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -88,65 +80,45 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
     if (mappers.isEmpty()) {
       return;
     }
-    if (mappers.size() > 1) {
-      List<XmlTag> xmlTags = new ArrayList<>();
-      mappers.forEach(mapper -> {
-        if (mapper.getXmlTag() != null) {
-          xmlTags.add(mapper.getXmlTag());
+    List<Choose> chooses = Choose.createChoose(mappers);
+    ListPopup listPopup = JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<>(null, chooses) {
+      @NotNull
+      @Override
+      public String getTextFor(Choose value) {
+        String path = "";
+        XmlTag xmlTag = value.getMapper().getXmlTag();
+        if (xmlTag != null && xmlTag.getContainingFile() != null) {
+          path = SymbolPresentationUtil.getFilePathPresentation(xmlTag.getContainingFile());
         }
-      });
+        return value.getMyBatisSQLTag().getValue() + " in " + path;
+      }
 
-      final IPopupChooserBuilder<XmlTag> builder = JBPopupFactory.getInstance()
-          .createPopupChooserBuilder(xmlTags)
-          .setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
-          .setRenderer(MyListCellRenderer.INSTANCE)
-          .setTitle("choose mapper").
-              setItemsChosenCallback((selectedValues) -> {
-                if (!selectedValues.isEmpty()) {
-                  System.out.println("11111111111111111111111");
-                }
-              })
-          .withHintUpdateSupply();
-      builder.createPopup().showInBestPositionFor(editor);
-    } else {
-    }
-//    PsiElement context = element.getContext();
-//    if (context instanceof PsiMethod) {
-//      ListPopup listPopup = JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<MyBatisSQLTag>(null, MyBatisSQLTag.values()) {
-//        @NotNull
-//        @Override
-//        public String getTextFor(MyBatisSQLTag value) {
-//          return value.getValue() + " statement";
-//        }
-//
-//        @Nullable
-//        @Override
-//        public PopupStep onChosen(MyBatisSQLTag selectedValue, boolean finalChoice) {
-//          PsiMethod psiMethod = (PsiMethod) context;
-////          Mapper mapper = MyDomService.getInstance().getMapper(psiClass, GlobalSearchScope.allScope(element.getProject()));
-////          generateStatement(selectedValue, psiMethod, mapper, project);
-//          return super.onChosen(selectedValue, finalChoice);
-//        }
-//      });
-//      listPopup.showInBestPositionFor(editor);
-//    }
+      @Nullable
+      @Override
+      public PopupStep<?> onChosen(Choose selectedValue, boolean finalChoice) {
+        PsiMethod psiMethod = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
+        generateStatement(selectedValue, psiMethod, project);
+        return super.onChosen(selectedValue, finalChoice);
+      }
+    });
+    listPopup.showInBestPositionFor(editor);
   }
 
-  private void generateStatement(MyBatisSQLTag myBatisSQLTag, PsiMethod psiMethod, Mapper mapper, Project project) {
+  private void generateStatement(Choose choose, PsiMethod psiMethod, Project project) {
     WriteCommandAction.writeCommandAction(project).run(() -> {
       Statement statement = null;
-      switch (myBatisSQLTag) {
+      switch (choose.getMyBatisSQLTag()) {
         case INSERT:
-          statement = mapper.addInsert();
+          statement = choose.getMapper().addInsert();
           break;
         case DELETE:
-          statement = mapper.addDelete();
+          statement = choose.getMapper().addDelete();
           break;
         case UPDATE:
-          statement = mapper.addUpdate();
+          statement = choose.getMapper().addUpdate();
           break;
         case SELECT:
-          statement = mapper.addSelect();
+          statement = choose.getMapper().addSelect();
           String returnTypeStr = "";
           PsiType returnType = psiMethod.getReturnType();
           if (returnType instanceof PsiClassType) {
@@ -179,7 +151,7 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
         return;
       }
       statement.getId().setStringValue(psiMethod.getName());
-      statement.setValue(myBatisSQLTag.getBodyText());
+      statement.setValue(choose.getMyBatisSQLTag().getBodyText());
       XmlTag xmlTag = statement.getXmlTag();
       if (xmlTag != null) {
         ASTNode node = xmlTag.getNode();
@@ -193,35 +165,44 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
           }
         }
       }
-//            CodeStyleManager formatter = CodeStyleManager.getInstance(project);
-//            formatter.reformat(mapper.getXmlTag().getContainingFile());
     });
   }
 
-  private static class MyListCellRenderer extends PsiElementListCellRenderer<XmlTag> {
-    public static final MyListCellRenderer INSTANCE = new MyListCellRenderer();
+  public static class Choose {
+    private Mapper mapper;
+    private MyBatisSQLTag myBatisSQLTag;
 
-    @Override
-    public String getElementText(XmlTag tag) {
-      DomElement domElement = DomManager.getDomManager(tag.getProject()).getDomElement(tag);
-      if (domElement != null) {
-        Mapper mapper = domElement.getParentOfType(Mapper.class, false);
-        if (mapper != null) {
+    public Choose(Mapper mapper, MyBatisSQLTag myBatisSQLTag) {
+      this.mapper = mapper;
+      this.myBatisSQLTag = myBatisSQLTag;
+    }
+
+    public Mapper getMapper() {
+      return mapper;
+    }
+
+    public void setMapper(Mapper mapper) {
+      this.mapper = mapper;
+    }
+
+    public MyBatisSQLTag getMyBatisSQLTag() {
+      return myBatisSQLTag;
+    }
+
+    public void setMyBatisSQLTag(MyBatisSQLTag myBatisSQLTag) {
+      this.myBatisSQLTag = myBatisSQLTag;
+    }
+
+    public static List<Choose> createChoose(@NotNull List<Mapper> mappers) {
+      List<Choose> chooses = new ArrayList<>();
+      for (Mapper mapper : mappers) {
+        for (MyBatisSQLTag myBatisSQLTag : MyBatisSQLTag.values()) {
+          Choose choose = new Choose(mapper, myBatisSQLTag);
+          chooses.add(choose);
         }
       }
-      return tag.getContainingFile().getName();
-    }
-
-    @Override
-    protected String getContainerText(XmlTag element, String name) {
-      return null;
-    }
-
-    @Override
-    protected int getIconFlags() {
-      return 0;
+      return chooses;
     }
   }
-
 
 }

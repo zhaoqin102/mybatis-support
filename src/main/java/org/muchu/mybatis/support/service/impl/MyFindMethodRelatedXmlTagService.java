@@ -23,10 +23,7 @@ public class MyFindMethodRelatedXmlTagService extends AbstractFindRelatedItemSer
       return false;
     }
     PsiMethod psiMethod = (PsiMethod) parent;
-    if (psiMethod.isConstructor()) {
-      return false;
-    }
-    return true;
+    return !psiMethod.isConstructor();
   }
 
   @Override

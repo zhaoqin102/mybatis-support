@@ -30,7 +30,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class CreateXmlDialog extends DialogWrapper {
-  private final JLabel myInformationLabel = new JLabel(CodeInsightBundle.message("dialog.create.class.label", "xml"));
+  private final JLabel myInformationLabel = new JLabel("create mapper");
   private final DirectoryEditorComboWithBrowseButton myDirectoryComponent;
   private final JLabel myPackageLabel = new JLabel("Destination folder");
   private final JTextField myTfClassName = new MyTextField();

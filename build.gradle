@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '1.8.2'
+version '1.8.3'
 
 repositories {
     mavenCentral()
@@ -24,7 +24,8 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      support new version  <br> """
+      support new version  <br> 
+      support one interface to many mapper"""
 }
 
 publishPlugin {

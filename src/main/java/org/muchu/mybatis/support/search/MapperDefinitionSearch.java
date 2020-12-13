@@ -35,7 +35,8 @@ public class MapperDefinitionSearch extends QueryExecutorBase<PsiElement, PsiEle
       XmlUtil.processXmlElements(mapper.getXmlTag(), element -> {
         if (element instanceof XmlAttributeValue
             && StringUtils.equals(psiClass.getQualifiedName(), ((XmlAttributeValue) element).getValue())) {
-          return consumer.process(element);
+          consumer.process(element);
+          return false;
         }
         return true;
       }, true);

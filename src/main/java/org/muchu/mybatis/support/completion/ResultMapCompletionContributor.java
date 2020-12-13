@@ -25,7 +25,7 @@ public class ResultMapCompletionContributor extends CompletionContributor {
   public ResultMapCompletionContributor() {
     extend(CompletionType.BASIC,
         PlatformPatterns.psiElement(XmlToken.class),
-        new CompletionProvider<CompletionParameters>() {
+        new CompletionProvider<>() {
           public void addCompletions(@NotNull CompletionParameters parameters,
                                      ProcessingContext context,
                                      @NotNull CompletionResultSet resultSet) {
@@ -50,7 +50,8 @@ public class ResultMapCompletionContributor extends CompletionContributor {
               Mapper mapper = fileElement.getRootElement();
               List<ResultMap> resultMaps = mapper.getResultMaps();
               for (ResultMap resultMap : resultMaps) {
-                if (resultMap.getId() == null || resultMap.getId().getStringValue() == null) {
+                resultMap.getId();
+                if (resultMap.getId().getStringValue() == null) {
                   continue;
                 }
                 if (StringUtils.equals(mapper.getNamespace().getStringValue(), mapperDomFileElement.getRootElement().getNamespace().getStringValue())) {

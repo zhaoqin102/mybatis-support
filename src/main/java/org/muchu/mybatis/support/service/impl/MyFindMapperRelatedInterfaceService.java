@@ -35,10 +35,7 @@ public class MyFindMapperRelatedInterfaceService extends AbstractFindRelatedItem
       return false;
     }
     DomElement domElement = DomManager.getDomManager(xmlToken.getProject()).getDomElement((XmlTag) xmlToken.getParent());
-    if (!(domElement instanceof Mapper)) {
-      return false;
-    }
-    return true;
+    return domElement instanceof Mapper;
   }
 
   @Override
