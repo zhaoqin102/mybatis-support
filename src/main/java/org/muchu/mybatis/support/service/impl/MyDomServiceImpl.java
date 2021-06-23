@@ -4,7 +4,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -43,9 +45,13 @@ public class MyDomServiceImpl implements MyDomService {
       return null;
     }
     List<Mapper> mappers = getMapper(psiClass, scope);
-    //TODO check return type
     return mappers.stream().map(Mapper::getStatements).flatMap(Collection::stream)
         .filter(statement -> StringUtils.equals(psiMethod.getName(), statement.getId().getValue()))
         .findFirst().orElse(null);
+  }
+
+  @Override
+  public @Nullable DomFileElement<Mapper> getMapper(XmlFile xmlFile) {
+    return DomManager.getDomManager(xmlFile.getProject()).getFileElement(xmlFile, Mapper.class);
   }
 }

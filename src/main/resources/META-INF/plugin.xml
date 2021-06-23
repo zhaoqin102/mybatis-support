@@ -22,8 +22,8 @@
         <standardResourceProvider implementation="org.muchu.mybatis.support.dom.MyBatisSchemaProvider"/>
         <completion.contributor language="XML"
                                 implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
-        <definitionsSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
-        <definitionsSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
+        <definitionsScopedSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
+        <definitionsScopedSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
         <fileTemplateGroup
                 implementation="org.muchu.mybatis.support.template.MybatisFileTemplateGroupDescriptorFactory"/>
         <intentionAction>
@@ -35,10 +35,14 @@
         <intentionAction>
             <className>org.muchu.mybatis.support.intention.GenerateStatementAction</className>
         </intentionAction>
-        <!--        <typedHandler implementation="org.muchu.mybatis.support.editorActions.XmlResultMapTypedHandler"-->
-        <!--                      id="xmlResultMap"/>-->
+        <renamePsiElementProcessor
+                implementation="org.muchu.mybatis.support.rename.RenameIdProcessor"/>
+        <typedHandler implementation="org.muchu.mybatis.support.editorActions.StatementParameterTypedHandler"
+                      id="statementParameter"/>
         <applicationService serviceInterface="org.muchu.mybatis.support.service.MyDomService"
                             serviceImplementation="org.muchu.mybatis.support.service.impl.MyDomServiceImpl"/>
+        <completion.contributor language="XML"
+                                implementationClass="org.muchu.mybatis.support.contributor.MybatisCompletionContributor"/>
     </extensions>
 
     <actions>
