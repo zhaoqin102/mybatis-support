@@ -9,6 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
+import com.intellij.psi.xml.XmlToken;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
@@ -23,6 +24,10 @@ public class MybatisCompletionContributor extends CompletionContributor {
 
   @Override
   public void fillCompletionVariants(@NotNull CompletionParameters parameters, @NotNull CompletionResultSet result) {
+    PsiElement psiElement = parameters.getPosition();
+    if (!(psiElement instanceof XmlToken) || !(psiElement.getParent() instanceof XmlText)) {
+      return;
+    }
     PsiFile psiFile = parameters.getOriginalFile();
     if (!(psiFile instanceof XmlFile)) {
       return;
@@ -31,8 +36,13 @@ public class MybatisCompletionContributor extends CompletionContributor {
     if (mapper == null) {
       return;
     }
-    PsiElement psiElement = parameters.getPosition();
     if (!(psiElement.getParent() instanceof XmlText)) {
+      return;
+    }
+    XmlText xmlText = (XmlText) psiElement.getParent();
+    final String text = xmlText.getText();
+    final int index = parameters.getOffset() - xmlText.getTextOffset() - 1;
+    if (text.charAt(index) != '{') {
       return;
     }
     XmlTag xmlTag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);

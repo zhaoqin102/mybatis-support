@@ -21,7 +21,7 @@
         <annotator language="JAVA" implementationClass="org.muchu.mybatis.support.annotator.ParamAnnotator"/>
         <standardResourceProvider implementation="org.muchu.mybatis.support.dom.MyBatisSchemaProvider"/>
         <completion.contributor language="XML"
-                                implementationClass="org.muchu.mybatis.support.completion.ResultMapCompletionContributor"/>
+                                implementationClass="org.muchu.mybatis.support.contributor.ResultMapCompletionContributor"/>
         <definitionsScopedSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
         <definitionsScopedSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
         <fileTemplateGroup
@@ -45,6 +45,9 @@
                                 implementationClass="org.muchu.mybatis.support.contributor.MybatisCompletionContributor"/>
     </extensions>
 
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+    <depends>com.intellij.modules.xml</depends>
     <actions>
     </actions>
 </idea-plugin>
