@@ -1,7 +1,9 @@
 package org.muchu.mybatis.support.service;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
@@ -14,8 +16,9 @@ import org.muchu.mybatis.support.dom.model.Statement;
 import java.util.List;
 
 public interface MyDomService {
+
   static MyDomService getInstance() {
-    return ServiceManager.getService(MyDomService.class);
+    return ApplicationManager.getApplication().getService(MyDomService.class);
   }
 
   @NotNull
@@ -27,4 +30,7 @@ public interface MyDomService {
                          @Nullable GlobalSearchScope scope);
 
   @Nullable DomFileElement<Mapper> getMapper(XmlFile xmlFile);
+
+  @NotNull
+  List<LookupElementBuilder> getLookupElement(PsiElement psiElement);
 }

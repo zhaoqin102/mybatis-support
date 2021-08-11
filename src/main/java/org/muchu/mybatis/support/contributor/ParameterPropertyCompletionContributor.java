@@ -16,7 +16,7 @@ import org.muchu.mybatis.support.service.MyDomService;
 
 import java.util.List;
 
-public class MybatisCompletionContributor extends CompletionContributor {
+public class ParameterPropertyCompletionContributor extends CompletionContributor {
 
   @Override
   public void fillCompletionVariants(@NotNull CompletionParameters parameters, @NotNull CompletionResultSet result) {
@@ -38,7 +38,7 @@ public class MybatisCompletionContributor extends CompletionContributor {
     XmlText xmlText = (XmlText) psiElement.getParent();
     final String text = xmlText.getText();
     final int index = parameters.getOffset() - xmlText.getTextOffset() - 1;
-    if (text.charAt(index) != '{') {
+    if (text.charAt(index) != '.') {
       return;
     }
     List<LookupElementBuilder> lookupElementBuilders = MyDomService.getInstance().getLookupElement(psiElement);
