@@ -20,8 +20,6 @@
                              implementationClass="org.muchu.mybatis.support.folding.SQLFoldingBuilder"/>
         <annotator language="JAVA" implementationClass="org.muchu.mybatis.support.annotator.ParamAnnotator"/>
         <standardResourceProvider implementation="org.muchu.mybatis.support.dom.MyBatisSchemaProvider"/>
-        <completion.contributor language="XML"
-                                implementationClass="org.muchu.mybatis.support.contributor.ResultMapCompletionContributor"/>
         <definitionsScopedSearch implementation="org.muchu.mybatis.support.search.StatementDefinitionSearch"/>
         <definitionsScopedSearch implementation="org.muchu.mybatis.support.search.MapperDefinitionSearch"/>
         <fileTemplateGroup
@@ -39,10 +37,16 @@
                 implementation="org.muchu.mybatis.support.rename.RenameIdProcessor"/>
         <typedHandler implementation="org.muchu.mybatis.support.editorActions.StatementParameterTypedHandler"
                       id="statementParameter"/>
+        <typedHandler implementation="org.muchu.mybatis.support.editorActions.StatementParameterPropertyTypedHandler"
+                      id="statementParameterProperty"/>
         <applicationService serviceInterface="org.muchu.mybatis.support.service.MyDomService"
                             serviceImplementation="org.muchu.mybatis.support.service.impl.MyDomServiceImpl"/>
         <completion.contributor language="XML"
                                 implementationClass="org.muchu.mybatis.support.contributor.MybatisCompletionContributor"/>
+        <completion.contributor language="XML"
+                                implementationClass="org.muchu.mybatis.support.contributor.ParameterPropertyCompletionContributor"/>
+        <completion.contributor language="XML"
+                                implementationClass="org.muchu.mybatis.support.contributor.ResultMapCompletionContributor"/>
     </extensions>
 
     <depends>com.intellij.modules.platform</depends>
