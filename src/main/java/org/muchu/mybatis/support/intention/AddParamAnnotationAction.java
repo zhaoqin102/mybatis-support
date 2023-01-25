@@ -1,18 +1,22 @@
 package org.muchu.mybatis.support.intention;
 
-import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
+import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.PsiParameter;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.ThrowableRunnable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
-public class AddParamAnnotationAction extends BaseIntentionAction {
+public class AddParamAnnotationAction extends PsiElementBaseIntentionAction {
 
   @Nls(capitalization = Nls.Capitalization.Sentence)
   @NotNull
@@ -29,37 +33,36 @@ public class AddParamAnnotationAction extends BaseIntentionAction {
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
-    if (!(file instanceof PsiJavaFile)) {
-      return false;
-    }
-    int offset = editor.getCaretModel().getOffset();
-    PsiElement element = file.findElementAt(offset);
-    if (element == null || !(element.getParent() instanceof PsiParameter)) {
+  public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
+    if (!(element.getParent() instanceof PsiParameter)) {
       return false;
     }
     PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-    if (psiClass == null || !psiClass.isInterface()) {
-      return false;
-    }
-    return true;
+    return psiClass != null && psiClass.isInterface();
   }
 
   @Override
-  public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
-    ApplicationManager.getApplication().invokeLater(() -> WriteCommandAction.writeCommandAction(project).run(() -> {
-      PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
-      if (element == null || !(element.getParent() instanceof PsiParameter)) {
-        return;
+  public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
+    if (!(element.getParent() instanceof PsiParameter psiParameter)) {
+      return;
+    }
+    var task = new ThrowableRunnable<RuntimeException>() {
+
+      @Override
+      public void run() {
+        PsiModifierList modifierList = psiParameter.getModifierList();
+        if (modifierList == null) {
+          return;
+        }
+        modifierList.addAnnotation("org.apache.ibatis.annotations.Param(\"" + psiParameter.getName() + "\")");
+        JavaCodeStyleManager instance = JavaCodeStyleManager.getInstance(project);
+        instance.shortenClassReferences(element.getContainingFile());
       }
-      PsiParameter psiParameter = (PsiParameter) element.getParent();
-      PsiModifierList modifierList = psiParameter.getModifierList();
-      if (modifierList == null) {
-        return;
-      }
-      modifierList.addAnnotation("org.apache.ibatis.annotations.Param(\"" + psiParameter.getName() + "\")");
-      JavaCodeStyleManager instance = JavaCodeStyleManager.getInstance(project);
-      instance.shortenClassReferences(file);
-    }));
+    };
+    if (!element.isPhysical()) {
+      task.run();
+      return;
+    }
+    ApplicationManager.getApplication().invokeLater(() -> WriteCommandAction.writeCommandAction(project).run(task));
   }
 }

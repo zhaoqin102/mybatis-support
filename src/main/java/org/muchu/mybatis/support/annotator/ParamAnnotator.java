@@ -21,10 +21,9 @@ public class ParamAnnotator implements Annotator {
     if (!(element instanceof PsiIdentifier)) {
       return;
     }
-    if (!(element.getParent() instanceof PsiParameter)) {
+    if (!(element.getParent() instanceof PsiParameter psiParameter)) {
       return;
     }
-    PsiParameter psiParameter = (PsiParameter) element.getParent();
     PsiClass parameterType = PsiTypesUtil.getPsiClass(psiParameter.getType());
     if (parameterType == null || PsiElementUtil.isMap(parameterType)) {
       return;

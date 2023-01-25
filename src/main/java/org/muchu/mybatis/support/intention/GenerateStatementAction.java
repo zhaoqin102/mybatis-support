@@ -72,6 +72,9 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
 
   @Override
   public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
+    if (!element.isPhysical()) {
+      return;
+    }
     PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
     if (psiClass == null) {
       return;
