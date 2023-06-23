@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '1.8.5'
+version '1.8.6'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ patchPluginXml {
       support intention action preview
       <br/>"""
     sinceBuild = "223"
-    untilBuild = "223.*"
+    untilBuild = "231.*"
 }
 
 publishPlugin {
