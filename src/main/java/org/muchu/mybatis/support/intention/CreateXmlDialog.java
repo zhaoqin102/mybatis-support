@@ -3,13 +3,9 @@ package org.muchu.mybatis.support.intention;
 import com.intellij.CommonBundle;
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.ide.util.DirectoryUtil;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CustomShortcutSet;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.fileChooser.FileChooser;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
@@ -26,10 +22,9 @@ import org.muchu.mybatis.support.ui.DirectoryEditorComboWithBrowseButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 public class CreateXmlDialog extends DialogWrapper {
+  private static final Logger LOG = Logger.getInstance(CreateXmlDialog.class);
   private final JLabel myInformationLabel = new JLabel("create mapper");
   private final DirectoryEditorComboWithBrowseButton myDirectoryComponent;
   private final JLabel myPackageLabel = new JLabel("Destination folder");
@@ -48,19 +43,9 @@ public class CreateXmlDialog extends DialogWrapper {
     myXmlName = targetXmlName;
     myProject = project;
     myDirectoryComponent = new DirectoryEditorComboWithBrowseButton(null, psiDirectory, project, RECENTS_KEY);
-    myDirectoryComponent.addActionListener(e -> {
-      FileChooserDescriptor fileChooserDescriptor = new FileChooserDescriptor(false, true, false, false, false, false);
-      FileChooser.chooseFile(fileChooserDescriptor, project, psiDirectory != null ? psiDirectory.getVirtualFile() : null, virtualFile -> {
-        if (virtualFile.isDirectory()) {
-          myDirectoryComponent.setText(virtualFile.getCanonicalPath());
-          myTargetDirectory = PsiManager.getInstance(project).findDirectory(virtualFile);
-        }
-      });
-
-    });
     myDirectoryComponent.setTextFieldPreferredWidth(40);
-    init();
     setTitle(title);
+    init();
     myTfClassName.setText(myXmlName);
   }
 
@@ -104,13 +89,6 @@ public class CreateXmlDialog extends DialogWrapper {
 
     gbConstraints.gridx = 1;
     gbConstraints.weightx = 1;
-
-    new AnAction() {
-      @Override
-      public void actionPerformed(@NotNull AnActionEvent e) {
-        myDirectoryComponent.getButton().doClick();
-      }
-    }.registerCustomShortcutSet(new CustomShortcutSet(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.SHIFT_DOWN_MASK)), myDirectoryComponent.getChildComponent());
 
     JPanel _panel = new JPanel(new BorderLayout());
     _panel.add(myDirectoryComponent, BorderLayout.CENTER);
