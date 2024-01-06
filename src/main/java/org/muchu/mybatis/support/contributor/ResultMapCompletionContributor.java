@@ -12,7 +12,6 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.ResultMap;
