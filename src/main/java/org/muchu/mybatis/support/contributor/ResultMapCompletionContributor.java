@@ -18,6 +18,7 @@ import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.dom.model.ResultMap;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ResultMapCompletionContributor extends CompletionContributor {
 
@@ -50,7 +51,7 @@ public class ResultMapCompletionContributor extends CompletionContributor {
         if (resultMap.getId().getStringValue() == null) {
           continue;
         }
-        if (StringUtils.equals(mapper.getNamespace().getStringValue(), mapperDomFileElement.getRootElement().getNamespace().getStringValue())) {
+        if (Objects.equals(mapper.getNamespace().getStringValue(), mapperDomFileElement.getRootElement().getNamespace().getStringValue())) {
           result.addElement(LookupElementBuilder.create(resultMap.getId().getStringValue()));
         } else {
           result.addElement(LookupElementBuilder.create(mapper.getNamespace() + "." + resultMap.getId().getStringValue()));
