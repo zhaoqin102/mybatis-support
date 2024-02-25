@@ -20,10 +20,9 @@ public class MapperDefinitionSearch extends QueryExecutorBase<XmlAttributeValue,
 
   @Override
   public void processQuery(DefinitionsScopedSearch.@NotNull SearchParameters queryParameters, @NotNull Processor<? super XmlAttributeValue> consumer) {
-    if (!(queryParameters.getElement() instanceof PsiClass)) {
+    if (!(queryParameters.getElement() instanceof PsiClass psiClass)) {
       return;
     }
-    PsiClass psiClass = (PsiClass) queryParameters.getElement();
     List<Mapper> mappers = MyDomService.getInstance().getMapper(psiClass,
         GlobalSearchScope.allScope(psiClass.getProject()));
     mappers.forEach(mapper -> consumer.process(mapper.getNamespace().getXmlAttributeValue()));

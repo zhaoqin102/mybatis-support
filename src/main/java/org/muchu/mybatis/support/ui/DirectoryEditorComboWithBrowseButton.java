@@ -23,7 +23,7 @@ public class DirectoryEditorComboWithBrowseButton extends ComponentWithBrowseBut
       getChildComponent().setHistory(recentEntries);
     }
     if (psiDirectory != null && psiDirectory.getVirtualFile().getCanonicalFile() != null
-        && psiDirectory.getVirtualFile().getCanonicalPath() != null && psiDirectory.getVirtualFile().getCanonicalPath().length() > 0) {
+        && psiDirectory.getVirtualFile().getCanonicalPath() != null && !psiDirectory.getVirtualFile().getCanonicalPath().isEmpty()) {
       setText(psiDirectory.getVirtualFile().getCanonicalPath());
     }
   }

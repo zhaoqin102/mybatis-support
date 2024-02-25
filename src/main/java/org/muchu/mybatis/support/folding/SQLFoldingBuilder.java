@@ -10,7 +10,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.muchu.mybatis.support.dom.model.Include;
@@ -26,13 +26,12 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
   @NotNull
   @Override
   public FoldingDescriptor @NotNull [] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
-    if (!(root instanceof XmlFile)) {
-      return FoldingDescriptor.EMPTY;
+    if (!(root instanceof XmlFile xmlFile)) {
+      return FoldingDescriptor.EMPTY_ARRAY;
     }
-    XmlFile xmlFile = (XmlFile) root;
     DomFileElement<Mapper> domFileElement = DomManager.getDomManager(root.getProject()).getFileElement(xmlFile, Mapper.class);
     if (domFileElement == null) {
-      return FoldingDescriptor.EMPTY;
+      return FoldingDescriptor.EMPTY_ARRAY;
     }
     Mapper mapper = domFileElement.getRootElement();
     List<FoldingDescriptor> descriptors = new ArrayList<>();
@@ -66,22 +65,20 @@ public class SQLFoldingBuilder extends FoldingBuilderEx {
         }
       }
     }
-    return descriptors.toArray(FoldingDescriptor.EMPTY);
+    return descriptors.toArray(FoldingDescriptor.EMPTY_ARRAY);
   }
 
   @Nullable
   @Override
   public String getPlaceholderText(@NotNull ASTNode node) {
     PsiElement psi = node.getPsi();
-    if (!(psi instanceof XmlTag)) {
+    if (!(psi instanceof XmlTag xmlTag)) {
       return null;
     }
-    XmlTag xmlTag = (XmlTag) psi;
     DomElement domElement = DomManager.getDomManager(xmlTag.getProject()).getDomElement(xmlTag);
-    if (!(domElement instanceof Include)) {
+    if (!(domElement instanceof Include include)) {
       return null;
     }
-    Include include = (Include) domElement;
     include.getRefid();
     if (StringUtils.isBlank(include.getRefid().getStringValue())) {
       return null;

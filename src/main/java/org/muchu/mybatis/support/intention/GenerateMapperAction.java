@@ -30,10 +30,9 @@ public class GenerateMapperAction extends PsiElementBaseIntentionAction {
 
   @Override
   public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
-    if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass)) {
+    if (!(element instanceof PsiIdentifier) || !(element.getParent() instanceof PsiClass psiClass)) {
       return false;
     }
-    PsiClass psiClass = (PsiClass) element.getParent();
     return psiClass.isInterface();
   }
 

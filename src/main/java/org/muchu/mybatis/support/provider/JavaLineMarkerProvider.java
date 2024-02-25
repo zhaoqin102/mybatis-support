@@ -18,7 +18,7 @@ public class JavaLineMarkerProvider extends RelatedItemLineMarkerProvider {
   protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
     FindRelatedItemService findRelatedItemService = MyFindRelatedItemServiceFactory.getFindRelatedItemService(element);
     List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
-    if (resultList.size() > 0) {
+    if (!resultList.isEmpty()) {
       NavigationGutterIconBuilder<PsiElement> builder =
           NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_JAVA)
               .setTargets(resultList)

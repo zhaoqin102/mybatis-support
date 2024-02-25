@@ -26,7 +26,7 @@ public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
     }
     FindRelatedItemService findRelatedItemService = MyFindRelatedItemServiceFactory.getFindRelatedItemService(element);
     List<PsiElement> resultList = findRelatedItemService.findRelatedItem(element);
-    if (resultList.size() > 0) {
+    if (!resultList.isEmpty()) {
       NavigationGutterIconBuilder<PsiElement> builder =
           NavigationGutterIconBuilder.create(MybatisIcon.NAVIGATE_TO_XML)
               .setTargets(resultList)

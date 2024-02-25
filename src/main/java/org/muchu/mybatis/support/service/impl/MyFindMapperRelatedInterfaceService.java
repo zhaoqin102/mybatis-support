@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.muchu.mybatis.support.dom.model.Mapper;
 import org.muchu.mybatis.support.util.MyJavaUtil;
 
@@ -23,10 +23,9 @@ public class MyFindMapperRelatedInterfaceService extends AbstractFindRelatedItem
 
   @Override
   public boolean isSupport(PsiElement psiElement) {
-    if (!(psiElement instanceof XmlToken)) {
+    if (!(psiElement instanceof XmlToken xmlToken)) {
       return false;
     }
-    XmlToken xmlToken = (XmlToken) psiElement;
     if (!StringUtils.equals(xmlToken.getText(), "mapper") || !(xmlToken.getParent() instanceof XmlTag)) {
       return false;
     }

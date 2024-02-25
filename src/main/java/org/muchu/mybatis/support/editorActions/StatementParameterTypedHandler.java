@@ -15,8 +15,7 @@ public class StatementParameterTypedHandler extends TypedHandlerDelegate {
 
   @Override
   public @NotNull Result charTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
-    if (!(file instanceof XmlFile)) return Result.CONTINUE;
-    XmlFile xmlFile = (XmlFile) file;
+    if (!(file instanceof XmlFile xmlFile)) return Result.CONTINUE;
     if (MyDomService.getInstance().getMapper(xmlFile) == null) {
       return Result.CONTINUE;
     }

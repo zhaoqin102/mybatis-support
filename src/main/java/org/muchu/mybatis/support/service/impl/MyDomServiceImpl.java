@@ -12,7 +12,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.muchu.mybatis.support.dom.model.Foreach;
@@ -67,6 +67,7 @@ public class MyDomServiceImpl implements MyDomService {
     List<LookupElementBuilder> lookupElementBuilders = new ArrayList<>();
     DomFileElement<Mapper> domFileElement = DomManager.getDomManager(psiElement.getProject())
         .getFileElement((XmlFile) psiElement.getContainingFile(), Mapper.class);
+    assert domFileElement != null;
     Mapper mapper = domFileElement.getRootElement();
     XmlTag xmlTag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
     if (xmlTag == null) {

@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.14.1'
+    id("org.jetbrains.intellij") version "1.17.2"
 }
 
 group 'org.muchu'
@@ -19,8 +19,8 @@ dependencies {
 }
 
 intellij {
-    version = '2023.3.2'
-    plugins = ['com.intellij.java']
+    version = "2023.3.4"
+    plugins = ["com.intellij.java"]
 }
 
 patchPluginXml {

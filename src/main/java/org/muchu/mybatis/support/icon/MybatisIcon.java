@@ -16,6 +16,6 @@ public class MybatisIcon {
 
   public static final Icon NAVIGATE_TO_JAVA = AllIcons.Gutter.ImplementingMethod;
 
-  public static final Icon MYBATIS_ICON = iconManager.getIcon("/images/mybatis.png", MybatisIcon.class);
+  public static final Icon MYBATIS_ICON = iconManager.getIcon("/images/mybatis.png", MybatisIcon.class.getClassLoader());
 
 }

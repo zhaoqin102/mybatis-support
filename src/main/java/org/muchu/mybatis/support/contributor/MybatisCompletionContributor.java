@@ -32,10 +32,9 @@ public class MybatisCompletionContributor extends CompletionContributor {
     if (mapper == null) {
       return;
     }
-    if (!(psiElement.getParent() instanceof XmlText)) {
+    if (!(psiElement.getParent() instanceof XmlText xmlText)) {
       return;
     }
-    XmlText xmlText = (XmlText) psiElement.getParent();
     final String text = xmlText.getText();
     final int index = parameters.getOffset() - xmlText.getTextOffset() - 1;
     if (text.charAt(index) != '{') {

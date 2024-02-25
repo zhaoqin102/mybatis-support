@@ -124,8 +124,7 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
           statement = choose.getMapper().addSelect();
           String returnTypeStr = "";
           PsiType returnType = psiMethod.getReturnType();
-          if (returnType instanceof PsiClassType) {
-            PsiClassType psiClassType = ((PsiClassType) returnType);
+          if (returnType instanceof PsiClassType psiClassType) {
             PsiType collectionType = Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(JAVA_UTIL_COLLECTION, GlobalSearchScope.allScope(project)))
                 .map(psiClass -> PsiElementFactory.getInstance(project).createType(psiClass))
                 .orElse(null);
@@ -142,8 +141,7 @@ public class GenerateStatementAction extends PsiElementBaseIntentionAction {
             } else {
               returnTypeStr = psiClassType.getCanonicalText();
             }
-          } else if (returnType instanceof PsiArrayType) {
-            PsiArrayType psiArrayType = (PsiArrayType) returnType;
+          } else if (returnType instanceof PsiArrayType psiArrayType) {
             returnTypeStr = psiArrayType.getComponentType().getCanonicalText();
           }
           if (StringUtils.isNotBlank(returnTypeStr)) {

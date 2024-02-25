@@ -18,10 +18,9 @@ public class StatementDefinitionSearch extends QueryExecutorBase<XmlAttributeVal
 
   @Override
   public void processQuery(DefinitionsScopedSearch.@NotNull SearchParameters queryParameters, @NotNull Processor<? super XmlAttributeValue> consumer) {
-    if (!(queryParameters.getElement() instanceof PsiMethod)) {
+    if (!(queryParameters.getElement() instanceof PsiMethod psiMethod)) {
       return;
     }
-    PsiMethod psiMethod = (PsiMethod) queryParameters.getElement();
     Statement statement = MyDomService.getInstance().getStatement(psiMethod,
         GlobalSearchScope.allScope(psiMethod.getProject()));
     if (statement == null) {

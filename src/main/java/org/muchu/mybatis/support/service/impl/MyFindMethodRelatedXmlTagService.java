@@ -19,10 +19,9 @@ public class MyFindMethodRelatedXmlTagService extends AbstractFindRelatedItemSer
   @Override
   public boolean isSupport(PsiElement psiElement) {
     PsiElement parent = psiElement.getParent();
-    if (!(psiElement instanceof PsiIdentifier) || !(parent instanceof PsiMethod)) {
+    if (!(psiElement instanceof PsiIdentifier) || !(parent instanceof PsiMethod psiMethod)) {
       return false;
     }
-    PsiMethod psiMethod = (PsiMethod) parent;
     return !psiMethod.isConstructor();
   }
 

@@ -126,7 +126,7 @@ public class CreateXmlDialog extends DialogWrapper {
       }
     }, CodeInsightBundle.message("create.directory.command"), null);
     if (errorString[0] != null) {
-      if (errorString[0].length() > 0) {
+      if (!errorString[0].isEmpty()) {
         Messages.showMessageDialog(myProject, errorString[0], CommonBundle.getErrorTitle(), Messages.getErrorIcon());
       }
       return;
