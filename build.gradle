@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.muchu'
-version '1.9.0'
+version '1.9.7'
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ dependencies {
 }
 
 intellij {
-    version = "2023.3.4"
+    version = "2024.3.1"
     plugins = ["com.intellij.java"]
 }
 
@@ -27,6 +27,7 @@ patchPluginXml {
     changeNotes = """
       support new version.<br/>
       support intention action preview
+      fix resource load error
       <br/>"""
 }
 
